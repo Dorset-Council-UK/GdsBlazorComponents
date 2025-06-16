@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+<fieldset class="govuk-fieldset" role="group" aria-describedby="@_describedBy">
+    @if (Heading != null)
+    {
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            @Heading
+        </legend>
+    }
+    @ChildContent
+    @Content
+</fieldset>
+
+@code {
+    [CascadingParameter]
+    private EditContext EditContext { get; set; } = default!;
+
+    [CascadingParameter]
+    private string? CascadedId { get; set; }
+
+    [CascadingParameter]
+    private FieldIdentifier FieldIdentifier { get; set; } = default!;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? Heading { get; set; }
+
+    [Parameter]
+    public RenderFragment? Content { get; set; }
+
+    private string _describedBy => EditContext.IsValid(FieldIdentifier) ? $"{CascadedId}-hint" : $"{CascadedId}-hint {CascadedId}-error";
+}

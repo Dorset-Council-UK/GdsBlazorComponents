@@ -1,0 +1,46 @@
+﻿@if (Show)
+{
+    <div class="@_formGroupCssClass">
+        <fieldset class="govuk-fieldset" role="group" aria-describedby="@_describedBy">
+            @if (Heading != null)
+            {
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                    @Heading
+                </legend>
+            }
+
+            @if (Hint != null)
+            {
+                <Hint Id="@_hintId">@Hint</Hint>
+            }
+
+            @if (_errorMessage != null)
+            {
+                <p id="@_errorId" class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span> <span>@_errorMessage</span>
+                </p>
+            }
+
+            <div class="govuk-date-input" id="@Id">
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <Label For="@_dayId" Text="Day" CssClass="govuk-label govuk-date-input__label" />
+                        <Microsoft.AspNetCore.Components.Forms.InputText id="@_dayId" @bind-Value="Date.DayText" autocomplete="@_dayAutocomplete" inputmode="numeric" class="@_dayCssClass" />
+                    </div>
+                </div>
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <Label For="@_monthId" Text="Month" CssClass="govuk-label govuk-date-input__label" />
+                        <Microsoft.AspNetCore.Components.Forms.InputText id="@_monthId" @bind-Value="Date.MonthText" autocomplete="@_monthAutocomplete" inputmode="numeric" class="@_monthCssClass" />
+                    </div>
+                </div>
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <Label For="@_yearId" Text="Year" CssClass="govuk-label govuk-date-input__label" />
+                        <Microsoft.AspNetCore.Components.Forms.InputText id="@_yearId" @bind-Value="Date.YearText" autocomplete="@_yearAutocomplete" inputmode="numeric" class="@_yearCssClass" />
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+}

@@ -1,0 +1,8 @@
+﻿@inherits Microsoft.AspNetCore.Components.Forms.InputText
+
+<input id="@Id" name="@NameAttributeValue" @attributes="AdditionalAttributes" class="@CssClass" @bind-Value="CurrentValueAsString" @bind-Value:event="oninput" />
+
+@code {
+    [CascadingParameter]
+    private string Id { get; set; } = default!;
+}

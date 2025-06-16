@@ -1,0 +1,55 @@
+﻿@using System.Linq.Expressions
+@using Microsoft.AspNetCore.Components.Forms
+
+@if (Show)
+{
+    <div class="@FormGroupCssClass" data-module="@DataModule" data-maxlength="@DataMaxLength">
+        <CascadingValue Value="Id" IsFixed="true">
+            <CascadingValue Value="FieldIdentifier" IsFixed="false">
+                @ChildContent
+            </CascadingValue>
+        </CascadingValue>
+    </div>
+}
+
+@code {
+    [CascadingParameter]
+    private EditContext EditContext { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public Expression<Func<object>> For { get; set; } = default!;
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public bool Show { get; set; } = true;
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter]
+    public string? DataModule { get; set; } = null;
+
+    [Parameter]
+    public string? DataMaxLength { get; set; } = null;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private const string GroupCssClass = "govuk-form-group";
+    private const string GroupErrorCssClass = "govuk-form-group--error";
+
+    private FieldIdentifier FieldIdentifier => FieldIdentifier.Create(For);
+    private string FormGroupCssClass => EditContext.IsValid(FieldIdentifier)
+        ? $"{GroupCssClass} {AdditionalCssClasses}"
+        : $"{GroupCssClass} {AdditionalCssClasses} {GroupErrorCssClass}";
+
+    protected override void OnInitialized()
+    {
+        if (Id == null)
+        {
+            Id = FieldIdentifier.FieldName;
+        }
+    }
+}

@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+@if (!EditContext.IsValid(FieldIdentifier))
+{
+    <p id="@Id" class="govuk-error-message">
+        <span class="govuk-visually-hidden">Error:</span> <span>@EditContext.GetValidationMessages(FieldIdentifier).First()</span>
+    </p>
+}
+
+@code {
+    [CascadingParameter]
+    private EditContext EditContext { get; set; } = default!;
+
+    [CascadingParameter]
+    private string? CascadedId { get; set; }
+
+    [CascadingParameter]
+    private FieldIdentifier FieldIdentifier { get; set; } = default!;
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Id == null)
+        {
+            Id = $"{CascadedId}-error";
+        }
+    }
+}

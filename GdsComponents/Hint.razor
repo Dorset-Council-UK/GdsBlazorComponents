@@ -1,0 +1,31 @@
+﻿@if (Show)
+{
+    <div id="@Id" class="@CssClass">
+        @ChildContent
+    </div>
+}
+
+@code {
+    [CascadingParameter]
+    private string? CascadedId { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public bool Show { get; set; } = true;
+
+    [Parameter]
+    public string CssClass { get; set; } = "govuk-hint";
+
+    protected override void OnInitialized()
+    {
+        if (Id == null)
+        {
+            Id = $"{CascadedId}-hint";
+        }
+    }
+}

@@ -1,0 +1,28 @@
+﻿<label for="@For" class="@LabelCssClass">@Text</label>
+
+@code {
+    [CascadingParameter]
+    private string? CascadedId { get; set; }
+
+    [Parameter]
+    public string? For { get; set; }
+
+    [Parameter]
+    public string Text { get; set; } = "";
+
+    [Parameter]
+    public string CssClass { get; set; } = "govuk-label";
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    private string LabelCssClass => $"{CssClass} {AdditionalCssClasses}";
+
+    protected override void OnInitialized()
+    {
+        if (For == null)
+        {
+            For = CascadedId;
+        }
+    }
+}
