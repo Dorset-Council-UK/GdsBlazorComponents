@@ -1,18 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Version>1.0.0</Version>
+		<Authors>Dorset Council</Authors>
+		<Company>Dorset Council</Company>
+		<Description>Blazor components styled to match GOV.UK Design System.</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageId>DorsetCouncil.FloodOnlineReportingTool.GdsComponents</PackageId>
+		<RepositoryUrl>https://github.com/Dorset-Council-UK/FloodOnlineReportingTool.GdsComponents</RepositoryUrl>
+	</PropertyGroup>
 
 
-  <ItemGroup>
-    <SupportedPlatform Include="browser" />
-  </ItemGroup>
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.6" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.6" />
+	</ItemGroup>
 
 </Project>
