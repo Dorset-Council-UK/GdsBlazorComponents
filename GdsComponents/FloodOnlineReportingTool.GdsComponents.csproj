@@ -13,7 +13,6 @@
 		<RepositoryUrl>https://github.com/Dorset-Council-UK/FloodOnlineReportingTool.GdsComponents</RepositoryUrl>
 	</PropertyGroup>
 
-
 	<ItemGroup>
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>

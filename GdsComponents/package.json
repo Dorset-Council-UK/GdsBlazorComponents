@@ -1,0 +1,41 @@
+{
+  "name": "flood-online-reporting-tool-gds-components",
+  "version": "1.0.0",
+  "description": "Blazor components styled to match GOV.UK Design System.",
+  "repository": "https://github.com/Dorset-Council-UK/FloodOnlineReportingTool.GdsComponents",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --node-env production --config webpack.prod.js",
+    "build:dev": "webpack --node-env development --config webpack.dev.js",
+    "watch": "webpack --config webpack.dev.js --watch"
+  },
+  "author": "Dorset Council",
+  "dependencies": {
+    "@types/govuk-frontend": "^5.9.0",
+    "govuk-frontend": "^5.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.16",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^6.10.0",
+    "mini-css-extract-plugin": "^2.8.0",
+    "sass": "^1.70.0",
+    "sass-loader": "^14.1.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.90.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-merge": "^5.10.0"
+  },
+  "-vs-binding": {
+    "ProjectOpened": [
+      "watch",
+      "build:dev"
+    ],
+    "BeforeBuild": [
+      "build:dev"
+    ]
+  }
+}
