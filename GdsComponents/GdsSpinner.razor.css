@@ -1,0 +1,32 @@
+﻿.loaderContainer {
+    display: inline-flex;
+    align-items: center;
+}
+
+.loader {
+    display: inline-block;
+    vertical-align: bottom;
+    border: .25em solid #505a5f;
+    border-radius: 50%;
+    border-right-color: transparent;
+    width: 2rem;
+    height: 2rem;
+    -webkit-animation: loader 0.75s linear infinite both;
+    animation: loader 0.75s linear infinite both;
+}
+
+.loaderMessage {
+    margin-left: 1rem;
+}
+
+@keyframes loader {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}

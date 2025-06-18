@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace FloodOnlineReportingTool.GdsComponents;
 
-internal class GdsFieldCssClassProvider : FieldCssClassProvider
+public class GdsFieldCssClassProvider : FieldCssClassProvider
 {
     /// <summary>
     /// Get the CSS class to apply to a field based on its state.

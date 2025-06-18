@@ -7,14 +7,14 @@ namespace FloodOnlineReportingTool.GdsComponents;
 /// A customised error summary component that displays GDS style validation errors.
 /// </summary>
 /// <remarks>Based on <see href="https://github.com/dotnet/aspnetcore/blob/main/src/Components/Web/src/Forms/ValidationSummary.cs" /></remarks>
-public partial class ErrorSummary : IDisposable
+public partial class GdsErrorSummary : IDisposable
 {
     [CascadingParameter]
     EditContext CurrentEditContext { get; set; } = default!;
 
     private readonly EventHandler<ValidationStateChangedEventArgs> _validationStateChangedHandler;
 
-    public ErrorSummary()
+    public GdsErrorSummary()
     {
         _validationStateChangedHandler = (sender, args) => OnValidationStateChanged();
     }
@@ -43,7 +43,7 @@ public partial class ErrorSummary : IDisposable
     {
         if (CurrentEditContext == null)
         {
-            throw new InvalidOperationException($"{nameof(ErrorSummary)} requires a cascading parameter of type {nameof(EditContext)}. For example, you can use {nameof(ErrorSummary)} inside an {nameof(EditForm)}.");
+            throw new InvalidOperationException($"{nameof(GdsErrorSummary)} requires a cascading parameter of type {nameof(EditContext)}. For example, you can use {nameof(GdsErrorSummary)} inside an {nameof(EditForm)}.");
         }
     }
 

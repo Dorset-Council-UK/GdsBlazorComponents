@@ -1,6 +1,6 @@
 ﻿namespace FloodOnlineReportingTool.GdsComponents;
 
-internal enum GdsFieldTypes
+public enum GdsFieldTypes
 {
     Unknown,
     Checkbox,

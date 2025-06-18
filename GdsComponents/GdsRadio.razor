@@ -3,15 +3,15 @@
 
 @if (Option.IsExclusive)
 {
-    <div class="govuk-checkboxes__divider">or</div>
+    <div class="govuk-radios__divider">or</div>
 }
 
-<div @key="_id" class="govuk-checkboxes__item">
-    <InputCheckbox id="@_id" @bind-Value="Option.Selected" class="govuk-checkboxes__input" data-behaviour="@_exclusiveBehaviour" aria-describedby="@_hintId" data-aria-controls="@ConditionalId" />
-    <Label For="@_id" AdditionalCssClasses="govuk-checkboxes__label" Text="@Option.Label" />
+<div @key="_id" class="govuk-radios__item">
+    <InputRadio id="@_id" Value="@Option.Value" class="govuk-radios__input" data-behaviour="@_exclusiveBehaviour" aria-describedby="@_hintId" data-aria-controls="@ConditionalId" />
+    <GdsLabel For="@_id" AdditionalCssClasses="govuk-radios__label" Text="@Option.Label" />
     @if (_hasHint)
     {
-        <Hint Id="@_hintId" CssClass="govuk-hint govuk-checkboxes__hint">@Option.Hint</Hint>
+        <GdsHint Id="@_hintId" CssClass="govuk-hint govuk-radios__hint">@Option.Hint</GdsHint>
     }
 </div>
 

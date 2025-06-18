@@ -2,10 +2,10 @@
 
 @if (Options.Count > 0)
 {
-    <div class="@_cssClass" data-module="govuk-radios">
+    <div class="@_cssClass" data-module="govuk-checkboxes">
         @foreach (var option in Options)
         {
-            <Radio Option="option" />
+            <GdsCheckbox Option="option" />
         }
     </div>
 }
@@ -17,8 +17,5 @@
     [Parameter]
     public bool Smaller { get; set; }
 
-    [Parameter]
-    public bool Inline { get; set; }
-
-    private string _cssClass => string.Format("govuk-radios{0}{1}", Inline ? " govuk-radios--inline" : "", Smaller ? " govuk-radios--small" : "");
+    private string _cssClass => Smaller ? "govuk-checkboxes govuk-checkboxes--small" : "govuk-checkboxes";
 }

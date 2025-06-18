@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNetCore.Components.Sections
+
+<SectionContent SectionName="Layout.GdsBreadcrumbs">
+    @if (Items.Any())
+    {
+        <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+            <ol class="govuk-breadcrumbs__list">
+                @foreach (var item in Items)
+                {
+                    <li @key="item.Uri" class="govuk-breadcrumbs__list-item">
+                        <a href="@item.Uri" class="govuk-breadcrumbs__link">@item.Label</a>
+                    </li>
+                }
+            </ol>
+        </nav>
+    }
+</SectionContent>
+
+@code {
+    [Parameter]
+    public IReadOnlyCollection<GdsBreadcrumb> Items { get; set; } = [];
+}

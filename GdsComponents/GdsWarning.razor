@@ -1,0 +1,14 @@
+﻿<div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">@Icon</span>
+    <strong class="govuk-warning-text__text">
+        <span class="govuk-visually-hidden">Warning</span> @Text
+    </strong>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Text { get; set; }
+
+    [Parameter]
+    public string Icon { get; set; } = "!";
+}

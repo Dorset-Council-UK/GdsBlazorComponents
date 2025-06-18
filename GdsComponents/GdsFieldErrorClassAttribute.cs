@@ -1,7 +1,7 @@
 ﻿namespace FloodOnlineReportingTool.GdsComponents;
 
 [AttributeUsage(AttributeTargets.Property)]
-internal class GdsFieldErrorClassAttribute : Attribute
+public class GdsFieldErrorClassAttribute : Attribute
 {
     private const string FileUploadErrorCssClass = "govuk-file-upload--error";
     private const string InputErrorCssClass = "govuk-input--error";

@@ -1,0 +1,15 @@
+﻿@if (Show)
+{
+    <div class="loaderContainer">
+        <div class="loader" role="status">
+            @if (!ShowMessage)
+            {
+                <span class="govuk-visually-hidden">@Message</span>
+            }
+        </div>
+        @if (ShowMessage)
+        {
+            <span class="loaderMessage">@Message</span>
+        }
+    </div>
+}

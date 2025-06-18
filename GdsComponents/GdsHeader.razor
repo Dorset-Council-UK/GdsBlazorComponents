@@ -1,0 +1,27 @@
+﻿<header class="govuk-header" role="banner" data-module="govuk-header">
+    <div class="govuk-header__container govuk-width-container">
+        <div class="govuk-header__logo">
+            <a href="@ServiceUrl" class="govuk-header__link govuk-header__link--homepage">
+                <img src="@LogoUrl" alt="@ServiceName">
+            </a>
+        </div>
+        <div class="govuk-header__content">
+            <div class="govuk-header__service-name">@ServiceName</div>
+            @ChildContent
+        </div>
+    </div>
+</header>
+
+@code {
+    [Parameter, EditorRequired]
+    public string ServiceName { get; set; }
+
+    [Parameter, EditorRequired]
+    public string ServiceUrl { get; set; }
+
+    [Parameter, EditorRequired]
+    public string LogoUrl { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

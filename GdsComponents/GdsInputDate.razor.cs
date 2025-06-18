@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Forms;
 
 namespace FloodOnlineReportingTool.GdsComponents;
 
-public partial class InputDate : IDisposable
+public partial class GdsInputDate : IDisposable
 {
     [CascadingParameter]
     private EditContext EditContext { get; set; } = default!;
@@ -26,27 +26,37 @@ public partial class InputDate : IDisposable
     [Parameter]
     public RenderFragment? Hint { get; set; }
 
+    private static class InputDateCssClasses
+    {
+        public const string Group = "govuk-form-group";
+        public const string GroupError = "govuk-form-group--error";
+        public const string DateError = "govuk-input--error";
+        public const string Day = "govuk-input govuk-date-input__input govuk-input--width-2";
+        public const string Month = Day;
+        public const string Year = "govuk-input govuk-date-input__input govuk-input--width-4";
+    }
+
     private string? _errorMessage;
     private readonly EventHandler<ValidationStateChangedEventArgs>? _validationStateChangedHandler;
 
-    private string _formGroupCssClass = CssClasses.Group;
+    private string _formGroupCssClass = InputDateCssClasses.Group;
     private string? _describedBy;
     private string? _hintId;
     private string? _errorId;
 
     private string _dayId = "";
-    private string _dayCssClass = CssClasses.Day;
+    private string _dayCssClass = InputDateCssClasses.Day;
     private string? _dayAutocomplete;
 
     private string _monthId = "";
-    private string _monthCssClass = CssClasses.Month;
+    private string _monthCssClass = InputDateCssClasses.Month;
     private string? _monthAutocomplete;
 
     private string _yearId = "";
-    private string _yearCssClass = CssClasses.Year;
+    private string _yearCssClass = InputDateCssClasses.Year;
     private string? _yearAutocomplete;
 
-    public InputDate()
+    public GdsInputDate()
     {
         _validationStateChangedHandler = (sender, args) => OnValidationStateChanged();
     }
@@ -94,11 +104,11 @@ public partial class InputDate : IDisposable
         _errorMessage = PriorityErrorMessage(isDateValid, isDayValid, isMonthValid, isYearValid);
         var hasError = _errorMessage != null;
 
-        _formGroupCssClass = hasError ? $"{CssClasses.Group} {CssClasses.GroupError}" : CssClasses.Group;
+        _formGroupCssClass = hasError ? $"{InputDateCssClasses.Group} {InputDateCssClasses.GroupError}" : InputDateCssClasses.Group;
         _describedBy = DescribedBy(hasError);
-        _dayCssClass = CssClass(isDayValid, isDateValid, CssClasses.Day);
-        _monthCssClass = CssClass(isMonthValid, isDateValid, CssClasses.Month);
-        _yearCssClass = CssClass(isYearValid, isDateValid, CssClasses.Year);
+        _dayCssClass = CssClass(isDayValid, isDateValid, InputDateCssClasses.Day);
+        _monthCssClass = CssClass(isMonthValid, isDateValid, InputDateCssClasses.Month);
+        _yearCssClass = CssClass(isYearValid, isDateValid, InputDateCssClasses.Year);
     }
 
     private string? DescribedBy(bool hasError)
@@ -129,7 +139,7 @@ public partial class InputDate : IDisposable
         // if the date field is not valid, append the error class
         if (!isDateValid)
         {
-            return $"{fieldCssClass} {CssClasses.DateError}";
+            return $"{fieldCssClass} {InputDateCssClasses.DateError}";
         }
 
         // The field and date are valid, return the field css class
