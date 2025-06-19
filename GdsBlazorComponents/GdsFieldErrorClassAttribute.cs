@@ -1,4 +1,4 @@
-﻿namespace FloodOnlineReportingTool.GdsComponents;
+﻿namespace GdsBlazorComponents;
 
 [AttributeUsage(AttributeTargets.Property)]
 public class GdsFieldErrorClassAttribute : Attribute

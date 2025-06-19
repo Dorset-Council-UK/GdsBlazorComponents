@@ -1,6 +1,6 @@
-# Flood Online Reporting Tool - GDS Components
+# Gds Blazor Components
 
-This project contains Blazor components used by the Flood Online Reporting Tool (FORT). And could also be used by other C# Blazor projects that want to use the GDS components.
+This project contains Blazor components styled using the GOV.UK Design System. It can be used in any C# Blazor project that want to use GDS components.
 
 ## Dependencies
 
@@ -20,7 +20,7 @@ Security issues should be reported privately, to the project team via email at [
 
 ## Core developers
 
-The Flood Online Reporting tool is a Dorset Council Open Source project. The core developers are currently Dorset Council staff. If you want to become a core developer, Please see our guide on [contributing](CONTRIBUTING.md).
+The Gds Blazor Components are a Dorset Council Open Source project. The core developers are currently Dorset Council staff. If you want to become a core developer, Please see our guide on [contributing](CONTRIBUTING.md).
 
 ## Licence
 

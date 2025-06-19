@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace FloodOnlineReportingTool.GdsComponents;
+namespace GdsBlazorComponents;
 
 public partial class GdsSpinner
 {

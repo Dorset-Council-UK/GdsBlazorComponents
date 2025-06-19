@@ -1,11 +1,11 @@
 
-# Developing for Flood Online Reporting Tool - GDS Components
+# Developing for Gds Blazor Components
 
-Thank you for your interest in contributing to the Flood Online Reporting Tool - GDS Components! This guide will help you set up your development environment and understand the basic components of the project.
+Thank you for your interest in contributing to the Gds Blazor Components! This guide will help you set up your development environment and understand the basic components of the project.
 
 ## Dependencies
 
-To run Flood Online Reporting Tool - GDS Components with minimal modification, you will need the following:
+To run Gds Blazor Components with minimal modification, you will need the following:
 
 - **.NET 9**: Ensure you have the .NET 9 SDK installed.
 - **GDS Framework**: The project relies on the Government Digital Service (GDS) framework for its front-end.

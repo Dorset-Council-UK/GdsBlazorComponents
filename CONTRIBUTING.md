@@ -1,6 +1,6 @@
-# Contributing to Flood Online Reporting Tool - GDS Components
+# Contributing to Gds Blazor Components
 
-Thank you for your interest in contributing to Flood Online Reporting Tool - GDS Components! Please review the project's [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before proceeding.
+Thank you for your interest in contributing to Gds Blazor Components! Please review the project's [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before proceeding.
 
 If you wish to become a core developer, please contact the project team via email at [fort@dorsetcouncil.gov.uk](mailto:fort@dorsetcouncil.gov.uk)
 
@@ -49,7 +49,7 @@ Please follow these best practices for commit messages:
 - Use separate commits for logically distinct changes.
 
 Examples: 
-`Add initial flood report form`
+`Add date component`
 `Fix null reference error in report handler`
 
 ### Be possible to merge automatically

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
 using System.Reflection;
 
-namespace FloodOnlineReportingTool.GdsComponents;
+namespace GdsBlazorComponents;
 
 public class GdsFieldCssClassProvider : FieldCssClassProvider
 {

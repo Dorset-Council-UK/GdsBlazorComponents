@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace FloodOnlineReportingTool.GdsComponents;
+namespace GdsBlazorComponents;
 
 /// <summary>
 /// A customised error summary component that displays GDS style validation errors.

@@ -1,6 +1,6 @@
 using Microsoft.JSInterop;
 
-namespace FloodOnlineReportingTool.GdsComponents
+namespace GdsBlazorComponents
 {
     // This class provides an example of how JavaScript functionality can be wrapped
     // in a .NET class for easy consumption. The associated JavaScript module is
@@ -16,7 +16,7 @@ namespace FloodOnlineReportingTool.GdsComponents
         public ExampleJsInterop(IJSRuntime jsRuntime)
         {
             moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-                "import", "./_content/FloodOnlineReportingTool.GdsComponents/exampleJsInterop.js").AsTask());
+                "import", "./_content/GdsBlazorComponents/exampleJsInterop.js").AsTask());
         }
 
         public async ValueTask<string> Prompt(string message)

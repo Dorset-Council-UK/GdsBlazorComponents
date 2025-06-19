@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace FloodOnlineReportingTool.GdsComponents;
+namespace GdsBlazorComponents;
 
 public partial class GdsInputDate : IDisposable
 {

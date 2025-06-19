@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace FloodOnlineReportingTool.GdsComponents;
+namespace GdsBlazorComponents;
 
 /// <summary>
 ///     <para>Represents a GDS Date in Blazor.</para>

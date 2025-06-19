@@ -1,4 +1,4 @@
-﻿namespace FloodOnlineReportingTool.GdsComponents;
+﻿namespace GdsBlazorComponents;
 
 public class GdsOptionItem<T>
 {
