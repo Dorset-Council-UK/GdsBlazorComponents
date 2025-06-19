@@ -4,8 +4,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
-        gds: './Scripts/gds.ts',
-        exampleJsInterop: './Scripts/exampleJsInterop.ts'
+        gds: './Scripts/gds.ts'
     },
     resolve: {
         extensions: ['.ts', '.js']

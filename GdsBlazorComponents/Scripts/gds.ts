@@ -3,13 +3,6 @@
 import { createAll, Accordion, Button, CharacterCount, ErrorSummary, Header, PasswordInput, Radios, SkipLink } from 'govuk-frontend'
 import { BlazorCheckboxes } from './blazorCheckboxes'
 
-declare global {
-    interface Window {
-        initGDS: () => void
-    }
-}
-window.initGDS = initGDS;
-
 function onCreateError(error: any) {
     if (error.name !== 'InitError') {
         console.error('Error creating GDS component: %s', error.message)
@@ -19,7 +12,7 @@ function onCreateError(error: any) {
 /**
  * See GitHub - govuk-frontend https://github.com/alphagov/govuk-frontend/blob/main/packages/govuk-frontend/src/govuk/init.mjs for complete list of component modules.
  */
-function initGDS() {
+export function initGDS() {
     document.body.classList.add('js-enabled')
     if ('noModule' in HTMLScriptElement.prototype) document.body.classList.add('govuk-frontend-supported')
 
