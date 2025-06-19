@@ -1,14 +1,11 @@
 ﻿$govuk-new-typography-scale: true;
+$govuk-assets-path: "/_content/DorsetCouncil.GdsBlazorComponents/";
 
 // Use our image for the copyright notice
 $govuk-footer-crest-image-width: 188px;
 $govuk-footer-crest-image-height: 80px;
 $govuk-footer-crest-image-width-2x: $govuk-footer-crest-image-width * 2;
 $govuk-footer-crest-image-height-2x: $govuk-footer-crest-image-height * 2;
-$copyright-image: "/images/copyright.webp";
-$copyright-retina-image: "/images/copyright-x2.webp";
-
-$govuk-assets-path: "/_content/DorsetCouncil.GdsBlazorComponents/";
 
 @import "govuk-frontend/dist/govuk";
 
@@ -22,24 +19,13 @@ $govuk-assets-path: "/_content/DorsetCouncil.GdsBlazorComponents/";
 // Use our image for the copyright notice
 .govuk-footer__copyright-logo::before {
     padding-top: ($govuk-footer-crest-image-height + govuk-spacing(2));
+    background: unset;
     background-image: govuk-image-url("copyright.webp");
+    background-repeat: no-repeat;
+    background-position: 50% 0%;
     background-size: $govuk-footer-crest-image-width $govuk-footer-crest-image-height;
-
-    @supports ((-webkit-mask-position: initial) or (mask-position: initial)) {
-        -webkit-mask-image: govuk-image-url("copyright.webp");
-                mask-image: govuk-image-url("copyright.webp");
-        -webkit-mask-size: $govuk-footer-crest-image-width $govuk-footer-crest-image-height;
-                mask-size: $govuk-footer-crest-image-width $govuk-footer-crest-image-height;
-    }
-}
-.XXgovuk-footer__copyright-logo {
-    min-width: $govuk-footer-crest-image-width;
-    background-size: $govuk-footer-crest-image-width $govuk-footer-crest-image-height;
-    background-image: govuk-image-url($copyright-image);
-
-    @include govuk-device-pixel-ratio {
-        background-image: govuk-image-url($copyright-retina-image);
-    }
+    -webkit-mask: unset;
+    mask: unset;
 }
 
 // Make GDS errors without links look like errors
