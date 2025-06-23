@@ -9,7 +9,7 @@
 		<Company>Dorset Council</Company>
 		<Description>Blazor components styled to match GOV.UK Design System.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageId>DorsetCouncil.GdsBlazorComponents</PackageId>
+		<PackageId>Dorset-Council-UK.GdsBlazorComponents</PackageId>
 		<RepositoryUrl>https://github.com/Dorset-Council-UK/GdsBlazorComponents</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>

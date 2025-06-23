@@ -9,7 +9,7 @@ public class GdsJsInterop : IGdsJsInterop, IAsyncDisposable
     public GdsJsInterop(IJSRuntime jsRuntime)
     {
         moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-            "import", "./_content/DorsetCouncil.GdsBlazorComponents/gds.js").AsTask());
+            "import", "./_content/Dorset-Council-UK.GdsBlazorComponents/gds.js").AsTask());
     }
 
     public async ValueTask InitGds()
