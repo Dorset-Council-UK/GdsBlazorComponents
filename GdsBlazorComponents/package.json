@@ -1,6 +1,6 @@
 {
   "name": "gds-blazor-components",
-  "version": "1.0.1-aplha",
+  "version": "1.0.1",
   "description": "Blazor components styled to match GOV.UK Design System.",
   "repository": "https://github.com/Dorset-Council-UK/GdsBlazorComponents",
   "author": "Dorset Council",
