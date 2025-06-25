@@ -12,7 +12,7 @@ Please report any bugs via the issue tracker in GitHub.
 
 ## Contributing
 
-Please see our guide on [contributing](CONTRIBUTING.md) if you're interested in getting involved.
+Please see our guide on [contributing](https://github.com/Dorset-Council-UK/GdsBlazorComponents/CONTRIBUTING.md) if you're interested in getting involved.
 
 ## Reporting security issues
 
@@ -20,7 +20,7 @@ Security issues should be reported privately, to the project team via email at [
 
 ## Core developers
 
-The Gds Blazor Components are a Dorset Council Open Source project. The core developers are currently Dorset Council staff. If you want to become a core developer, Please see our guide on [contributing](CONTRIBUTING.md).
+The Gds Blazor Components are a Dorset Council Open Source project. The core developers are currently Dorset Council staff. If you want to become a core developer, Please see our guide on [contributing](https://github.com/Dorset-Council-UK/GdsBlazorComponents/CONTRIBUTING.md).
 
 ## Licence
 

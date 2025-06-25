@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Components.Forms
-@if (!EditContext.IsValid(FieldIdentifier))
+﻿@if (!EditContext.IsValid(FieldIdentifier))
 {
     <p id="@Id" class="govuk-error-message">
         <span class="govuk-visually-hidden">Error:</span> <span>@EditContext.GetValidationMessages(FieldIdentifier).First()</span>

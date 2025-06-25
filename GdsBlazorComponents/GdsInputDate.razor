@@ -25,19 +25,19 @@
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <GdsLabel For="@_dayId" AdditionalCssClasses="govuk-date-input__label" Text="Day" />
-                        <Microsoft.AspNetCore.Components.Forms.InputText id="@_dayId" @bind-Value="Date.DayText" autocomplete="@_dayAutocomplete" inputmode="numeric" class="@_dayCssClass" />
+                        <InputText id="@_dayId" @bind-Value="Date.DayText" autocomplete="@_dayAutocomplete" inputmode="numeric" class="@_dayCssClass" />
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <GdsLabel For="@_monthId" AdditionalCssClasses="govuk-date-input__label" Text="Month" />
-                        <Microsoft.AspNetCore.Components.Forms.InputText id="@_monthId" @bind-Value="Date.MonthText" autocomplete="@_monthAutocomplete" inputmode="numeric" class="@_monthCssClass" />
+                        <InputText id="@_monthId" @bind-Value="Date.MonthText" autocomplete="@_monthAutocomplete" inputmode="numeric" class="@_monthCssClass" />
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <GdsLabel For="@_yearId" AdditionalCssClasses="govuk-date-input__label" Text="Year" />
-                        <Microsoft.AspNetCore.Components.Forms.InputText id="@_yearId" @bind-Value="Date.YearText" autocomplete="@_yearAutocomplete" inputmode="numeric" class="@_yearCssClass" />
+                        <InputText id="@_yearId" @bind-Value="Date.YearText" autocomplete="@_yearAutocomplete" inputmode="numeric" class="@_yearCssClass" />
                     </div>
                 </div>
             </div>

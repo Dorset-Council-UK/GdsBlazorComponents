@@ -1,0 +1,45 @@
+name: Build and Pack
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+
+      - name: Install npm dependencies
+        run: npm ci
+        working-directory: ./GdsBlazorComponents
+
+      - name: Build npm project
+        run: npm run build
+        working-directory: ./GdsBlazorComponents
+        
+      - name: Restore dependencies
+        run: dotnet restore
+        working-directory: ./
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+        working-directory: ./
+
+      - name: Package NuGet
+        run: dotnet pack --configuration Release --no-build
+
+      - name: Publish NuGet
+        run: dotnet nuget push **/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}} --skip-duplicate --no-symbols
