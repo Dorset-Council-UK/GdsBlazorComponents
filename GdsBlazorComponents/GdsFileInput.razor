@@ -1,0 +1,75 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+
+<div @key="_inputFileId" class="govuk-form-group">
+    <label class="govuk-label" for="@_inputFileId">
+        @Label
+    </label>
+    <div class="govuk-drop-zone" data-module="govuk-file-upload">
+        <InputFile id="@_inputFileId" @key="@_inputFileId" class="govuk-file-upload" disabled="@IsFileUploading" OnChange="@OnInputFileChange" multiple />
+
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int MaxFileSizeMB { get; set; } = 20;
+    [Parameter]
+    public int MaxAllowedFiles { get; set; } = 10;
+    [Parameter, EditorRequired]
+    public EventCallback<IReadOnlyList<IBrowserFile?>> OnValidFilesSubmitted { get; set; }
+    [Parameter]
+    public string? Label { get; set; }
+    private string _inputFileId = Guid.NewGuid().ToString();
+    private bool IsFileUploading;
+    private long MaxFileSize = 20 * (1024 * 1024);
+    IReadOnlyList<IBrowserFile>? SelectedFiles;
+
+
+    protected override void OnInitialized()
+    {
+        MaxFileSize = MaxFileSizeMB * (1024 * 1024);
+    }
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        SelectedFiles = e.GetMultipleFiles();
+        int numFiles = SelectedFiles.Count;
+        if (numFiles == 0)
+        {
+            return;
+        }
+        IsFileUploading = true;
+        if (SelectedFiles.Count > MaxAllowedFiles)
+        {
+            //TODO - warn user that they have selected too many files
+            IsFileUploading = false;
+            return;
+        }
+        foreach (var file in SelectedFiles)
+        {
+            try
+            {
+                if (file.Size > MaxFileSize)
+                {
+                    //TODO - warn user that the file is too large
+                    return;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //TODO - warn user that the file could not be processed
+                return;
+            }
+        }
+
+        IsFileUploading = false;
+        
+        if (OnValidFilesSubmitted.HasDelegate)
+        {
+            await OnValidFilesSubmitted.InvokeAsync(SelectedFiles);
+            //regenerate upload box
+            _inputFileId = Guid.NewGuid().ToString();
+        }
+    }
+}
