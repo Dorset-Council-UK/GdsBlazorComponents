@@ -4,7 +4,7 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Version>1.0.2</Version>
+		<Version>1.0.2-alpha</Version>
 		<Authors>Dorset Council</Authors>
 		<Company>Dorset Council</Company>
 		<Description>Blazor components styled to match GOV.UK Design System.</Description>
