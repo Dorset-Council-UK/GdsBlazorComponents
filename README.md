@@ -1,3 +1,7 @@
+[![NuGet Version](https://img.shields.io/nuget/v/Dorset-Council-UK.GdsBlazorComponents?style=flat&logo=nuget)](https://www.nuget.org/packages/Dorset-Council-UK.GdsBlazorComponents/)
+
+
+
 # Gds Blazor Components
 
 This project contains Blazor components styled using the GOV.UK Design System. It can be used in any C# Blazor project that want to use GDS components.
