@@ -1,7 +1,7 @@
-﻿using FluentValidation;
+﻿using GdsBlazorComponents;
 using System.Globalization;
 
-namespace GdsBlazorComponents.Validators;
+namespace FluentValidation;
 
 public static class GdsDateDayValidators
 {
@@ -10,10 +10,23 @@ public static class GdsDateDayValidators
     /// </summary>
     public static IRuleBuilderOptions<T, GdsDate> DayNotEmpty<T>(this IRuleBuilder<T, GdsDate> ruleBuilder)
     {
+        string? propertyDisplayName = null;
+
         return ruleBuilder
-            .Must(date => !string.IsNullOrWhiteSpace(date.DayText))
-            .WithMessage("{PropertyName} must include a day")
-            .OverridePropertyName("DayText");
+            .Custom((o, context) =>
+            {
+                if (GdsDateValidators.ParentDisplayNameChanged(context))
+                {
+                    propertyDisplayName = context.DisplayName;
+                }
+            })
+            .ChildRules(date =>
+            {
+                date.RuleFor(o => o.DayText)
+                    .NotEmpty()
+                    .WithMessage("{PropertyName} must include a day")
+                    .WithName(o => propertyDisplayName ?? nameof(o.DayText));
+            });
     }
 
     /// <summary>
@@ -21,10 +34,24 @@ public static class GdsDateDayValidators
     /// </summary>
     public static IRuleBuilderOptions<T, GdsDate> DayMustBeNumber<T>(this IRuleBuilder<T, GdsDate> ruleBuilder)
     {
+        string? propertyDisplayName = null;
+
         return ruleBuilder
-            .Must(date => date.Day.HasValue)
-            .WithMessage("{PropertyName} day must be a number")
-            .OverridePropertyName("DayText");
+            .Custom((o, context) =>
+            {
+                if (GdsDateValidators.ParentDisplayNameChanged(context))
+                {
+                    propertyDisplayName = context.DisplayName;
+                }
+            })
+            .ChildRules(date =>
+            {
+                date.RuleFor(o => o.Day)
+                    .NotEmpty()
+                    .WithMessage("{PropertyName} day must be a number")
+                    .OverridePropertyName(o => o.DayText)
+                    .WithName(o => propertyDisplayName ?? nameof(o.DayText));
+            });
     }
 
     /// <summary>
@@ -32,43 +59,68 @@ public static class GdsDateDayValidators
     /// </summary>
     public static IRuleBuilderOptions<T, GdsDate> DayInclusiveBetween<T>(this IRuleBuilder<T, GdsDate> ruleBuilder, int from = 1, int to = 31)
     {
+        string? propertyDisplayName = null;
+
         return ruleBuilder
-            .Must((o, date, context) =>
+            .Custom((o, context) =>
             {
-                context.MessageFormatter
-                    .AppendArgument("From", from)
-                    .AppendArgument("To", to);
-
-                return date.Day.HasValue && (date.Day.Value >= from && date.Day.Value <= to);
+                if (GdsDateValidators.ParentDisplayNameChanged(context))
+                {
+                    propertyDisplayName = context.DisplayName;
+                }
             })
-            .WithMessage("{PropertyName} day must be between {From} and {To}")
-            .OverridePropertyName("DayText");
+            .ChildRules(date =>
+            {
+                date.RuleFor(o => o.Day)
+                    .InclusiveBetween(from, to)
+                    .WithMessage("{PropertyName} day must be between {From} and {To}")
+                    .OverridePropertyName(o => o.DayText)
+                    .WithName(o => propertyDisplayName ?? nameof(o.DayText));
+            });
     }
-
 
     /// <summary>
     /// Day validator - Checks that the month has enough days. The day, month, and year parts are needed to validate this.
     /// </summary>
-    public static IRuleBuilderOptions<T, GdsDate> DaysInMonth<T>(this IRuleBuilder<T, GdsDate> ruleBuilder)
+    public static IRuleBuilderOptions<T, GdsDate> CorrectDaysInMonth<T>(this IRuleBuilder<T, GdsDate> ruleBuilder)
     {
-        //.DayMustBeNumber()
-        //.MonthMustBeNumber()
-        //.YearMustBeNumber()
+        string? propertyDisplayName = null;
+
         return ruleBuilder
-            .Must((o, date, context) =>
+            .Custom((o, context) =>
             {
-                var day = date.Day.Value;
-                var month = date.Month.Value;
-                var year = date.Year.Value;
-
-                context.MessageFormatter
-                    .AppendArgument("MonthName", CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month))
-                    .AppendArgument("Days", day);
-
-                return day < DateTime.DaysInMonth(year, month);
-
+                if (GdsDateValidators.ParentDisplayNameChanged(context))
+                {
+                    propertyDisplayName = context.DisplayName;
+                }
             })
-            .WithMessage("{PropertyName} {MonthName} does not have {Days} days")
-            .OverridePropertyName("DayText");
+            .ChildRules(date =>
+            {
+                date.RuleFor(o => o)
+                    .Must((o, date, context) =>
+                    {
+                        if ((date.Day is null or < 1 or > 31) || (date.Month is null or < 1 or > 12) || date.Year is null)
+                        {
+                            context.MessageFormatter
+                                .AppendArgument("MonthName", "unknown month")
+                                .AppendArgument("Days", "unknown");
+                            return false;
+                        }
+
+                        var day = date.Day.Value;
+                        var month = date.Month.Value;
+                        var year = date.Year.Value;
+
+                        context.MessageFormatter
+                            .AppendArgument("MonthName", CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month))
+                            .AppendArgument("Days", day);
+
+                        return day <= DateTime.DaysInMonth(year, month);
+
+                    })
+                    .WithMessage("{PropertyName} {MonthName} does not have {Days} days")
+                    .OverridePropertyName(o => o.DayText)
+                    .WithName(o => propertyDisplayName ?? nameof(o.DayText));
+            });
     }
 }

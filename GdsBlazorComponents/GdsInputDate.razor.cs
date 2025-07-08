@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using System.Linq.Expressions;
 
 namespace GdsBlazorComponents;
 
@@ -9,7 +10,7 @@ public partial class GdsInputDate : IDisposable
     private EditContext EditContext { get; set; } = default!;
 
     [Parameter, EditorRequired]
-    public GdsDate Date { get; set; } = default!;
+    public Expression<Func<object>> For { get; set; } = default!;
 
     [Parameter]
     public bool IsDateOfBirth { get; set; } = false;
@@ -56,6 +57,12 @@ public partial class GdsInputDate : IDisposable
     private string _yearCssClass = InputDateCssClasses.Year;
     private string? _yearAutocomplete;
 
+    private GdsDate? _gdsDate;
+    private FieldIdentifier _fieldIdentifier;
+    private FieldIdentifier _dayFieldIdentifier;
+    private FieldIdentifier _monthFieldIdentifier;
+    private FieldIdentifier _yearFieldIdentifier;
+
     public GdsInputDate()
     {
         _validationStateChangedHandler = (sender, args) => OnValidationStateChanged();
@@ -68,6 +75,16 @@ public partial class GdsInputDate : IDisposable
         _dayId = $"{Id}-day";
         _monthId = $"{Id}-month";
         _yearId = $"{Id}-year";
+
+        _fieldIdentifier = FieldIdentifier.Create(For);
+        _gdsDate = For.Compile().Invoke() as GdsDate;
+
+        if (_gdsDate != null)
+        {
+            _dayFieldIdentifier = new FieldIdentifier(_gdsDate, nameof(_gdsDate.DayText));
+            _monthFieldIdentifier = new FieldIdentifier(_gdsDate, nameof(_gdsDate.MonthText));
+            _yearFieldIdentifier = new FieldIdentifier(_gdsDate, nameof(_gdsDate.YearText));
+        }
 
         // Subscribe to validation state changes
         EditContext.OnValidationStateChanged += _validationStateChangedHandler;
@@ -96,19 +113,19 @@ public partial class GdsInputDate : IDisposable
 
     private void OnValidationStateChanged()
     {
-        var isDateValid = EditContext.IsValid(() => Date.DateUtc);
-        var isDayValid = EditContext.IsValid(() => Date.DayText);
-        var isMonthValid = EditContext.IsValid(() => Date.MonthText);
-        var isYearValid = EditContext.IsValid(() => Date.YearText);
+        var isFieldValid = EditContext.IsValid(_fieldIdentifier);
+        var isDayValid = EditContext.IsValid(_dayFieldIdentifier);
+        var isMonthValid = EditContext.IsValid(_monthFieldIdentifier);
+        var isYearValid = EditContext.IsValid(_yearFieldIdentifier);
 
-        _errorMessage = PriorityErrorMessage(isDateValid, isDayValid, isMonthValid, isYearValid);
+        _errorMessage = PriorityErrorMessage(isFieldValid, isDayValid, isMonthValid, isYearValid);
         var hasError = _errorMessage != null;
 
         _formGroupCssClass = hasError ? $"{InputDateCssClasses.Group} {InputDateCssClasses.GroupError}" : InputDateCssClasses.Group;
         _describedBy = DescribedBy(hasError);
-        _dayCssClass = CssClass(isDayValid, isDateValid, InputDateCssClasses.Day);
-        _monthCssClass = CssClass(isMonthValid, isDateValid, InputDateCssClasses.Month);
-        _yearCssClass = CssClass(isYearValid, isDateValid, InputDateCssClasses.Year);
+        _dayCssClass = CssClass(isDayValid, isFieldValid, InputDateCssClasses.Day);
+        _monthCssClass = CssClass(isMonthValid, isFieldValid, InputDateCssClasses.Month);
+        _yearCssClass = CssClass(isYearValid, isFieldValid, InputDateCssClasses.Year);
     }
 
     private string? DescribedBy(bool hasError)
@@ -128,16 +145,16 @@ public partial class GdsInputDate : IDisposable
         return hasHint ? _hintId : null;
     }
 
-    private static string CssClass(bool isFieldValid, bool isDateValid, string fieldCssClass)
+    private static string CssClass(bool isPropertyValid, bool isFieldValid, string fieldCssClass)
     {
         // if the field itself is not valid, let the FieldCssClassProvider handle additional error classes
-        if (!isFieldValid)
+        if (!isPropertyValid)
         {
             return fieldCssClass;
         }
 
         // if the date field is not valid, append the error class
-        if (!isDateValid)
+        if (!isFieldValid)
         {
             return $"{fieldCssClass} {InputDateCssClasses.DateError}";
         }
@@ -146,26 +163,26 @@ public partial class GdsInputDate : IDisposable
         return fieldCssClass;
     }
 
-    private string? PriorityErrorMessage(bool isDateValid, bool isDayValid, bool isMonthValid, bool isYearValid)
+    private string? PriorityErrorMessage(bool isFieldValid, bool isDayValid, bool isMonthValid, bool isYearValid)
     {
-        if (!isDateValid)
+        if (!isFieldValid)
         {
-            return EditContext.GetValidationMessages(() => Date.DateUtc).FirstOrDefault();
+            return EditContext.GetValidationMessages(_fieldIdentifier).FirstOrDefault();
         }
 
         if (!isDayValid)
         {
-            return EditContext.GetValidationMessages(() => Date.DayText).FirstOrDefault();
+            return EditContext.GetValidationMessages(_dayFieldIdentifier).FirstOrDefault();
         }
 
         if (!isMonthValid)
         {
-            return EditContext.GetValidationMessages(() => Date.MonthText).FirstOrDefault();
+            return EditContext.GetValidationMessages(_monthFieldIdentifier).FirstOrDefault();
         }
 
         if (!isYearValid)
         {
-            return EditContext.GetValidationMessages(() => Date.YearText).FirstOrDefault();
+            return EditContext.GetValidationMessages(_yearFieldIdentifier).FirstOrDefault();
         }
 
         // All components are valid
