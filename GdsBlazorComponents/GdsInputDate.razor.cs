@@ -15,8 +15,8 @@ public partial class GdsInputDate : IDisposable
     [Parameter]
     public bool IsDateOfBirth { get; set; } = false;
 
-    [Parameter, EditorRequired]
-    public string Id { get; set; } = default!;
+    [Parameter]
+    public string? Id { get; set; }
 
     [Parameter]
     public bool Show { get; set; } = true;
@@ -26,16 +26,6 @@ public partial class GdsInputDate : IDisposable
 
     [Parameter]
     public RenderFragment? Hint { get; set; }
-
-    private static class InputDateCssClasses
-    {
-        public const string Group = "govuk-form-group";
-        public const string GroupError = "govuk-form-group--error";
-        public const string DateError = "govuk-input--error";
-        public const string Day = "govuk-input govuk-date-input__input govuk-input--width-2";
-        public const string Month = Day;
-        public const string Year = "govuk-input govuk-date-input__input govuk-input--width-4";
-    }
 
     private string? _errorMessage;
     private readonly EventHandler<ValidationStateChangedEventArgs>? _validationStateChangedHandler;
@@ -70,12 +60,6 @@ public partial class GdsInputDate : IDisposable
 
     protected override void OnInitialized()
     {
-        _hintId = $"{Id}-hint";
-        _errorId = $"{Id}-error";
-        _dayId = $"{Id}-day";
-        _monthId = $"{Id}-month";
-        _yearId = $"{Id}-year";
-
         _fieldIdentifier = FieldIdentifier.Create(For);
         _gdsDate = For.Compile().Invoke() as GdsDate;
 
@@ -85,6 +69,14 @@ public partial class GdsInputDate : IDisposable
             _monthFieldIdentifier = new FieldIdentifier(_gdsDate, nameof(_gdsDate.MonthText));
             _yearFieldIdentifier = new FieldIdentifier(_gdsDate, nameof(_gdsDate.YearText));
         }
+
+        Id ??= _fieldIdentifier.FieldName;
+
+        _hintId = $"{Id}-hint";
+        _errorId = $"{Id}-error";
+        _dayId = $"{Id}-day";
+        _monthId = $"{Id}-month";
+        _yearId = $"{Id}-year";
 
         // Subscribe to validation state changes
         EditContext.OnValidationStateChanged += _validationStateChangedHandler;
