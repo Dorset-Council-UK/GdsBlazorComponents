@@ -27,6 +27,6 @@ public static class GdsDateValidators
     internal static bool ParentDisplayNameChanged<T>(ValidationContext<T> context)
     {
         var displayNameNoSpaces = context.DisplayName.Replace(" ", string.Empty);
-        return !context.PropertyPath.Equals(displayNameNoSpaces, StringComparison.OrdinalIgnoreCase);
+        return !context.PropertyPath.Equals(displayNameNoSpaces, StringComparison.Ordinal);
     }
 }
