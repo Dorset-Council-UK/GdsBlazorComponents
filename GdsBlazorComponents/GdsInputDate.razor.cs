@@ -5,13 +5,16 @@ using System.Linq.Expressions;
 
 namespace GdsBlazorComponents;
 
+/// <summary>
+/// Represents a Blazor component for inputting dates, allowing users to enter day, month, and year.
+/// </summary>
 public partial class GdsInputDate : IDisposable
 {
     [CascadingParameter]
     private EditContext EditContext { get; set; } = default!;
 
     [Parameter, EditorRequired]
-    public Expression<Func<object>> For { get; set; } = default!;
+    public Expression<Func<GdsDate>> For { get; set; } = default!;
 
     [Parameter]
     public bool IsDateOfBirth { get; set; } = false;
@@ -65,7 +68,7 @@ public partial class GdsInputDate : IDisposable
     protected override void OnInitialized()
     {
         _fieldIdentifier = FieldIdentifier.Create(For);
-        _gdsDate = For.Compile().Invoke() as GdsDate;
+        _gdsDate = For.Compile().Invoke();
 
         if (_gdsDate != null)
         {

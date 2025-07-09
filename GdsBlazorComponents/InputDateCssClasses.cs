@@ -1,6 +1,6 @@
 ﻿namespace GdsBlazorComponents;
 
-internal class InputDateCssClasses
+internal static class InputDateCssClasses
 {
     public const string Group = "govuk-form-group";
     public const string GroupError = "govuk-form-group--error";
