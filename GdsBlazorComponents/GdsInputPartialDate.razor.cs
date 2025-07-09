@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
 namespace GdsBlazorComponents;
@@ -36,6 +37,8 @@ public partial class GdsInputPartialDate : IDisposable
     [Parameter]
     public RenderFragment? Hint { get; set; }
 
+    private readonly ILogger<GdsInputPartialDate> _logger;
+
     private string? _errorMessage;
     private readonly EventHandler<ValidationStateChangedEventArgs>? _validationStateChangedHandler;
 
@@ -62,8 +65,9 @@ public partial class GdsInputPartialDate : IDisposable
     private FieldIdentifier _monthFieldIdentifier;
     private FieldIdentifier _yearFieldIdentifier;
 
-    public GdsInputPartialDate()
+    public GdsInputPartialDate(ILogger<GdsInputPartialDate> logger)
     {
+        _logger = logger;
         _validationStateChangedHandler = (sender, args) => OnValidationStateChanged();
     }
 
@@ -105,8 +109,9 @@ public partial class GdsInputPartialDate : IDisposable
             // Unsubscribe from validation state changes
             EditContext.OnValidationStateChanged -= _validationStateChangedHandler;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogError(ex, "Failed to unsubscribe from validation state changes in GdsInputPartialDate component.");
         }
 
         GC.SuppressFinalize(this);
