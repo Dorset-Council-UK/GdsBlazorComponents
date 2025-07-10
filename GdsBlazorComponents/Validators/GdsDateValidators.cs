@@ -24,9 +24,10 @@ public static class GdsDateValidators
     /// <summary>
     /// Work out if WithName was used to change the display name of the parent property.
     /// </summary>
+    /// <remarks>Comparing the DisplayName to the PropertyPath with case sensitivity and ignoring spaces.</remarks>
     internal static bool ParentDisplayNameChanged<T>(ValidationContext<T> context)
     {
         var displayNameNoSpaces = context.DisplayName.Replace(" ", string.Empty);
-        return !context.PropertyPath.Equals(displayNameNoSpaces, StringComparison.OrdinalIgnoreCase);
+        return !context.PropertyPath.Equals(displayNameNoSpaces, StringComparison.Ordinal);
     }
 }
