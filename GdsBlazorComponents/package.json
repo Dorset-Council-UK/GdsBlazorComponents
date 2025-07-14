@@ -1,6 +1,6 @@
 {
   "name": "gds-blazor-components",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Blazor components styled to match GOV.UK Design System.",
   "repository": "https://github.com/Dorset-Council-UK/GdsBlazorComponents",
   "author": "Dorset Council",
@@ -13,8 +13,8 @@
     "watch": "webpack --config webpack.dev.js --watch"
   },
   "dependencies": {
-    "@types/govuk-frontend": "^5.9.0",
-    "govuk-frontend": "^5.9.0"
+    "@types/govuk-frontend": "5.9.0",
+    "govuk-frontend": "^5.11.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.16",
