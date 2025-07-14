@@ -1,0 +1,55 @@
+﻿@if (Show && (ShowDay || ShowMonth || ShowYear))
+{
+    <div class="@_formGroupCssClass">
+        <fieldset class="govuk-fieldset" role="group" aria-describedby="@_describedBy">
+            @if (Heading != null)
+            {
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                    @Heading
+                </legend>
+            }
+
+            @if (Hint != null)
+            {
+                <GdsHint Id="@_hintId">@Hint</GdsHint>
+            }
+
+            @if (_errorMessage != null)
+            {
+                <p id="@_errorId" class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span> <span>@_errorMessage</span>
+                </p>
+            }
+
+            <div class="govuk-date-input" id="@Id">
+                @if (ShowDay)
+                {
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <GdsLabel For="@_dayId" AdditionalCssClasses="govuk-date-input__label" Text="Day" />
+                            <InputText id="@_dayId" @bind-Value="_gdsDate!.DayText" autocomplete="@_dayAutocomplete" inputmode="numeric" class="@_dayCssClass" />
+                        </div>
+                    </div>
+                }
+                @if (ShowMonth)
+                {
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <GdsLabel For="@_monthId" AdditionalCssClasses="govuk-date-input__label" Text="Month" />
+                            <InputText id="@_monthId" @bind-Value="_gdsDate!.MonthText" autocomplete="@_monthAutocomplete" inputmode="numeric" class="@_monthCssClass" />
+                        </div>
+                    </div>
+                }
+                @if (ShowYear)
+                {
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <GdsLabel For="@_yearId" AdditionalCssClasses="govuk-date-input__label" Text="Year" />
+                            <InputText id="@_yearId" @bind-Value="_gdsDate!.YearText" autocomplete="@_yearAutocomplete" inputmode="numeric" class="@_yearCssClass" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </fieldset>
+    </div>
+}

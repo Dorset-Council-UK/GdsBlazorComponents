@@ -6,9 +6,9 @@ using System.Linq.Expressions;
 namespace GdsBlazorComponents;
 
 /// <summary>
-/// Represents a Blazor component for inputting dates, allowing users to enter day, month, and year.
+/// Represents a Blazor component for inputting partial dates, allowing users to enter day, month, and year separately.
 /// </summary>
-public partial class GdsInputDate : IDisposable
+public partial class GdsInputPartialDate : IDisposable
 {
     [CascadingParameter]
     private EditContext EditContext { get; set; } = default!;
@@ -26,12 +26,21 @@ public partial class GdsInputDate : IDisposable
     public bool Show { get; set; } = true;
 
     [Parameter]
+    public bool ShowDay { get; set; }
+
+    [Parameter]
+    public bool ShowMonth { get; set; }
+
+    [Parameter]
+    public bool ShowYear { get; set; }
+
+    [Parameter]
     public RenderFragment? Heading { get; set; }
 
     [Parameter]
     public RenderFragment? Hint { get; set; }
 
-    private readonly ILogger<GdsInputDate> _logger;
+    private readonly ILogger<GdsInputPartialDate> _logger;
 
     private string? _errorMessage;
     private readonly EventHandler<ValidationStateChangedEventArgs>? _validationStateChangedHandler;
@@ -59,7 +68,7 @@ public partial class GdsInputDate : IDisposable
     private FieldIdentifier _monthFieldIdentifier;
     private FieldIdentifier _yearFieldIdentifier;
 
-    public GdsInputDate(ILogger<GdsInputDate> logger)
+    public GdsInputPartialDate(ILogger<GdsInputPartialDate> logger)
     {
         _logger = logger;
         _validationStateChangedHandler = (sender, args) => OnValidationStateChanged();
@@ -72,9 +81,9 @@ public partial class GdsInputDate : IDisposable
 
         if (_gdsDate != null)
         {
-            _dayFieldIdentifier = new FieldIdentifier(_gdsDate, nameof(_gdsDate.DayText));
-            _monthFieldIdentifier = new FieldIdentifier(_gdsDate, nameof(_gdsDate.MonthText));
-            _yearFieldIdentifier = new FieldIdentifier(_gdsDate, nameof(_gdsDate.YearText));
+            if (ShowDay) _dayFieldIdentifier = new FieldIdentifier(_gdsDate, nameof(_gdsDate.DayText));
+            if (ShowMonth) _monthFieldIdentifier = new FieldIdentifier(_gdsDate, nameof(_gdsDate.MonthText));
+            if (ShowYear) _yearFieldIdentifier = new FieldIdentifier(_gdsDate, nameof(_gdsDate.YearText));
         }
 
         Id ??= _fieldIdentifier.FieldName;
@@ -105,7 +114,7 @@ public partial class GdsInputDate : IDisposable
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to unsubscribe from validation state changes in GdsInputDate component.");
+            _logger.LogError(ex, "Failed to unsubscribe from validation state changes in GdsInputPartialDate component.");
         }
 
         GC.SuppressFinalize(this);
@@ -114,9 +123,9 @@ public partial class GdsInputDate : IDisposable
     private void OnValidationStateChanged()
     {
         var isFieldValid = EditContext.IsValid(_fieldIdentifier);
-        var isDayValid = EditContext.IsValid(_dayFieldIdentifier);
-        var isMonthValid = EditContext.IsValid(_monthFieldIdentifier);
-        var isYearValid = EditContext.IsValid(_yearFieldIdentifier);
+        var isDayValid = ShowDay && EditContext.IsValid(_dayFieldIdentifier);
+        var isMonthValid = ShowMonth && EditContext.IsValid(_monthFieldIdentifier);
+        var isYearValid = ShowYear && EditContext.IsValid(_yearFieldIdentifier);
 
         _errorMessage = PriorityErrorMessage(isFieldValid, isDayValid, isMonthValid, isYearValid);
         var hasError = _errorMessage != null;
@@ -170,17 +179,17 @@ public partial class GdsInputDate : IDisposable
             return EditContext.GetValidationMessages(_fieldIdentifier).FirstOrDefault();
         }
 
-        if (!isDayValid)
+        if (ShowDay && !isDayValid)
         {
             return EditContext.GetValidationMessages(_dayFieldIdentifier).FirstOrDefault();
         }
 
-        if (!isMonthValid)
+        if (ShowMonth && !isMonthValid)
         {
             return EditContext.GetValidationMessages(_monthFieldIdentifier).FirstOrDefault();
         }
 
-        if (!isYearValid)
+        if (ShowYear && !isYearValid)
         {
             return EditContext.GetValidationMessages(_yearFieldIdentifier).FirstOrDefault();
         }
