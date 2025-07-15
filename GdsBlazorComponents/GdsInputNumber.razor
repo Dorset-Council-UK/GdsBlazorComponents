@@ -1,0 +1,16 @@
+﻿@inherits InputText
+@if (Show)
+{
+    <input
+        id="@Id"
+        name="@NameAttributeValue"
+        @attributes="AdditionalAttributes"
+        class="@CssClass"
+        inputmode="@_inputmode"
+        spellcheck="false"
+        aria-describedby="@_describedBy"
+        @bind-Value="CurrentValueAsString"
+        @bind-Value:event="oninput"
+        @bind-Value:after="@AfterSetValue"
+    />
+}
