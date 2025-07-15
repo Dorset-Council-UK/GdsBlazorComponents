@@ -31,6 +31,8 @@ public partial class GdsInputNumber
 
     protected override void OnInitialized()
     {
+        base.OnInitialized();
+
         Id ??= CascadedId;
 
         if (WholeNumberChanged.HasDelegate)
@@ -38,7 +40,10 @@ public partial class GdsInputNumber
             _inputmode = "numeric";
         }
 
-        _describedBy = $"{Id}-hint {Id}-error";
+        if (Id != null)
+        {
+            _describedBy = $"{Id}-hint {Id}-error";
+        }
     }
 
     private async Task AfterSetValue()
