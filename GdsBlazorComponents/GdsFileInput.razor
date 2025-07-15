@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.Extensions.Logging
 
 @if (_errorMessage != null)
 {
@@ -6,106 +7,20 @@
         <span class="govuk-visually-hidden">Error:</span> <span>@_errorMessage</span>
     </p>
 }
-<div @key="_inputFileId" class="govuk-form-group">
-    <label class="govuk-label" for="@_inputFileId">
+<div @key="Id" class="@_formGroupCssClass">
+    <label class="govuk-label" for="@Id">
         @Label
     </label>
+    @if(_errorMessage != null)
+    {
+        <p id="@_errorId" class="govuk-error-message">
+            <span class="govuk-visually-hidden">Error:</span> @_errorMessage
+        </p>
+    }
+    
     <div class="govuk-drop-zone" data-module="govuk-file-upload">
-        <InputFile id="@_inputFileId" @key="@_inputFileId" class="govuk-file-upload" disabled="@IsBusy" OnChange="@OnInputFileChange" multiple />
+        <InputFile id="@Id" @key="@Id" class="govuk-file-upload" disabled="@IsBusy" OnChange="@OnInputFileChange" multiple />
     </div>
 </div>
 
-@code {
-    /// <summary>
-    /// The maximum file size in megabytes per file that can be uploaded. Defaults to 20 MB.
-    /// </summary>
-    [Parameter]
-    public int MaxFileSizeMB { get; set; } = 20;
-    /// <summary>
-    /// The maximum number of files that can be uploaded at once. Defaults to 10.
-    /// </summary>
-    [Parameter]
-    public int MaxAllowedFiles { get; set; } = 10;
-    /// <summary>
-    /// The list of allowed file types for upload. This should be a list of mime types (e.g., "image/png", "application/pdf").
-    /// </summary>
-    [Parameter, EditorRequired]
-    public required string[] AllowedFileTypes { get; set; }
-    /// <summary>
-    /// Event callback that is triggered when valid files are submitted.
-    /// </summary>
-    [Parameter, EditorRequired]
-    public EventCallback<FileInputResult> OnValidFilesSubmitted { get; set; }
-    /// <summary>
-    /// Event callback that is triggered when an error occurs during file input.
-    /// </summary>
-    [Parameter]
-    public EventCallback<Exception> OnFileInputError { get; set; }
-    /// <summary>
-    /// The text label for the file input field.
-    /// </summary>
-    [Parameter]
-    public string? Label { get; set; }
-    [Parameter]
-    public bool? IsBusy { get; set; } = false;
-    private string? _inputFileId;
-    private long MaxFileSize = 20 * (1024 * 1024);
-    IReadOnlyList<IBrowserFile>? SelectedFiles;
 
-    private string? _errorMessage;
-    private readonly EventHandler<ValidationStateChangedEventArgs>? _validationStateChangedHandler;
-
-    private string? _errorId;
-
-    protected override void OnInitialized()
-    {
-        MaxFileSize = MaxFileSizeMB * (1024 * 1024);
-        _inputFileId = $"file-input-{Guid.NewGuid()}";
-        _errorId = $"{_inputFileId}-error";
-
-    }
-
-    private async Task OnInputFileChange(InputFileChangeEventArgs e)
-    {
-        SelectedFiles = e.GetMultipleFiles();
-        int numFiles = SelectedFiles.Count;
-        if (numFiles == 0)
-        {
-            return;
-        }
-        if (SelectedFiles.Count > MaxAllowedFiles)
-        {
-            var ex = new TooManyFilesSelectedException(MaxAllowedFiles, SelectedFiles.Count);
-            if (OnFileInputError.HasDelegate)
-            {
-                await OnFileInputError.InvokeAsync(ex);
-                return;
-            }
-            throw ex; // fallback if no handler is attached
-        }
-
-        var acceptedFiles = new List<IBrowserFile>();
-        var rejectedFiles = new List<RejectedFile>();
-
-        foreach(var file in SelectedFiles)
-        { 
-            if(file.ContentType == null || !AllowedFileTypes.Contains(file.ContentType))
-            {
-                rejectedFiles.Add(new RejectedFile(file, FileRejectionReason.InvalidFileType));
-                continue;
-            }
-            if (file.Size > MaxFileSize)
-            {
-                rejectedFiles.Add(new RejectedFile(file, FileRejectionReason.FileTooLarge));
-                continue;
-            }
-           
-            acceptedFiles.Add(file);
-        }
-        
-        if (OnValidFilesSubmitted.HasDelegate)
-        {
-            await OnValidFilesSubmitted.InvokeAsync(new FileInputResult(acceptedFiles, rejectedFiles));
-        }
-    }
-}
