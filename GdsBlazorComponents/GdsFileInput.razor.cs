@@ -9,6 +9,9 @@ namespace GdsBlazorComponents
     {
         [CascadingParameter]
         private EditContext EditContext { get; set; } = default!;
+        /// <summary>
+        /// The property that this input is bound to. Used for validation
+        /// </summary>
         [Parameter, EditorRequired]
         public Expression<Func<object>> For { get; set; } = default!;
         /// <summary>
@@ -16,13 +19,28 @@ namespace GdsBlazorComponents
         /// </summary>
         [Parameter, EditorRequired]
         public EventCallback<IReadOnlyList<IBrowserFile>?> OnFilesSubmitted { get; set; }
+        /// <summary>
+        /// Label to place on component
+        /// </summary>
         [Parameter]
         public string? Label { get; set; }
+        /// <summary>
+        /// ID of the component
+        /// </summary>
         [Parameter]
         public string? Id { get; set; }
+        /// <summary>
+        /// A boolean that can be passed to hook into the busy state of the component.
+        /// </summary>
         [Parameter]
         public bool? IsBusy { get; set; } = false;
-        
+        /// <summary>
+        /// <para>Whether to show the most recent error message on the component itself. Defaults to true</para>
+        /// <para>Set to false if you are using validation summaries or another suitable error message elsewhere</para>
+        /// </summary>
+        [Parameter]
+        public bool ShowErrorOnComponent { get; set; } = true;
+
         IReadOnlyList<IBrowserFile>? SelectedFiles;
 
         private readonly ILogger<GdsFileInput> _logger;
@@ -48,14 +66,20 @@ namespace GdsBlazorComponents
             Id ??= _fieldIdentifier.FieldName;
             _errorId = $"{Id}-error";
             // Subscribe to validation state changes
-            EditContext.OnValidationStateChanged += _validationStateChangedHandler;
+            if (_validationStateChangedHandler != null)
+            {
+                EditContext.OnValidationStateChanged += _validationStateChangedHandler;
+            }
         }
         public void Dispose()
         {
             try
             {
                 // Unsubscribe from validation state changes
-                EditContext.OnValidationStateChanged -= _validationStateChangedHandler;
+                if (_validationStateChangedHandler != null)
+                {
+                    EditContext.OnValidationStateChanged -= _validationStateChangedHandler;
+                }
             }
             catch (Exception ex)
             {
@@ -66,9 +90,7 @@ namespace GdsBlazorComponents
         }
         private async Task OnInputFileChange(InputFileChangeEventArgs e)
         {
-            
-            SelectedFiles = e.GetMultipleFiles();
-            
+            SelectedFiles = e.GetMultipleFiles(50);
 
             if (OnFilesSubmitted.HasDelegate)
             {
@@ -80,7 +102,7 @@ namespace GdsBlazorComponents
             _errorMessage = EditContext.GetValidationMessages(_fieldIdentifier).FirstOrDefault();
             var hasError = _errorMessage != null;
 
-            _formGroupCssClass = hasError ? $"govuk-form-group govuk-form-group--error" : "govuk-form-group";
+            _formGroupCssClass = ShowErrorOnComponent && hasError ? $"govuk-form-group govuk-form-group--error" : "govuk-form-group";
         }
     }
 }
