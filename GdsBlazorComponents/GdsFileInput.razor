@@ -1,0 +1,5 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+
+<div class="govuk-drop-zone" data-module="govuk-file-upload">
+    <InputFile id="@Id" @key="@Id" class="govuk-file-upload" disabled="@IsBusy" OnChange="@OnInputFileChange" multiple />
+</div>

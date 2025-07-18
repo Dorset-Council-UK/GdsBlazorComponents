@@ -68,7 +68,7 @@ module.exports = {
         // Copy the assets to the output folder for GDS gov frontend
         new CopyPlugin({
             patterns: [
-                { from: 'node_modules/govuk-frontend/dist/govuk/assets/images', to: 'images' },
+                { from: 'node_modules/govuk-frontend/dist/govuk/assets/rebrand/images', to: 'rebrand/images' },
                 { from: 'node_modules/govuk-frontend/dist/govuk/assets/fonts', to: 'fonts' },
                 { from: 'Scripts/images', to: 'images' },
             ]

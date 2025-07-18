@@ -1,6 +1,6 @@
 ﻿import './gds.scss'
 
-import { createAll, Accordion, Button, CharacterCount, ErrorSummary, Header, PasswordInput, Radios, SkipLink } from 'govuk-frontend'
+import { createAll, Accordion, Button, CharacterCount, ErrorSummary, Header, PasswordInput, Radios, SkipLink, FileUpload } from 'govuk-frontend'
 import { BlazorCheckboxes } from './blazorCheckboxes'
 
 function onCreateError(error: any) {
@@ -23,7 +23,7 @@ export function initGDS() {
     createAll(BlazorCheckboxes, undefined, onCreateError)
     createAll(ErrorSummary, undefined, onCreateError)
     //createAll(ExitThisPage, undefined, notifyErrorMonitoringService)
-    //createAll(FileUpload, undefined, notifyErrorMonitoringService)
+    createAll(FileUpload, undefined, onCreateError)
     createAll(Header, undefined, onCreateError)
     //createAll(NotificationBanner, undefined, notifyErrorMonitoringService)
     createAll(PasswordInput, undefined, onCreateError)
