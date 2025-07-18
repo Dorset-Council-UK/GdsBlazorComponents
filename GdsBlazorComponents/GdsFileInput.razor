@@ -1,20 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Components.Forms
-@using Microsoft.Extensions.Logging
 
-<div @key="Id" class="@_formGroupCssClass">
-    <label class="govuk-label" for="@Id">
-        @Label
-    </label>
-    @if(ShowErrorOnComponent && _errorMessage != null)
-    {
-        <p id="@_errorId" class="govuk-error-message">
-            <span class="govuk-visually-hidden">Error:</span> @_errorMessage
-        </p>
-    }
-    
-    <div class="govuk-drop-zone" data-module="govuk-file-upload">
-        <InputFile id="@Id" @key="@Id" class="govuk-file-upload" disabled="@IsBusy" OnChange="@OnInputFileChange" multiple />
-    </div>
+<div class="govuk-drop-zone" data-module="govuk-file-upload">
+    <InputFile id="@Id" @key="@Id" class="govuk-file-upload" disabled="@IsBusy" OnChange="@OnInputFileChange" multiple />
 </div>
-
-
