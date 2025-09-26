@@ -6,7 +6,7 @@ You can use plain text, HTML markup, or other Blazor components as the content o
 
 ## How it works
 
-- Renders `<div class="govuk-hint">` with any child content you provide..
+- Renders `<div class="govuk-hint">` with any child content you provide.
 - The `id` attribute is set from the `Id` component property. If omitted, it falls back to a cascaded id provided by `GdsFormGroup`.
 
 ## Simple example with explicit `id`
