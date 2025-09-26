@@ -10,7 +10,7 @@ Render GOV.UK Design System styled checkboxes using the options from a list of [
 
 - Renders a list of [GdsOptionItem](GdsOptionItem.md) under a ```<div class="govuk-checkboxes" data-module="govuk-checkboxes">```.
 - Supports binding to any value type (e.g., string, int, enum, bool, custom types).
-- It is recommended to use this component within a [GdsFormGroup](FormGroup.md), Blazor's `InputRadioGroup`, and [GdsFieldsetGroup](FieldsetGroup.md) to fully support correct HTML and accessibility.
+- It is recommended to use this component within a [GdsFormGroup](FormGroup.md), and [GdsFieldsetGroup](FieldsetGroup.md) to fully support correct HTML and accessibility.
 
 ## Simple example
 
@@ -46,18 +46,16 @@ ICollection<GdsOptionItem<int>> contactTypes = [
     new ("contactTypePost", "Post", 4),
 ];
 <GdsFormGroup For="() => Model.ContactType">
-    <InputRadioGroup @bind-Value="Model.ContactType">
-        <GdsFieldsetGroup>
-            <Heading>
-                <h2 class="govuk-fieldset__heading">How can we contact you?</h2>
-            </Heading>
-            <Content>
-                <GdsHint>Select all that apply.</GdsHint>
-                <GdsErrorMessage />
-                <GdsRadios Options="@contactTypes" />
-            </Content>
-        </GdsFieldsetGroup>
-    </InputRadioGroup>
+    <GdsFieldsetGroup>
+        <Heading>
+            <h2 class="govuk-fieldset__heading">How can we contact you?</h2>
+        </Heading>
+        <Content>
+            <GdsHint>Select all that apply.</GdsHint>
+            <GdsErrorMessage />
+            <GdsCheckboxes Options="@contactTypes" />
+        </Content>
+    </GdsFieldsetGroup>
 </GdsFormGroup>
 ```
 
@@ -71,33 +69,31 @@ ICollection<GdsOptionItem<int>> contactTypes = [
     new ("contactTypePost", "Post", 4),
 ];
 <GdsFormGroup For="() => Model.ContactType">
-    <InputRadioGroup @bind-Value="Model.ContactType">
-        <GdsFieldsetGroup>
-            <Heading>
-                <h2 class="govuk-fieldset__heading">How can we contact you?</h2>
-            </Heading>
-            <Content>
-                <GdsHint>Select all that apply.</GdsHint>
-                <GdsErrorMessage />
-                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                    @foreach (var option in contactTypes)
+    <GdsFieldsetGroup>
+        <Heading>
+            <h2 class="govuk-fieldset__heading">How can we contact you?</h2>
+        </Heading>
+        <Content>
+            <GdsHint>Select all that apply.</GdsHint>
+            <GdsErrorMessage />
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                @foreach (var option in contactTypes)
+                {
+                    var conditionalId = option.Value == 1 ? $"{option.Id}-conditional" : null;
+                    <GdsCheckbox Option="@option" ConditionalId="@conditionalId" />
+                    if (option.Value == 1)
                     {
-                        var conditionalId = option.Value == 1 ? $"{option.Id}-conditional" : null;
-                        <GdsCheckbox Option="@option" ConditionalId="@conditionalId" />
-                        if (option.Value == 1)
-                        {
-                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="@conditionalId">
-                                <GdsFormGroup For="() => Model.PhoneNumber">
-                                    <GdsLabel Text="What is your phone number?" />
-                                    <GdsErrorMessage />
-                                    <GdsInputText @bind-Value=Model.PhoneNumber class="govuk-input govuk-input--width-50" />
-                                </GdsFormGroup>
-                            </div>
-                        }
+                        <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="@conditionalId">
+                            <GdsFormGroup For="() => Model.PhoneNumber">
+                                <GdsLabel Text="What is your phone number?" />
+                                <GdsErrorMessage />
+                                <GdsInputText @bind-Value=Model.PhoneNumber class="govuk-input govuk-input--width-50" />
+                            </GdsFormGroup>
+                        </div>
                     }
-                </div>
-            </Content>
-        </GdsFieldsetGroup>
-    </InputRadioGroup>
+                }
+            </div>
+        </Content>
+    </GdsFieldsetGroup>
 </GdsFormGroup>
 ```
