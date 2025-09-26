@@ -1,6 +1,6 @@
 # Error Message
 
-Render a GOV.UK Design System styled errro message that associates with a form control. Works standalone (explicit `id`) or by consuming a cascaded control id provided by `GdsFormGroup`.
+Render a GOV.UK Design System styled error message that associates with a form control. Works standalone (explicit `id`) or by consuming a cascaded control id provided by `GdsFormGroup`.
 
 ## Example image
 
