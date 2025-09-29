@@ -85,3 +85,14 @@ RuleFor(o => o.StartDate)
     <Hint>For example, 27 3 2025</Hint>
 </GdsInputDate>
 ```
+
+# Example using date of birth
+
+```
+<GdsInputDate For="() => Model.DateOfBirth" Id="dob" IsDateOfBirth="true">
+    <Heading>
+        <h1 class="govuk-fieldset__heading">What is your date of birth?</h1>
+    </Heading>
+    <Hint>For example, 27 3 1980</Hint>
+</GdsInputDate>
+```
