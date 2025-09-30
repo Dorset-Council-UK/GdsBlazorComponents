@@ -13,7 +13,7 @@ Render a GOV.UK Design System styled summary of validation errors for a form. Th
 
 ## Example
 
-```
+```csharp
 <EditForm EditContext="_editContext" OnSubmit="OnSubmit" FormName="MyForm">
     <GdsErrorSummary />
 </EditForm>

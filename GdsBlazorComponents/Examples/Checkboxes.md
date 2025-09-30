@@ -14,7 +14,7 @@ Render GOV.UK Design System styled checkboxes using the options from a list of [
 
 ## Simple example
 
-```
+```csharp
 ICollection<GdsOptionItem<int>> contactTypes = [
     new ("contactTypePhone", "Phone", 1),
     new ("contactTypeEmail", "Email", 2),
@@ -26,7 +26,7 @@ ICollection<GdsOptionItem<int>> contactTypes = [
 
 ## Smaller checkboxes example
 
-```
+```csharp
 ICollection<GdsOptionItem<int>> contactTypes = [
     new ("contactTypePhone", "Phone", 1),
     new ("contactTypeEmail", "Email", 2),
@@ -38,7 +38,7 @@ ICollection<GdsOptionItem<int>> contactTypes = [
 
 ## Recommended use example
 
-```
+```csharp
 ICollection<GdsOptionItem<int>> contactTypes = [
     new ("contactTypePhone", "Phone", 1),
     new ("contactTypeEmail", "Email", 2),
@@ -61,7 +61,7 @@ ICollection<GdsOptionItem<int>> contactTypes = [
 
 # Custom example using GDS conditional controls
 
-```
+```csharp
 ICollection<GdsOptionItem<int>> contactTypes = [
     new ("contactTypePhone", "Phone", 1),
     new ("contactTypeEmail", "Email", 2),

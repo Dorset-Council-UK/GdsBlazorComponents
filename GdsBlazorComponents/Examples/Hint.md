@@ -11,17 +11,17 @@ You can use plain text, HTML markup, or other Blazor components as the content o
 
 ## Simple example with explicit `id`
 
-```
-<GdsHint Id="eventName">The name you’ll use on promotional material</GdsHint>
+```csharp
+<GdsHint Id="eventName">The name you'll use on promotional material</GdsHint>
 <InputText id="eventName" class="govuk-input" @bind-Value="eventName" />
 ```
 
 ## Example using a cascaded id
 
-```
+```csharp
 <GdsFormGroup For="() => Model.EventName">
     <GdsLabel Text="What is the name of the event?" />
-    <GdsHint>The name you’ll use on promotional material</GdsHint>
+    <GdsHint>The name you'll use on promotional material</GdsHint>
     <GdsErrorMessage />
     <GdsInputText @bind-Value=Model.EventName class="govuk-input govuk-input--width-50" />
 </GdsFormGroup>
@@ -30,9 +30,9 @@ You can use plain text, HTML markup, or other Blazor components as the content o
 ## Example with any content
 
 You can include multiple elements, formatting, or even other components inside the hint:
-```
+```csharp
 <GdsHint>
-    <div>The name you’ll use on promotional material</div>
+    <div>The name you'll use on promotional material</div>
     <div>It can be up to 50 characters long</div>
     <div>Example: My event name</div>
 </GdsHint>

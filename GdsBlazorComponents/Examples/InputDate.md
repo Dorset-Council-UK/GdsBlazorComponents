@@ -48,7 +48,7 @@ These are all the validators we provide:
 
 ## Example validation
 
-```
+```csharp
 RuleFor(o => o.StartDate)
     .Cascade(CascadeMode.Stop)
     .DayMonthYearNotEmpty()
@@ -65,19 +65,19 @@ RuleFor(o => o.StartDate)
 
 ## Simple example
 
-```
+```csharp
 <GdsInputDate For="() => Model.StartDate" />
 ```
 
 ## Example with explicit Id
 
-```
+```csharp
 <GdsInputDate For="() => Model.StartDate" Id="flood-start" />
 ```
 
 ## Example using optional Heading and hint
 
-```
+```csharp
 <GdsInputDate For="() => Model.StartDate" Id="flood-start">
     <Heading>
         <h1 class="govuk-fieldset__heading">When did the flooding start?</h1>
@@ -88,7 +88,7 @@ RuleFor(o => o.StartDate)
 
 # Example using date of birth
 
-```
+```csharp
 <GdsInputDate For="() => Model.DateOfBirth" Id="dob" IsDateOfBirth="true">
     <Heading>
         <h1 class="govuk-fieldset__heading">What is your date of birth?</h1>

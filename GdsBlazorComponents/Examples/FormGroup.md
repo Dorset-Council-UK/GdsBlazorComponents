@@ -18,7 +18,7 @@ Render a GOV.UK Design System styled form group that contains a GDS form control
 
 ## Simple example
 
-```
+```csharp
 <GdsFormGroup For="() => Model.PhoneNumber">
     <GdsLabel Text="What is your phone number?" />
     <GdsHint>For international numbers include the country code</GdsHint>
@@ -29,7 +29,7 @@ Render a GOV.UK Design System styled form group that contains a GDS form control
 
 ## Manual ID's and Blazor control example
 
-```
+```csharp
 <GdsFormGroup For="() => Model.PhoneNumber" Id="phone-number">
     <GdsLabel Text="What is your phone number?" />
     <GdsHint>For international numbers include the country code</GdsHint>
@@ -44,7 +44,7 @@ The ID of `phone-number` on the `GdsFormGroup` is cascaded down to:
 
 ## Character count example
 
-```
+```csharp
 <GdsFormGroup For="() => Model.OtherAction" AdditionalCssClasses="govuk-character-count govuk-!-margin-top-4" DataModule="govuk-character-count" DataMaxLength="100">
     <h2 class="govuk-label-wrapper">
         <GdsLabel Text="Can you provide more details?" AdditionalCssClasses="govuk-label--m" />

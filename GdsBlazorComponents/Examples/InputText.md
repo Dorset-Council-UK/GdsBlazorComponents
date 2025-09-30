@@ -15,13 +15,13 @@ Render a GOV.UK Design System styled text form control.
 
 ## Simple example with explicit `id`
 
-```
+```csharp
 <GdsInputText Id="event-name" @bind-Value=Model.EventName class="govuk-input govuk-input--width-50" />
 ```
 
 ## Example using a cascaded id
 
-```
+```csharp
 <GdsFormGroup For="() => Model.EventName">
     <GdsLabel Text="What is the name of the event?" />
     <GdsHint>Do not include personal or financial information</GdsHint>

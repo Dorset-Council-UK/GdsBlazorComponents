@@ -9,17 +9,17 @@ Render a GOV.UK Design System styled `<label>` that associates with a form contr
 
 ## Simple example with explicit `for`
 
-```
+```csharp
 <GdsLabel For="first-name" Text="First name" />
 <InputText id="first-name" class="govuk-input" @bind-Value="firstName" />
 ```
 
 ## Example using a cascaded id
 
-```
+```csharp
 <GdsFormGroup For="() => Model.EventName">
     <GdsLabel Text="What is the name of the event?" />
-    <GdsHint>The name you’ll use on promotional material</GdsHint>
+    <GdsHint>The name youï¿½ll use on promotional material</GdsHint>
     <GdsErrorMessage />
     <GdsInputText @bind-Value=Model.EventName class="govuk-input govuk-input--width-50" />
 </GdsFormGroup>
@@ -27,7 +27,7 @@ Render a GOV.UK Design System styled `<label>` that associates with a form contr
 
 ## Example with additional classes
 
-```
+```csharp
 <GdsLabel For="more-detail" Text="Can you provide more detail?" AdditionalCssClasses="govuk-label--l" />
 <textarea class="govuk-textarea" id="more-detail" name="moreDetail" rows="5"></textarea>
 ```

@@ -14,7 +14,7 @@ Render GOV.UK Design System styled radio buttons using the options from a list o
 
 ## Simple example
 
-```
+```csharp
 ICollection<GdsOptionItem<int>> contactTypes = [
     new ("contactTypePhone", "Phone", 1),
     new ("contactTypeEmail", "Email", 2),
@@ -26,7 +26,7 @@ ICollection<GdsOptionItem<int>> contactTypes = [
 
 ## Smaller radio button example
 
-```
+```csharp
 ICollection<GdsOptionItem<int>> contactTypes = [
     new ("contactTypePhone", "Phone", 1),
     new ("contactTypeEmail", "Email", 2),
@@ -38,7 +38,7 @@ ICollection<GdsOptionItem<int>> contactTypes = [
 
 ## Inline radio button example
 
-```
+```csharp
 ICollection<GdsOptionItem<bool>> nameChangedOptions = [
     new ("nameChangedYes", "Yes", true),
     new ("nameChangedNo", "No", false),
@@ -48,7 +48,7 @@ ICollection<GdsOptionItem<bool>> nameChangedOptions = [
 
 ## Recommended use example
 
-```
+```csharp
 ICollection<GdsOptionItem<int>> contactTypes = [
     new ("contactTypePhone", "Phone", 1),
     new ("contactTypeEmail", "Email", 2),
@@ -73,7 +73,7 @@ ICollection<GdsOptionItem<int>> contactTypes = [
 
 # Custom example using GDS conditional controls
 
-```
+```csharp
 ICollection<GdsOptionItem<int>> contactTypes = [
     new ("contactTypePhone", "Phone", 1),
     new ("contactTypeEmail", "Email", 2),

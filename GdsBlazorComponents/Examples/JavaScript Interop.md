@@ -14,7 +14,7 @@ The `GdsJsInterop` service, defined by the `IGdsJsInterop` interface, allows Bla
 
 ## Simple example
 
-```
+```csharp
 @inject IGdsJsInterop gdsJs
 @code {
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -30,7 +30,7 @@ The `GdsJsInterop` service, defined by the `IGdsJsInterop` interface, allows Bla
 
 ## Example with cancellation token
 
-```
+```csharp
 @inject IGdsJsInterop gdsJs
 @code {
     private CancellationTokenSource _cts = new();

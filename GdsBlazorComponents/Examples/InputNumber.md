@@ -21,7 +21,7 @@ The GOV.UK Design System defines two types: "Asking for whole numbers" and "Aski
 
 ## Example model
 
-```
+```csharp
 public class ExampleModel
 {
     public string? AccountNumberText { get; set; }
@@ -33,7 +33,7 @@ public class ExampleModel
 
 ## Whole number example
 
-```
+```csharp
 <GdsFormGroup For="() => Model.AccountNumberText" Id="account-number">
     <GdsLabel Text="What is your account number?" />
     <GdsHint>Must be between 6 and 8 digits long</GdsHint>
@@ -44,7 +44,7 @@ public class ExampleModel
 
 ## Decimal number example
 
-```
+```csharp
 <GdsFormGroup For="() => Model.WeightText" Id="weight">
     <GdsLabel Text="How much does it weigh?" />
     <GdsHint>Weight, in kilograms</GdsHint>

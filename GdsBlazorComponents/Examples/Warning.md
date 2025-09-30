@@ -16,14 +16,12 @@ Render a GOV.UK Design System styled warning text using the `GdsWarning` compone
 
 ## Simple example
 
-```
+```csharp
 <GdsWarning Text="Contact information not found" />
-
 ```
 
 ## Custom icon text example
 
-```
+```csharp
 <GdsWarning Text="Are you sure you want to delete this contact" Icon="?" />
-
 ```

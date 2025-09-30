@@ -16,13 +16,13 @@ You can use this component to handle file uploads in your forms, with support fo
 
 ## Simple example
 
-```
+```csharp
 <GdsFileInput OnFilesSubmitted="HandleFiles" />
 ```
 
 ## Example
 
-```
+```csharp
 <GdsFormGroup For="() => Model.SupportingDocuments">
     <GdsLabel Text="Upload supporting documents" />
     <GdsHint>Accepted file types: PDF, DOCX, JPG</GdsHint>

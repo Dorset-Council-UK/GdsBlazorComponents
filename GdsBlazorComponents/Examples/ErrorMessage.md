@@ -17,17 +17,17 @@ You never manually set the error message text. It is automatically populated fro
 
 ## Simple example with explicit `id`
 
-```
+```csharp
 <GdsErrorMessage Id="eventName" />
 <InputText id="eventName" class="govuk-input" @bind-Value="eventName" />
 ```
 
 ## Example using a cascaded id
 
-```
+```csharp
 <GdsFormGroup For="() => Model.EventName">
     <GdsLabel Text="What is the name of the event?" />
-    <GdsHint>The name you’ll use on promotional material</GdsHint>
+    <GdsHint>The name you'll use on promotional material</GdsHint>
     <GdsErrorMessage />
     <GdsInputText @bind-Value=Model.EventName class="govuk-input govuk-input--width-50" />
 </GdsFormGroup>

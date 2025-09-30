@@ -13,7 +13,7 @@ See [GdsCheckboxes](Checkboxes.md) and [GdsRadios](Radios.md) for complete examp
 
 ## Simple example
 
-```
+```csharp
 <GdsFieldsetGroup>
     <Heading>
         <h2 class="govuk-fieldset__heading">How can we contact you?</h2>
@@ -23,7 +23,7 @@ See [GdsCheckboxes](Checkboxes.md) and [GdsRadios](Radios.md) for complete examp
 
 ## Example
 
-```
+```csharp
 <GdsFieldsetGroup>
     <Heading>
         <h2 class="govuk-fieldset__heading">How can we contact you?</h2>
