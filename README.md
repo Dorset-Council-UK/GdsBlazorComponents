@@ -1,15 +1,42 @@
 [![NuGet Version](https://img.shields.io/nuget/v/Dorset-Council-UK.GdsBlazorComponents?style=flat&logo=nuget)](https://www.nuget.org/packages/Dorset-Council-UK.GdsBlazorComponents/)
 
-
-
-# Gds Blazor Components
+# GDS Blazor Components
 
 This project contains Blazor components styled using the GOV.UK Design System. It can be used in any C# Blazor project that want to use GDS components.
 
-## Dependencies
+This was originally built for our [Dorset Council - Flood Online Reporting Tool](https://github.com/Dorset-Council-UK/FloodOnlineReportingTool.Public) project.
 
-This project is currently used by our Flood Online Reporting Tool, the public version of which can be found at [Dorset Council - Flood Online Reporting Tool - Public](https://github.com/Dorset-Council-UK/FloodOnlineReportingTool.Public). 
-We expect to use this project widely in our other projects to ensure a consistent use of GDS components within any Blazor projects that we develop using Government design principles. 
+We expect to use this project widely in our other projects to ensure a consistent use of GDS components within any Blazor projects that we develop using Government design principles.
+
+## Component Examples
+
+- [GdsBreadcrumbs](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Breadcrumbs.md)
+- [GdsCheckbox](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Checkbox.md)
+- [GdsCheckboxes](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Checkboxes.md)
+- [GdsErrorMessage](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/ErrorMessage.md)
+- [GdsErrorSummary](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/ErrorSummary.md)
+- [GdsFieldsetGroup](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/FieldsetGroup.md)
+- [GdsFileInput](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/FileInput.md)
+- [GdsFooter](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Footer.md)
+- [GdsFormGroup](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/FormGroup.md)
+- [GdsHeader](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Header.md)
+- [GdsHint](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Hint.md)
+- [GdsInputDate](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/InputDate.md)
+- [GdsInputNumber](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/InputNumber.md)
+- [GdsInputPartialDate](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/InputPartialDate.md)
+- [GdsInputText](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/InputText.md)
+- [GdsLabel](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Label.md)
+- [GdsPhaseBanner](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/PhaseBanner.md)
+- [GdsRadio](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Radio.md)
+- [GdsRadios](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Radios.md)
+- [GdsSkipLink](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/SkipLink.md)
+- [GdsSpinner](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Spinner.md)
+- [GdsWarning](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Warning.md)
+
+### Other examples:
+
+- [JavaScript](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/JavaScript%20Interop.md)
+- [Validation Classes](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/ValidationClasses.md)
 
 ## Bugs
 

@@ -1,0 +1,113 @@
+# Radios
+
+Render GOV.UK Design System styled radio buttons using the options from a list of [GdsOptionItem<T>](GdsOptionItem.md). This component supports any type of value and can be used for single selections.
+
+## Example image
+
+![Radios example](Radios.png)
+
+## How it works
+
+- Renders a list of [GdsOptionItem](GdsOptionItem.md) under a ```<div class="govuk-radios" data-module="govuk-radios">```.
+- Supports binding to any value type (e.g., string, int, enum, bool, custom types).
+- It is recommended to use this component within a [GdsFormGroup](FormGroup.md), Blazor's `InputRadioGroup`, and [GdsFieldsetGroup](FieldsetGroup.md) to fully support correct HTML and accessibility.
+
+## Simple example
+
+```csharp
+ICollection<GdsOptionItem<int>> contactTypes = [
+    new ("contactTypePhone", "Phone", 1),
+    new ("contactTypeEmail", "Email", 2),
+    new ("contactTypeText", "Text message", 3),
+    new ("contactTypePost", "Post", 4),
+];
+<GdsRadios Options="@contactTypes" />
+```
+
+## Smaller radio button example
+
+```csharp
+ICollection<GdsOptionItem<int>> contactTypes = [
+    new ("contactTypePhone", "Phone", 1),
+    new ("contactTypeEmail", "Email", 2),
+    new ("contactTypeText", "Text message", 3),
+    new ("contactTypePost", "Post", 4),
+];
+<GdsRadios Options="@contactTypes" Smaller="true" />
+```
+
+## Inline radio button example
+
+```csharp
+ICollection<GdsOptionItem<bool>> nameChangedOptions = [
+    new ("nameChangedYes", "Yes", true),
+    new ("nameChangedNo", "No", false),
+];
+<GdsRadios Options="@nameChangedOptions" Inline="true" />
+```
+
+## Recommended use example
+
+```csharp
+ICollection<GdsOptionItem<int>> contactTypes = [
+    new ("contactTypePhone", "Phone", 1),
+    new ("contactTypeEmail", "Email", 2),
+    new ("contactTypeText", "Text message", 3),
+    new ("contactTypePost", "Post", 4),
+];
+<GdsFormGroup For="() => Model.ContactType">
+    <InputRadioGroup @bind-Value="Model.ContactType">
+        <GdsFieldsetGroup>
+            <Heading>
+                <h2 class="govuk-fieldset__heading">How can we contact you?</h2>
+            </Heading>
+            <Content>
+                <GdsHint>Select all that apply.</GdsHint>
+                <GdsErrorMessage />
+                <GdsRadios Options="@contactTypes" />
+            </Content>
+        </GdsFieldsetGroup>
+    </InputRadioGroup>
+</GdsFormGroup>
+```
+
+# Custom example using GDS conditional controls
+
+```csharp
+ICollection<GdsOptionItem<int>> contactTypes = [
+    new ("contactTypePhone", "Phone", 1),
+    new ("contactTypeEmail", "Email", 2),
+    new ("contactTypeText", "Text message", 3),
+    new ("contactTypePost", "Post", 4),
+];
+<GdsFormGroup For="() => Model.ContactType">
+    <InputRadioGroup @bind-Value="Model.ContactType">
+        <GdsFieldsetGroup>
+            <Heading>
+                <h2 class="govuk-fieldset__heading">How can we contact you?</h2>
+            </Heading>
+            <Content>
+                <GdsHint>Select all that apply.</GdsHint>
+                <GdsErrorMessage />
+                <div class="govuk-radios" data-module="govuk-radios">
+                    @foreach (var option in contactTypes)
+                    {
+                        var conditionalId = option.Value == 1 ? $"{option.Id}-conditional" : null;
+                        <GdsRadio Option="@option" ConditionalId="@conditionalId" />
+                        if (option.Value == 1)
+                        {
+                            <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="@conditionalId">
+                                <GdsFormGroup For="() => Model.PhoneNumber">
+                                    <GdsLabel Text="What is your phone number?" />
+                                    <GdsErrorMessage />
+                                    <GdsInputText @bind-Value=Model.PhoneNumber class="govuk-input govuk-input--width-50" />
+                                </GdsFormGroup>
+                            </div>
+                        }
+                    }
+                </div>
+            </Content>
+        </GdsFieldsetGroup>
+    </InputRadioGroup>
+</GdsFormGroup>
+```
