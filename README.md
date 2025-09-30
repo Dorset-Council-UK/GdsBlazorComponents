@@ -4,7 +4,7 @@
 
 This project contains Blazor components styled using the GOV.UK Design System. It can be used in any C# Blazor project that want to use GDS components.
 
-This was orginally built for our [Dorset Council - Flood Online Reporting Tool](https://github.com/Dorset-Council-UK/FloodOnlineReportingTool.Public) project.
+This was originally built for our [Dorset Council - Flood Online Reporting Tool](https://github.com/Dorset-Council-UK/FloodOnlineReportingTool.Public) project.
 
 We expect to use this project widely in our other projects to ensure a consistent use of GDS components within any Blazor projects that we develop using Government design principles.
 

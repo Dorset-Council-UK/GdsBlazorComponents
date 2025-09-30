@@ -27,7 +27,7 @@ You can use this component to handle file uploads in your forms, with support fo
     <GdsLabel Text="Upload supporting documents" />
     <GdsHint>Accepted file types: PDF, DOCX, JPG</GdsHint>
     <GdsErrorMessage />
-    GdsFileInput OnFilesSubmitted="HandleFiles" />
+    <GdsFileInput OnFilesSubmitted="HandleFiles" />
 </GdsFormGroup>
 ```
 

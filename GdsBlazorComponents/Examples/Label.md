@@ -19,7 +19,7 @@ Render a GOV.UK Design System styled `<label>` that associates with a form contr
 ```csharp
 <GdsFormGroup For="() => Model.EventName">
     <GdsLabel Text="What is the name of the event?" />
-    <GdsHint>The name you�ll use on promotional material</GdsHint>
+    <GdsHint>The name you'll use on promotional material</GdsHint>
     <GdsErrorMessage />
     <GdsInputText @bind-Value=Model.EventName class="govuk-input govuk-input--width-50" />
 </GdsFormGroup>

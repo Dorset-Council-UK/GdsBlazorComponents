@@ -89,7 +89,7 @@ ICollection<GdsOptionItem<int>> contactTypes = [
             <Content>
                 <GdsHint>Select all that apply.</GdsHint>
                 <GdsErrorMessage />
-                <div class="govuk-radios" data-module="govuk-govuk-radios">
+                <div class="govuk-radios" data-module="govuk-radios">
                     @foreach (var option in contactTypes)
                     {
                         var conditionalId = option.Value == 1 ? $"{option.Id}-conditional" : null;
