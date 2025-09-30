@@ -1,15 +1,42 @@
 [![NuGet Version](https://img.shields.io/nuget/v/Dorset-Council-UK.GdsBlazorComponents?style=flat&logo=nuget)](https://www.nuget.org/packages/Dorset-Council-UK.GdsBlazorComponents/)
 
-
-
 # Gds Blazor Components
 
 This project contains Blazor components styled using the GOV.UK Design System. It can be used in any C# Blazor project that want to use GDS components.
 
-## Dependencies
+This was orginally built for our [Dorset Council - Flood Online Reporting Tool - Public](https://github.com/Dorset-Council-UK/FloodOnlineReportingTool.Public) project.
 
-This project is currently used by our Flood Online Reporting Tool, the public version of which can be found at [Dorset Council - Flood Online Reporting Tool - Public](https://github.com/Dorset-Council-UK/FloodOnlineReportingTool.Public). 
-We expect to use this project widely in our other projects to ensure a consistent use of GDS components within any Blazor projects that we develop using Government design principles. 
+We expect to use this project widely in our other projects to ensure a consistent use of GDS components within any Blazor projects that we develop using Government design principles.
+
+## Component Examples
+
+- [GdsBreadcrumbs](Examples/Breadcrumbs.md)
+- [GdsCheckbox](Examples/Checkbox.md)
+- [GdsCheckboxes](Examples/Checkboxes.md)
+- [GdsErrorMessage](Examples/ErrorMessage.md)
+- [GdsErrorSummary](Examples/ErrorSummary.md)
+- [GdsFieldsetGroup](Examples/FieldsetGroup.md)
+- [GdsFileInput](Examples/FileInput.md)
+- [GdsFooter](Examples/Footer.md)
+- [GdsFormGroup](Examples/FormGroup.md)
+- [GdsHeader](Examples/Header.md)
+- [GdsHint](Examples/Hint.md)
+- [GdsInputDate](Examples/InputDate.md)
+- [GdsInputNumber](Examples/InputNumber.md)
+- [GdsInputPartialDate](Examples/InputPartialDate.md)
+- [GdsInputText](Examples/InputText.md)
+- [GdsLabel](Examples/Label.md)
+- [GdsPhaseBanner](Examples/PhaseBanner.md)
+- [GdsRadio](Examples/Radio.md)
+- [GdsRadios](Examples/Radios.md)
+- [GdsSkipLink](Examples/SkipLink.md)
+- [GdsSpinner](Examples/Spinner.md)
+- [GdsWarning](Examples/Warning.md)
+
+### Other examples:
+
+- [JavaScript](Examples/JavaScript%20Interop.md)
+- [Validation Classes](Examples/ValidationClasses.md)
 
 ## Bugs
 
