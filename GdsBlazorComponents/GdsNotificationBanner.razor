@@ -1,15 +1,15 @@
 <div class="govuk-notification-banner @_class" role="@_role" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
-        @if (BannerTitleSize == BannerSizeOption.sm)
-        {
-            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-                @BannerTitle
-            </h2>
-        } else
+        @if (BannerTitleSize == BannerSizeOption.small)
         {
             <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
                 @BannerTitle
             </h3>
+        } else
+        {
+            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                @BannerTitle
+            </h2>
         }
     </div>
     <div class="govuk-notification-banner__content">
@@ -27,15 +27,15 @@
     public required string BannerTitle { get; set; }
 
     [Parameter]
-    public BannerSizeOption BannerTitleSize { get; set; } = BannerSizeOption.sm;
+    public BannerSizeOption BannerTitleSize { get; set; } = BannerSizeOption.small;
 
     [Parameter, EditorRequired]
     public required RenderFragment? ChildContent { get; set; }
 
     public enum BannerSizeOption
     {
-        sm,
-        lg
+        small,
+        large
     }
 
     public enum NotificationTypeOption
