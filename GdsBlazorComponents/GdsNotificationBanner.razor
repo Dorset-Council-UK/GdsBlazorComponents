@@ -1,0 +1,62 @@
+<div class="govuk-notification-banner @_class" role="@_role" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner__header">
+        @if (BannerTitleSize == BannerSizeOption.small)
+        {
+            <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                @BannerTitle
+            </h3>
+        } else
+        {
+            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                @BannerTitle
+            </h2>
+        }
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">
+            @ChildContent
+        </p>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public NotificationTypeOption NotificationType { get; set; } = NotificationTypeOption.info;
+
+    [Parameter, EditorRequired]
+    public required string BannerTitle { get; set; }
+
+    [Parameter]
+    public BannerSizeOption BannerTitleSize { get; set; } = BannerSizeOption.small;
+
+    [Parameter, EditorRequired]
+    public required RenderFragment? ChildContent { get; set; }
+
+    public enum BannerSizeOption
+    {
+        small,
+        large
+    }
+
+    public enum NotificationTypeOption
+    {
+        info,
+        success
+    }
+
+    private string _role = "";
+    private string _class = "";
+
+    protected override void OnInitialized()
+    {
+
+        _role = NotificationType switch
+        {
+            NotificationTypeOption.info => "region",
+            NotificationTypeOption.success => "alert",
+            _ => "region"
+        };
+        _class = "govuk-notification-banner--" + NotificationType.ToString();
+    }
+
+}
