@@ -24,13 +24,13 @@
     public NotificationTypeOption NotificationType { get; set; } = NotificationTypeOption.info;
 
     [Parameter]
-    public string BannerTitle { get; set; } = "";
+    public required string BannerTitle { get; set; } = "";
 
     [Parameter]
     public BannerSizeOption BannerTitleSize { get; set; } = BannerSizeOption.sm;
 
     [Parameter]
-    public RenderFragment? ChildContent { get; set; }
+    public required RenderFragment? ChildContent { get; set; }
 
     public enum BannerSizeOption
     {
@@ -54,7 +54,7 @@
         {
             NotificationTypeOption.info => "region",
             NotificationTypeOption.success => "alert",
-            _ => "role"
+            _ => "region"
         };
         _class = "govuk-notification-banner--" + NotificationType.ToString();
     }
