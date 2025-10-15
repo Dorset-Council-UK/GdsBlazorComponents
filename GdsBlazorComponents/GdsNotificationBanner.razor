@@ -23,13 +23,13 @@
     [Parameter]
     public NotificationTypeOption NotificationType { get; set; } = NotificationTypeOption.info;
 
-    [Parameter]
-    public required string BannerTitle { get; set; } = "";
+    [Parameter, EditorRequired]
+    public required string BannerTitle { get; set; }
 
     [Parameter]
     public BannerSizeOption BannerTitleSize { get; set; } = BannerSizeOption.sm;
 
-    [Parameter]
+    [Parameter, EditorRequired]
     public required RenderFragment? ChildContent { get; set; }
 
     public enum BannerSizeOption
