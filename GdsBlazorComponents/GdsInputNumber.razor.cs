@@ -1,24 +1,20 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Globalization;
+using System.Linq.Expressions;
 
 namespace GdsBlazorComponents;
 
-public partial class GdsInputNumber
+public partial class GdsInputNumber<TNumberValue>
 {
     [CascadingParameter]
     private string? CascadedId { get; set; }
 
+    [Parameter, EditorRequired]
+    public TNumberValue? NumberValue { get; set; }
     [Parameter]
-    public int? WholeNumber { get; set; }
-
+    public EventCallback<TNumberValue> NumberValueChanged { get; set; }
     [Parameter]
-    public EventCallback<int?> WholeNumberChanged { get; set; }
-
-    [Parameter]
-    public float? FloatNumber { get; set; }
-
-    [Parameter]
-    public EventCallback<float?> FloatNumberChanged { get; set; }
+    public Expression<Func<TNumberValue>>? NumberValueExpression { get; set; }
 
     [Parameter]
     public string? Id { get; set; }
@@ -34,39 +30,93 @@ public partial class GdsInputNumber
         base.OnInitialized();
 
         Id ??= CascadedId;
-
-        if (WholeNumberChanged.HasDelegate)
-        {
-            _inputmode = "numeric";
-        }
-
         if (Id != null)
         {
             _describedBy = $"{Id}-hint {Id}-error";
         }
+        _inputmode = GetInputModeValue();
     }
 
-    private async Task AfterSetValue()
+    private static string? GetInputModeValue()
     {
-        if (int.TryParse(Value, CultureInfo.InvariantCulture, out var wholeNumber))
+        var targetType = Nullable.GetUnderlyingType(typeof(TNumberValue)) ?? typeof(TNumberValue);
+        if (targetType == typeof(int) || targetType == typeof(long) || targetType == typeof(short))
         {
-            WholeNumber = wholeNumber;
+            return "numeric";
+        }
+        else if (targetType == typeof(float) || targetType == typeof(double) || targetType == typeof(decimal))
+        {
+            return null;
         }
         else
         {
-            WholeNumber = null;
+            throw new InvalidOperationException($"The type '{targetType}' is not a supported {nameof(NumberValue)} type. Only int, long, short, float, double, and decimal are allowed.");
         }
+    }
 
-        if (float.TryParse(Value, CultureInfo.InvariantCulture, out var floatNumber))
+    /// <summary>
+    /// Handles when the InputText value is set/changed.
+    /// </summary>
+    /// <remarks>Also sets NumberValue. Makes sure to set CurrentValueAsString last so that validation occurs after NumberValue is updated.</remarks>
+    private async Task OnValueSet(string? newValue)
+    {
+        if (newValue != Value)
         {
-            FloatNumber = floatNumber;
+            NumberValue = ParseNumberValue(newValue?.Trim());
+            await NumberValueChanged.InvokeAsync(NumberValue);
+
+            // Make sure this is called last, after NumberValueChanged has been called
+            CurrentValueAsString = newValue;
+        }    
+    }
+
+    /// <summary>
+    /// Tries to convert the string InputText value into a a number of type <typeparamref name="TNumberValue"/>.
+    /// </summary>
+    /// <remarks>Works out the type of <typeparamref name="TNumberValue"/> and converts it into that type if possible.</remarks>
+    /// <returns>The parsed value of type <typeparamref name="TNumberValue"/> if the conversion is successful; otherwise, <see langword="null"/>.</returns>
+    /// <exception cref="InvalidOperationException">Thrown if <typeparamref name="TNumberValue"/> is not a supported numeric type.</exception>
+    private TNumberValue? ParseNumberValue(string? value)
+    {
+        object? result;
+        bool success;
+
+        Type? targetType = Nullable.GetUnderlyingType(typeof(TNumberValue)) ?? typeof(TNumberValue);
+        if (targetType == typeof(int))
+        {
+            success = int.TryParse(value, CultureInfo.InvariantCulture, out var intVal);
+            result = intVal;
+        }
+        else if (targetType == typeof(long))
+        {
+            success = long.TryParse(value, CultureInfo.InvariantCulture, out var longVal);
+            result = longVal;
+        }
+        else if (targetType == typeof(short))
+        {
+            success = short.TryParse(value, CultureInfo.InvariantCulture, out var shortVal);
+            result = shortVal;
+        }
+        else if (targetType == typeof(float))
+        {
+            success = float.TryParse(value, CultureInfo.InvariantCulture, out var floatVal);
+            result = floatVal;
+        }
+        else if (targetType == typeof(double))
+        {
+            success = double.TryParse(value, CultureInfo.InvariantCulture, out var doubleVal);
+            result = doubleVal;
+        }
+        else if (targetType == typeof(decimal))
+        {
+            success = decimal.TryParse(value, CultureInfo.InvariantCulture, out var decimalVal);
+            result = decimalVal;
         }
         else
         {
-            FloatNumber = null;
+            throw new InvalidOperationException($"The type '{targetType}' is not a supported {nameof(NumberValue)} type. Only int, long, short, float, double, and decimal are allowed.");
         }
 
-        await WholeNumberChanged.InvokeAsync(WholeNumber);
-        await FloatNumberChanged.InvokeAsync(FloatNumber);
+        return success ? (TNumberValue)result : default;
     }
 }
