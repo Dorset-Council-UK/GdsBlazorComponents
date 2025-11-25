@@ -10,7 +10,7 @@ public partial class GdsInputNumber<TNumberValue>
     private string? CascadedId { get; set; }
 
     [Parameter, EditorRequired]
-    public TNumberValue? NumberValue { get; set; }
+    public TNumberValue? NumberValue { get; set; } // Nullable just in case someone tries to use a non number type
     [Parameter]
     public EventCallback<TNumberValue> NumberValueChanged { get; set; }
     [Parameter]
@@ -74,7 +74,7 @@ public partial class GdsInputNumber<TNumberValue>
     /// Tries to convert the string InputText value into a number of type <typeparamref name="TNumberValue"/>.
     /// </summary>
     /// <remarks>Works out the type of <typeparamref name="TNumberValue"/> and converts it into that type if possible.</remarks>
-    /// <returns>The parsed value of type <typeparamref name="TNumberValue"/> if the conversion is successful; otherwise, <see langword="null"/>.</returns>
+    /// <returns>The parsed value of type <typeparamref name="TNumberValue"/> if the conversion is successful; otherwise, <see langword="default"/>.</returns>
     /// <exception cref="InvalidOperationException">Thrown if <typeparamref name="TNumberValue"/> is not a supported numeric type.</exception>
     private TNumberValue? ParseNumberValue(string? value)
     {
