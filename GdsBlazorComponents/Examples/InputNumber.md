@@ -38,7 +38,7 @@ public class ExampleModel
     <GdsLabel Text="What is your account number?" />
     <GdsHint>Must be between 6 and 8 digits long</GdsHint>
     <GdsErrorMessage />
-    <GdsInputNumber @bind-Value=Model.AccountNumberText @bind-WholeNumber=Model.AccountNumber class="govuk-input govuk-input--width-10" />
+    <GdsInputNumber @bind-Value=Model.AccountNumberText @bind-NumberValue=Model.AccountNumber class="govuk-input govuk-input--width-10" />
 </GdsFormGroup>
 ```
 
@@ -50,7 +50,7 @@ public class ExampleModel
     <GdsHint>Weight, in kilograms</GdsHint>
     <GdsErrorMessage />
     <div class="govuk-input__wrapper">
-        <GdsInputNumber @bind-Value=Model.WeightText @bind-FloatNumber=Model.Weight class="govuk-input govuk-input--width-5" />
+        <GdsInputNumber @bind-Value=Model.WeightText @bind-NumberValue=Model.Weight class="govuk-input govuk-input--width-5" />
         <div class="govuk-input__suffix" aria-hidden="true">kg</div>
     </div>
 </GdsFormGroup>
