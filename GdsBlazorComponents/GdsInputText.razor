@@ -1,6 +1,6 @@
 ﻿@inherits InputText
 
-<input id="@Id" name="@NameAttributeValue" @attributes="AdditionalAttributes" class="@CssClass" @bind-Value="CurrentValueAsString" @bind-Value:event="oninput" />
+<input id="@Id" name="@NameAttributeValue" @attributes="AdditionalAttributes" class="@CssClass" @bind-Value="CurrentValueAsString" @bind-Value:event="onchange" />
 
 @code {
     [CascadingParameter]

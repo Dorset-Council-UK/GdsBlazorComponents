@@ -1,4 +1,6 @@
 ﻿@inherits InputText
+@typeparam TNumberValue
+
 @if (Show)
 {
     <input
@@ -9,8 +11,8 @@
         inputmode="@_inputmode"
         spellcheck="false"
         aria-describedby="@_describedBy"
-        @bind-Value="CurrentValueAsString"
-        @bind-Value:event="oninput"
-        @bind-Value:after="@AfterSetValue"
+        @bind-Value:get="CurrentValueAsString"
+        @bind-Value:set="OnValueSet"
+        @bind-Value:event="onchange"
     />
 }
