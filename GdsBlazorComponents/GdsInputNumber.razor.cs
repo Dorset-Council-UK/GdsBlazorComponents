@@ -71,7 +71,7 @@ public partial class GdsInputNumber<TNumberValue>
     }
 
     /// <summary>
-    /// Tries to convert the string InputText value into a a number of type <typeparamref name="TNumberValue"/>.
+    /// Tries to convert the string InputText value into a number of type <typeparamref name="TNumberValue"/>.
     /// </summary>
     /// <remarks>Works out the type of <typeparamref name="TNumberValue"/> and converts it into that type if possible.</remarks>
     /// <returns>The parsed value of type <typeparamref name="TNumberValue"/> if the conversion is successful; otherwise, <see langword="null"/>.</returns>
