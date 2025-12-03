@@ -1,4 +1,5 @@
 ﻿$govuk-new-typography-scale: true;
+$govuk-font-family: "Arial",sans-serif;
 $govuk-assets-path: "/_content/Dorset-Council-UK.GdsBlazorComponents/";
 
 // Use our image for the copyright notice
@@ -14,6 +15,11 @@ $govuk-footer-crest-image-height-2x: $govuk-footer-crest-image-height * 2;
     @include govuk-media-query($from: desktop) {
         display: inline-block;
     }
+}
+
+//make sure header navigation is right aligned
+.govuk-header__content {
+    text-align: right;
 }
 
 // Use our image for the copyright notice
