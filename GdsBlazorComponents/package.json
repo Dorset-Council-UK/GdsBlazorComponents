@@ -12,7 +12,7 @@
     "build:dev": "webpack --node-env development --config webpack.dev.js",
     "watch": "webpack --config webpack.dev.js --watch",
     "audit": "npm audit",
-    "audit fix": "npm audit fix",
+    "audit:fix": "npm audit fix",
     "outdated": "npm outdated"
   },
   "dependencies": {
