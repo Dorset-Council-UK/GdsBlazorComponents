@@ -1,0 +1,69 @@
+﻿@using Microsoft.AspNetCore.Components.Routing
+
+@inject NavigationManager Navigation
+@implements IDisposable
+
+<li class="govuk-header__navigation-item @(_isActive ? "govuk-header__navigation-item--active" : "")">
+    <a href="@Href" class="@LinkClass">
+        @ChildContent
+    </a>
+</li>
+
+@code {
+    [Parameter]
+    public string Href { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string LinkClass { get; set; } = "govuk-header__link";
+
+    [Parameter]
+    public NavLinkMatch Match { get; set; } = NavLinkMatch.Prefix;
+
+    private bool _isActive;
+
+    protected override void OnInitialized()
+    {
+        Navigation.LocationChanged += OnLocationChanged;
+        UpdateActiveState();
+    }
+
+    protected override void OnParametersSet()
+    {
+        UpdateActiveState();
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        UpdateActiveState();
+        StateHasChanged();
+    }
+
+    private void UpdateActiveState()
+    {
+        var currentUri = Navigation.ToAbsoluteUri(Navigation.Uri);
+        var targetUri = Navigation.ToAbsoluteUri(Href);
+
+        var currentPath = NormalizePath(currentUri.AbsolutePath);
+        var targetPath = NormalizePath(targetUri.AbsolutePath);
+
+        _isActive = Match == NavLinkMatch.All
+            ? currentPath.Equals(targetPath, StringComparison.OrdinalIgnoreCase)
+            : currentPath.StartsWith(targetPath, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string NormalizePath(string path)
+    {
+        // Ensure consistent trailing slash handling
+        return path.Length > 1 && path.EndsWith('/')
+            ? path[..^1]
+            : path;
+    }
+
+    public void Dispose()
+    {
+        Navigation.LocationChanged -= OnLocationChanged;
+    }
+}

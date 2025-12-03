@@ -2,12 +2,20 @@
     <div class="govuk-header__container govuk-width-container">
         <div class="govuk-header__logo">
             <a href="@ServiceUrl" class="govuk-header__link govuk-header__link--homepage">
-                <img src="@LogoUrl" alt="@ServiceName">
+                <img src="@LogoUrl" alt="@ServiceName" height="40" class="govuk-header__logotype" />
+                <span class="govuk-header__product-name">@ServiceName</span>
             </a>
         </div>
         <div class="govuk-header__content">
-            <div class="govuk-header__service-name">@ServiceName</div>
-            @ChildContent
+            @if (NavLinks != null)
+            {
+                <nav aria-label="Menu" class="govuk-header__navigation">
+                    <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide menu" aria-expanded="false">Menu</button>
+                    <ul id="navigation" class="govuk-header__navigation-list">
+                        @NavLinks
+                    </ul>
+                </nav>
+            }
         </div>
     </div>
 </header>
@@ -23,5 +31,6 @@
     public string LogoUrl { get; set; }
 
     [Parameter]
-    public RenderFragment? ChildContent { get; set; }
+    public RenderFragment? NavLinks { get; set; }
+
 }
