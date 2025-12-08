@@ -1,6 +1,8 @@
 # Header
 
-Render a single GOV.UK Design System styled header component, with optional navigation links
+Render a single GOV.UK Design System styled header component, with optional navigation links.
+
+This is designed to work with the rebranded GDS styles, so your `<html>` element should include the class `govuk-template--rebranded`.
 
 ## Example image
 
@@ -19,6 +21,23 @@ Render a single GOV.UK Design System styled header component, with optional navi
 - The `LogoUrl` parameter allows you to use your service logo image.
 - Optionally, you can add navigation links using the `NavLinks` fragment and including a list of `GdsHeaderNavLink`s.
 - Should be placed in your layout file, above the main content.
+
+## Changing the widths
+This component uses the defaults of 1/3rd width for the logo and service name, and 2/3rds width for the navigation links.
+If you need to change these widths, you can do so by overriding the CSS variables in your own stylesheet, for example:
+```css
+.govuk-header__content {
+    @include govuk-media-query($from: desktop) {
+        width: 47%;
+    }
+}
+
+.govuk-header__logo {
+    @include govuk-media-query($from: desktop) {
+        width: 53%;
+    }
+}
+```
 
 ## Notes
 This component is intentionally restrictive. If you need more control over the header layout, consider creating your own header component using standard HTML and CSS.
