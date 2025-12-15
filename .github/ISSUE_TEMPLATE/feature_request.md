@@ -1,20 +1,21 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
+name: Feature
+about: 'A request, idea, or new functionality'
 title: ''
 labels: enhancement
 assignees: ''
+type: feature
 
 ---
 
-## Is your feature request related to a problem? Please describe.
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+## Overview of Changes
+Provide a clear summary of the new functionality or improvement being introduced. Explain why this change is needed and what value it adds.
 
-## Describe the solution you'd like
-A clear and concise description of what you want to happen.
+## Proposed Solution
+Outline the approach for implementing the feature. Include key components, workflows, or technical considerations.
 
-## Describe alternatives you've considered
-A clear and concise description of any alternative solutions or features you've considered.
+## Additional Context
+Include any relevant details or references that help explain the feature.
 
-## Additional context
-Add any other context or screenshots about the feature request here.
+## Diagrams (Optional)
+Include a diagram (e.g., Mermaid) if it helps explain the feature or its components. This is optional but recommended for complex workflows.
