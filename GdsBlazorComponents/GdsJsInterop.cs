@@ -26,10 +26,18 @@ public class GdsJsInterop : IGdsJsInterop, IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
+        GC.SuppressFinalize(this);
         if (moduleTask.IsValueCreated)
         {
-            var module = await moduleTask.Value;
-            await module.DisposeAsync();
+            try
+            {
+                var module = await moduleTask.Value;
+                await module.DisposeAsync();
+            }
+            catch (JSDisconnectedException)
+            {
+                // The circuit has already disconnected and is being disposed.
+            }
         }
     }
 }
