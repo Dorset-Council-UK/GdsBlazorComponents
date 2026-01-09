@@ -8,7 +8,7 @@ function onCreateError(error: any) {
 }
 
 /**
- * Observer class to watch for DOM changes and initialize GDS components
+ * Observer class to watch for DOM changes and initialise GDS components
  */
 export class GdsObserver {
     private observer: MutationObserver | null = null
@@ -34,7 +34,6 @@ export class GdsObserver {
         })
 
         this.isObserving = true
-        console.debug('GDS Observer started')
     }
 
     /**
@@ -45,107 +44,98 @@ export class GdsObserver {
             this.observer.disconnect()
             this.observer = null
             this.isObserving = false
-            console.debug('GDS Observer stopped')
         }
     }
 
     /**
-     * Handle DOM mutations and initialize GDS components
+     * Handle DOM mutations and initialise GDS components
      */
     private handleMutations(mutations: MutationRecord[]): void {
-        const componentsToInit = new Set<Element>()
+        const moduleNames = new Set<string>()
 
         mutations.forEach((mutation) => {
             mutation.addedNodes.forEach((node) => {
                 if (node.nodeType === Node.ELEMENT_NODE) {
                     const element = node as Element
-                    this.findGdsComponents(element, componentsToInit)
+                    this.findModuleNames(element, moduleNames)
                 }
             })
         })
 
-        if (componentsToInit.size > 0) {
-            this.initializeComponents(componentsToInit)
+        if (moduleNames.size > 0) {
+            this.initialiseModules(moduleNames)
         }
     }
 
     /**
-     * Find all GDS components in the given element
+     * Find all GDS module names in the given element
      */
-    private findGdsComponents(element: Element, componentsToInit: Set<Element>): void {
+    private findModuleNames(element: Element, moduleNames: Set<string>): void {
         // Check if the element itself is a GDS component
         if (element.hasAttribute('data-module')) {
-            componentsToInit.add(element)
+            const moduleName = element.getAttribute('data-module')
+            if (moduleName) {
+                moduleNames.add(moduleName)
+            }
         }
 
         // Find all child elements with data-module attribute
         const gdsComponents = element.querySelectorAll('[data-module]')
-        gdsComponents.forEach(component => componentsToInit.add(component))
+        gdsComponents.forEach(component => {
+            const moduleName = component.getAttribute('data-module')
+            if (moduleName) {
+                moduleNames.add(moduleName)
+            }
+        })
     }
 
     /**
-     * Initialize GDS components
+     * Initialise GDS modules by calling createAll for each unique module type
      * See GitHub - govuk-frontend https://github.com/alphagov/govuk-frontend/blob/main/packages/govuk-frontend/src/govuk/init.mjs for complete list of component modules.
      */
-    private initializeComponents(components: Set<Element>): void {
-        components.forEach((component) => {
-            const moduleName = component.getAttribute('data-module')
-
+    private initialiseModules(moduleNames: Set<string>): void {
+        moduleNames.forEach((moduleName) => {
             switch (moduleName) {
                 case 'govuk-accordion':
-                    console.debug('Creating GDS Accordion components')
                     createAll(Accordion, undefined, onCreateError)
                     break
                 case 'govuk-button':
-                    console.debug('Creating GDS Button components')
                     createAll(Button, undefined, onCreateError)
                     break
                 case 'govuk-character-count':
-                    console.debug('Creating GDS Character Count components')
                     createAll(CharacterCount, undefined, onCreateError)
                     break
                 case 'govuk-checkboxes':
-                    console.debug('Creating GDS Blazor Checkbox components')
                     createAll(BlazorCheckboxes, undefined, onCreateError)
                     break
                 case 'govuk-error-summary':
-                    console.debug('Creating GDS Error Summary components')
                     createAll(ErrorSummary, undefined, onCreateError)
                     break
                 case 'govuk-exit-this-page':
-                    console.debug('Creating GDS Exit This Page components')
                     createAll(ExitThisPage, undefined, onCreateError)
                     break
                 case 'govuk-file-upload':
-                    console.debug('Creating GDS File Upload components')
                     createAll(FileUpload, undefined, onCreateError)
                     break
                 case 'govuk-header':
-                    console.debug('Creating GDS Header components')
                     createAll(Header, undefined, onCreateError)
                     break
                 case 'govuk-notification-banner':
-                    console.debug('Creating GDS Notification Banner components')
                     createAll(NotificationBanner, undefined, onCreateError)
                     break
                 case 'govuk-password-input':
-                    console.debug('Creating GDS Password Input components')
                     createAll(PasswordInput, undefined, onCreateError)
                     break
                 case 'govuk-radios':
-                    console.debug('Creating GDS Radios components')
                     createAll(Radios, undefined, onCreateError)
                     break
                 case 'govuk-service-navigation':
-                    console.debug('Creating GDS Service Navigation components')
                     createAll(ServiceNavigation, undefined, onCreateError)
                     break
                 case 'govuk-skip-link':
-                    console.debug('Creating GDS Skip Link components')
                     createAll(SkipLink, undefined, onCreateError)
                     break
                 case 'govuk-tabs':
-                    console.debug('Creating GDS Tabs components')
                     createAll(Tabs, undefined, onCreateError)
                     break
                 default:
