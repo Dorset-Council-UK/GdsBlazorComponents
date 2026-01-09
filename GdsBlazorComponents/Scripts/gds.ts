@@ -21,7 +21,7 @@ function stopGdsObserver() {
 }
 
 // Setup GDS - called automatically when module loads
-function setupGds() {
+function setupGDS() {
     setupGdsFrontend();
     startGdsObserver();
 }
@@ -35,10 +35,10 @@ function cleanupGDS() {
 // Automatically initialize when DOM is ready. Ensure it works whether the script is loaded before or after DOMContentLoaded.
 if (document.readyState === 'loading') {
     // Loading hasn't finished yet
-    document.addEventListener('DOMContentLoaded', setupGds)
+    document.addEventListener('DOMContentLoaded', setupGDS)
 } else {
     // `DOMContentLoaded` has already fired
-    setupGds();
+    setupGDS();
 }
 
 // Automatically cleanup on page unload
