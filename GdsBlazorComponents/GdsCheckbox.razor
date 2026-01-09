@@ -6,7 +6,7 @@
 }
 
 <div @key="_id" class="govuk-checkboxes__item">
-    <InputCheckbox id="@_id" @bind-Value="Option.Selected" class="govuk-checkboxes__input" data-behaviour="@_exclusiveBehaviour" aria-describedby="@_hintId" data-aria-controls="@ConditionalId" />
+    <InputCheckbox id="@_id" name="@Name" @bind-Value="Option.Selected" class="govuk-checkboxes__input" data-behaviour="@_exclusiveBehaviour" aria-describedby="@_hintId" data-aria-controls="@ConditionalId" />
     <GdsLabel For="@_id" AdditionalCssClasses="govuk-checkboxes__label" Text="@Option.Label" />
     @if (_hasHint)
     {
@@ -17,6 +17,9 @@
 @code {
     [Parameter, EditorRequired]
     public required GdsOptionItem<T> Option { get; set; }
+
+    [Parameter]
+    public string Name { get; set; } = Guid.NewGuid().ToString();
 
     [Parameter]
     public string? ConditionalId { get; set; }

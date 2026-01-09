@@ -5,7 +5,7 @@
     <div class="@_cssClass" data-module="govuk-checkboxes">
         @foreach (var option in Options)
         {
-            <GdsCheckbox Option="option" />
+            <GdsCheckbox Option="option" Name="@Name" />
         }
     </div>
 }
@@ -16,6 +16,9 @@
 
     [Parameter]
     public bool Smaller { get; set; }
+
+    [Parameter]
+    public string Name { get; set; } = Guid.NewGuid().ToString();
 
     private string _cssClass => Smaller ? "govuk-checkboxes govuk-checkboxes--small" : "govuk-checkboxes";
 }
