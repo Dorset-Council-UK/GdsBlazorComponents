@@ -1,34 +1,45 @@
 ﻿import './gds.scss'
+import { GdsObserver } from './gdsObserver'
 
-import { createAll, Accordion, Button, CharacterCount, ErrorSummary, Header, PasswordInput, Radios, SkipLink, FileUpload } from 'govuk-frontend'
-import { BlazorCheckboxes } from './blazorCheckboxes'
-
-function onCreateError(error: any) {
-    if (error.name !== 'InitError') {
-        console.error('Error creating GDS component: %s', error.message)
-    }
-}
-
-/**
- * See GitHub - govuk-frontend https://github.com/alphagov/govuk-frontend/blob/main/packages/govuk-frontend/src/govuk/init.mjs for complete list of component modules.
- */
-export function initGDS() {
+// Setup GDS frontend requirements on document.body
+function setupGdsFrontend(): void {
     document.body.classList.add('js-enabled')
     if ('noModule' in HTMLScriptElement.prototype) document.body.classList.add('govuk-frontend-supported')
-
-    createAll(Accordion, undefined, onCreateError)
-    createAll(Button, undefined, onCreateError)
-    createAll(CharacterCount, undefined, onCreateError)
-    //createAll(Checkboxes, undefined, onCreateError)
-    createAll(BlazorCheckboxes, undefined, onCreateError)
-    createAll(ErrorSummary, undefined, onCreateError)
-    //createAll(ExitThisPage, undefined, notifyErrorMonitoringService)
-    createAll(FileUpload, undefined, onCreateError)
-    createAll(Header, undefined, onCreateError)
-    //createAll(NotificationBanner, undefined, notifyErrorMonitoringService)
-    createAll(PasswordInput, undefined, onCreateError)
-    createAll(Radios, undefined, onCreateError)
-    //createAll(ServiceNavigation, undefined, notifyErrorMonitoringService)
-    createAll(SkipLink, undefined, onCreateError)
-    //createAll(Tabs, undefined, notifyErrorMonitoringService)
 }
+
+let gdsObserver: GdsObserver | null = null
+
+// Start observing the DOM for dynamically added GDS components
+function startGdsObserver() {
+    if (!gdsObserver) gdsObserver = new GdsObserver()
+    gdsObserver.startObserving()
+}
+
+// Stop observing the DOM
+function stopGdsObserver() {
+    if (gdsObserver) gdsObserver.stopObserving()
+}
+
+// Setup GDS - called automatically when module loads
+function setupGDS() {
+    setupGdsFrontend();
+    startGdsObserver();
+}
+
+// Cleanup - called automatically on page unload
+function cleanupGDS() {
+    stopGdsObserver();
+    document.body.classList.remove('js-enabled', 'govuk-frontend-supported')
+}
+
+// Automatically initialize when DOM is ready. Ensure it works whether the script is loaded before or after DOMContentLoaded.
+if (document.readyState === 'loading') {
+    // Loading hasn't finished yet
+    document.addEventListener('DOMContentLoaded', setupGDS)
+} else {
+    // `DOMContentLoaded` has already fired
+    setupGDS();
+}
+
+// Automatically cleanup on page unload
+window.addEventListener('beforeunload', cleanupGDS)
