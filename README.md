@@ -8,6 +8,20 @@ This was originally built for our [Dorset Council - Flood Online Reporting Tool]
 
 We expect to use this project widely in our other projects to ensure a consistent use of GDS components within any Blazor projects that we develop using Government design principles.
 
+## Getting Started
+
+Add this line to the top of your `App.razor` file:
+```html
+<head>
+  <link rel="stylesheet" href="@Assets["_content/Dorset-Council-UK.GdsBlazorComponents/gds.css"]">
+</head>
+```
+
+Add this line to the bottom of your `App.razor` file:
+```html
+<script type="module" src="@Assets["_content/Dorset-Council-UK.GdsBlazorComponents/gds.js"]"></script>
+```
+
 ## Component Examples
 
 - [GdsBreadcrumbs](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Breadcrumbs.md)
@@ -37,7 +51,6 @@ We expect to use this project widely in our other projects to ensure a consisten
 
 ### Other examples:
 
-- [JavaScript](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/JavaScript%20Interop.md)
 - [Validation Classes](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/ValidationClasses.md)
 
 ## Bugs
