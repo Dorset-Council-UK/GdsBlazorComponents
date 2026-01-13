@@ -14,6 +14,7 @@ Render a single GOV.UK Design System styled checkbox using the option from [GdsO
 - If the [GdsOptionItem](GdsOptionItem.md) includes a hint, it is displayed below the label as defined by the GOV.UK Design System style.
 - The component integrates with Blazor's validation system, but the errors won't be displayed in this component. See [GdsCheckboxes](Checkboxes.md) which shows check box error messages are shown above the check boxes using [GdsErrorMessage](ErrorMessage.md).
 - The component renders the check boxes using Blazor's `InputCheckbox` component, labels via the [GdsLabel](Label.md) component, and hints via the [GdsHint](Hint.md) component.
+- You _can_ include a `Name` parameter to ensure the check box is grouped correctly when used in a group context. If ommitted, a unique name will be generated.
 
 ## Simple example
 

@@ -11,6 +11,7 @@ Render GOV.UK Design System styled checkboxes using the options from a list of [
 - Renders a list of [GdsOptionItem](GdsOptionItem.md) under a ```<div class="govuk-checkboxes" data-module="govuk-checkboxes">```.
 - Supports binding to any value type (e.g., string, int, enum, bool, custom types).
 - It is recommended to use this component within a [GdsFormGroup](FormGroup.md), and [GdsFieldsetGroup](FieldsetGroup.md) to fully support correct HTML and accessibility.
+- It is recommended to include the `Name` parameter to ensure the check boxes are grouped correctly and exclusive behaviour works as intended. If ommitted, a unique name will be generated.
 
 ## Simple example
 
@@ -21,7 +22,7 @@ ICollection<GdsOptionItem<int>> contactTypes = [
     new ("contactTypeText", "Text message", 3),
     new ("contactTypePost", "Post", 4),
 ];
-<GdsCheckboxes Options="@contactTypes" />
+<GdsCheckboxes Options="@contactTypes" Name="ContactTypes" />
 ```
 
 ## Smaller checkboxes example
@@ -33,7 +34,7 @@ ICollection<GdsOptionItem<int>> contactTypes = [
     new ("contactTypeText", "Text message", 3),
     new ("contactTypePost", "Post", 4),
 ];
-<GdsCheckboxes Options="@contactTypes" Smaller="true" />
+<GdsCheckboxes Options="@contactTypes" Smaller="true" Name="ContactTypes" />
 ```
 
 ## Recommended use example
@@ -53,7 +54,7 @@ ICollection<GdsOptionItem<int>> contactTypes = [
         <Content>
             <GdsHint>Select all that apply.</GdsHint>
             <GdsErrorMessage />
-            <GdsCheckboxes Options="@contactTypes" />
+            <GdsCheckboxes Options="@contactTypes" Name="ContactTypes" />
         </Content>
     </GdsFieldsetGroup>
 </GdsFormGroup>
@@ -80,7 +81,7 @@ ICollection<GdsOptionItem<int>> contactTypes = [
                 @foreach (var option in contactTypes)
                 {
                     var conditionalId = option.Value == 1 ? $"{option.Id}-conditional" : null;
-                    <GdsCheckbox Option="@option" ConditionalId="@conditionalId" />
+                    <GdsCheckbox Option="@option" ConditionalId="@conditionalId" Name="ContactTypes" />
                     if (option.Value == 1)
                     {
                         <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="@conditionalId">
