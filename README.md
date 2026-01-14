@@ -29,7 +29,7 @@ Add this line to the bottom of your `App.razor` file:
 <script type="module" src="@Assets["_content/Dorset-Council-UK.GdsBlazorComponents/gds.js"]"></script>
 ```
 
-## Blazor Webassembly: 
+## Blazor WebAssembly: 
 Add this line to the top of your `index.html` file:
 ```html
 <head>
