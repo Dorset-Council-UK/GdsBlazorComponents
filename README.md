@@ -37,7 +37,7 @@ This is a partial example to show the required setup. Combine these lines into y
 </html>
 ```
 
-## Blazor WebAssembly
+### Blazor WebAssembly
 
 Your `index.html` should include the following GOV.UK template elements.
 
