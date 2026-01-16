@@ -15,31 +15,48 @@ Add the `@using` directive to your file or `_Imports.razor`
 @using GdsBlazorComponents
 ```
 
-### Blazor Web App: 
+### Blazor Web App
 
-Add this line to the top of your `App.razor` file:
+Your `App.razor` should include the following GOV.UK template elements.
+
+This is a partial example to show the required setup. Combine these lines into your existing Blazor markup as appropriate:
+
 ```html
+<!DOCTYPE html>
+<html lang="en-GB" class="govuk-template">
+
 <head>
   <link rel="stylesheet" href="@Assets["_content/Dorset-Council-UK.GdsBlazorComponents/gds.css"]">
+  <!-- other head content -->
 </head>
+
+<body class="govuk-template__body govuk-frontend-supported">
+  <!-- other body content -->
+  <script type="module" src="@Assets["_content/Dorset-Council-UK.GdsBlazorComponents/gds.js"]"></script>
+</body>
+</html>
 ```
 
-Add this line to the bottom of your `App.razor` file:
-```html
-<script type="module" src="@Assets["_content/Dorset-Council-UK.GdsBlazorComponents/gds.js"]"></script>
-```
+### Blazor WebAssembly
 
-## Blazor WebAssembly: 
-Add this line to the top of your `index.html` file:
+Your `index.html` should include the following GOV.UK template elements.
+
+This is a partial example to show the required setup. Combine these lines into your existing Blazor WebAssembly markup as appropriate:
+
 ```html
+<!DOCTYPE html>
+<html lang="en-GB" class="govuk-template">
+
 <head>
   <link rel="stylesheet" href="_content/Dorset-Council-UK.GdsBlazorComponents/gds.css">
+  <!-- other head content -->
 </head>
-```
 
-Add this line to the bottom of your `index.html` file:
-```html
-<script type="module" src="_content/Dorset-Council-UK.GdsBlazorComponents/gds.js"></script>
+<body class="govuk-template__body govuk-frontend-supported">
+  <!-- other body content -->
+  <script type="module" src="_content/Dorset-Council-UK.GdsBlazorComponents/gds.js"></script>
+</body>
+</html>
 ```
 
 ## Component Examples
