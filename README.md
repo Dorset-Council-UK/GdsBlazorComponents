@@ -10,6 +10,13 @@ We expect to use this project widely in our other projects to ensure a consisten
 
 ## Getting Started
 
+Add the `@using` directive to your file or `_Imports.razor`
+```razor
+@using GdsBlazorComponents
+```
+
+### Blazor Web App: 
+
 Add this line to the top of your `App.razor` file:
 ```html
 <head>
@@ -20,6 +27,19 @@ Add this line to the top of your `App.razor` file:
 Add this line to the bottom of your `App.razor` file:
 ```html
 <script type="module" src="@Assets["_content/Dorset-Council-UK.GdsBlazorComponents/gds.js"]"></script>
+```
+
+## Blazor WebAssembly: 
+Add this line to the top of your `index.html` file:
+```html
+<head>
+  <link rel="stylesheet" href="_content/Dorset-Council-UK.GdsBlazorComponents/gds.css">
+</head>
+```
+
+Add this line to the bottom of your `index.html` file:
+```html
+<script type="module" src="_content/Dorset-Council-UK.GdsBlazorComponents/gds.js"></script>
 ```
 
 ## Component Examples
