@@ -4,7 +4,11 @@ import { GdsObserver } from './gdsObserver'
 // Setup GDS frontend requirements on document.body
 function setupGdsFrontend(): void {
     document.body.classList.add('js-enabled')
-    if ('noModule' in HTMLScriptElement.prototype) document.body.classList.add('govuk-frontend-supported')
+    if ('noModule' in HTMLScriptElement.prototype) {
+        document.body.classList.add('govuk-frontend-supported')
+    } else {
+        document.body.classList.remove('govuk-frontend-supported')
+    }
 }
 
 let gdsObserver: GdsObserver | null = null
@@ -22,14 +26,13 @@ function stopGdsObserver() {
 
 // Setup GDS - called automatically when module loads
 function setupGDS() {
-    setupGdsFrontend();
-    startGdsObserver();
+    setupGdsFrontend()
+    startGdsObserver()
 }
 
 // Cleanup - called automatically on page unload
 function cleanupGDS() {
-    stopGdsObserver();
-    document.body.classList.remove('js-enabled', 'govuk-frontend-supported')
+    stopGdsObserver()
 }
 
 // Automatically initialize when DOM is ready. Ensure it works whether the script is loaded before or after DOMContentLoaded.
@@ -38,7 +41,7 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setupGDS)
 } else {
     // `DOMContentLoaded` has already fired
-    setupGDS();
+    setupGDS()
 }
 
 // Automatically cleanup on page unload
