@@ -11,7 +11,7 @@ $govuk-footer-crest-image-height-2x: $govuk-footer-crest-image-height * 2;
 @import "govuk-frontend/dist/govuk";
 
 // Colour variables to help with user styling
-﻿:root {
+:root {
     --govuk-frontend-color-red: #{govuk-colour("red")};
     --govuk-frontend-color-yellow: #{govuk-colour("yellow")};
     --govuk-frontend-color-green: #{govuk-colour("green")};
