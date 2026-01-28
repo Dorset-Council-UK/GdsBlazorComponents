@@ -1,16 +1,14 @@
-﻿<strong class="@Class">
-    @Text
+﻿<strong class="@($"govuk-tag {Colour?.GetDescription()} {AdditionalCssClasses}")">
+	@Text
 </strong>
 
 @code {
-    [Parameter]
-    public required string Text { get; set; }
+	[Parameter]
+	public required string Text { get; set; }
 
-    [Parameter]
-    public GdsTagColour? Colour { get; set; }
+	[Parameter]
+	public GdsTagColour? Colour { get; set; }
 
-    [Parameter]
-    public string? AdditionalCssClasses { get; set; }
-
-    private string Class => $"govuk-tag {Colour?.GetValue() ?? string.Empty} {AdditionalCssClasses}";
+	[Parameter]
+	public string? AdditionalCssClasses { get; set; }
 }
