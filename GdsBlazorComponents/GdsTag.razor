@@ -1,0 +1,14 @@
+﻿<strong class="@($"govuk-tag {Colour?.GetDescription()} {AdditionalCssClasses}")">
+	@Text
+</strong>
+
+@code {
+	[Parameter]
+	public required string Text { get; set; }
+
+	[Parameter]
+	public GdsTagColour? Colour { get; set; }
+
+	[Parameter]
+	public string? AdditionalCssClasses { get; set; }
+}

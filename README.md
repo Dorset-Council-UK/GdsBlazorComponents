@@ -85,6 +85,7 @@ This is a partial example to show the required setup. Combine these lines into y
 - [GdsSkipLink](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/SkipLink.md)
 - [GdsSpinner](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Spinner.md)
 - [GdsWarning](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Warning.md)
+- [GdsTag](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Tag.md)
 
 ### Other examples:
 

@@ -2,7 +2,7 @@
     <p class="govuk-phase-banner__content">
         @if (Phase != Phases.None)
         {
-            <strong class="govuk-tag govuk-phase-banner__content__tag">@Phase.ToString()</strong>
+            <GdsTag Text="@Phase.ToString()" AdditionalCssClasses="govuk-phase-banner__content__tag" />
         }
         @if (FeedbackLink != null)
         {
