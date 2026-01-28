@@ -4,7 +4,7 @@ Render a GOV.UK Design System styled tag component.
 
 ## Example image
 
-![Colourd Tag example](TagColours.png)
+![Coloured Tag example](TagColours.png)
 
 ## How it works
 
