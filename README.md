@@ -89,6 +89,7 @@ This is a partial example to show the required setup. Combine these lines into y
 
 ### Other examples:
 
+- [Colours](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Colours.md)
 - [Validation Classes](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/ValidationClasses.md)
 
 ## Bugs
