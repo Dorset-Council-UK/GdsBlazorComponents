@@ -1,12 +1,6 @@
 ﻿$govuk-new-typography-scale: true;
-$govuk-font-family: "Arial",sans-serif;
+$govuk-font-family: arial, sans-serif;
 $govuk-assets-path: "/_content/Dorset-Council-UK.GdsBlazorComponents/";
-
-// Use our image for the copyright notice
-$govuk-footer-crest-image-width: 188px;
-$govuk-footer-crest-image-height: 80px;
-$govuk-footer-crest-image-width-2x: $govuk-footer-crest-image-width * 2;
-$govuk-footer-crest-image-height-2x: $govuk-footer-crest-image-height * 2;
 
 @import "govuk-frontend/dist/govuk";
 
@@ -46,18 +40,6 @@ $govuk-footer-crest-image-height-2x: $govuk-footer-crest-image-height * 2;
     text-align: right;
 }
 
-// Use our image for the copyright notice
-.govuk-footer__copyright-logo::before {
-    padding-top: ($govuk-footer-crest-image-height + govuk-spacing(2));
-    background: unset;
-    background-image: govuk-image-url("copyright.webp");
-    background-repeat: no-repeat;
-    background-position: 50% 0%;
-    background-size: $govuk-footer-crest-image-width $govuk-footer-crest-image-height;
-    -webkit-mask: unset;
-    mask: unset;
-}
-
 // Make GDS errors without links look like errors
 .govuk-error-summary__list {
     li {
@@ -70,15 +52,53 @@ $govuk-footer-crest-image-height-2x: $govuk-footer-crest-image-height * 2;
 section.related-navigation, .related-navigation {
     border-top: 2px solid govuk-colour("blue");
 
-    @include govuk-media-query($media-type: print) {
+    @media print {
         display: none !important;
     }
 
-    @include govuk-media-query($from: tablet) {
+    @media #{govuk-from-breakpoint(tablet)} {
         padding: 0;
     }
 
     h2, h3, h4 {
         margin-top: govuk-spacing(3);
+    }
+}
+
+// Adjustments for Dorset Council
+.dorset {
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    // Fill the space when the parent is flex
+    .flex-fill {
+        flex: 1 1 0%;
+    }
+
+    // Footer
+    .govuk-footer {
+        background-color: #2E3136;
+        border-top: 1px solid #2E3136;
+        color: govuk-colour("white");
+
+        .govuk-footer__meta {
+            justify-content: flex-start;
+        }
+
+        .govuk-footer__heading {
+            color: govuk-colour("white");
+            border-bottom-color: govuk-colour("white");
+        }
+
+        .govuk-footer__section-break {
+            border-bottom-color: govuk-colour("white");
+        }
+
+        .govuk-footer__link {
+            @include govuk-link-style-inverse;
+        }
     }
 }
