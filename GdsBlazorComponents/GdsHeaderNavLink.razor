@@ -4,7 +4,7 @@
 @implements IDisposable
 
 <li class="govuk-header__navigation-item @(_isActive ? "govuk-header__navigation-item--active" : null)">
-    <a href="@Href" class="@LinkClass" aria-current="@(_isActive ? "true" : null)">
+    <a href="@Href" class="@LinkClass" aria-current="@(_isActive ? "page" : null)">
         @ChildContent
     </a>
 </li>
