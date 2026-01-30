@@ -28,13 +28,6 @@ $govuk-assets-path: "/_content/Dorset-Council-UK.GdsBlazorComponents/";
     --govuk-frontend-color-turquoise: #{govuk-colour("turquoise")};
 }
 
-// Adjust the header logo to make the focus link colour cover the entire logo
-.govuk-header__link--homepage {
-    @include govuk-media-query($from: desktop) {
-        display: inline-block;
-    }
-}
-
 //make sure header navigation is right aligned
 .govuk-header__content {
     text-align: right;
@@ -67,21 +60,30 @@ section.related-navigation, .related-navigation {
 
 // Adjustments for Dorset Council
 .dorset {
+    $dorset-colour-header: #09476d;
+    $dorset-colour-footer: #2e3136;
+
     body {
         display: flex;
         flex-direction: column;
         min-height: 100vh;
     }
-
     // Fill the space when the parent is flex
     .flex-fill {
-        flex: 1 1 0%;
+        flex: 1;
     }
+    // Header
+    .govuk-header {
+        background-color: $dorset-colour-header;
 
+        .govuk-header__link--homepage:not(:focus) {
+            background-color: unset;
+        }
+    }
     // Footer
     .govuk-footer {
-        background-color: #2E3136;
-        border-top: 1px solid #2E3136;
+        background-color: $dorset-colour-footer;
+        border-top: 1px solid $dorset-colour-footer;
         color: govuk-colour("white");
 
         .govuk-footer__meta {
