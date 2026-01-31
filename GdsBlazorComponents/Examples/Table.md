@@ -1,11 +1,11 @@
-# Tag
+# Table
 
 Render a GOV.UK Design System styled tabel component.
 
 ## Example images
 
-![Tabel example with value and formatting](Tabel1.png)
-![Tabel example with ChildContent](Tabel2.png)
+![Table example with value and formatting](Tabel1.png)
+![Table example with ChildContent](Tabel2.png)
 
 ## How it works
 
