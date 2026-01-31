@@ -1,11 +1,11 @@
 # Table
 
-Render a GOV.UK Design System styled tabel component.
+Render a GOV.UK Design System styled table component.
 
 ## Example images
 
-![Table example with value and formatting](Tabel1.png)
-![Table example with ChildContent](Tabel2.png)
+![Table example with value and formatting](Table1.png)
+![Table example with ChildContent](Table2.png)
 
 ## How it works
 
