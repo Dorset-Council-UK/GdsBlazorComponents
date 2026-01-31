@@ -1,4 +1,4 @@
-# Header
+# Panel
 
 Render a single GOV.UK Design System styled panel component.
 
