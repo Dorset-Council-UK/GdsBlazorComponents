@@ -1,0 +1,32 @@
+﻿<th scope="@Scope.GetDescription()"
+	class="@($"govuk-table__header {(Numeric ? "govuk-table__header--numeric" : string.Empty)} {AdditionalCssClasses}")"
+	colspan="@Span(Colspan)"
+	rowspan="@Span(Rowspan)"
+	@attributes="@AdditionalAttributes">
+	@ChildContent
+</th>
+
+@code {
+	[Parameter]
+	public bool Numeric { get; set; }
+
+	[Parameter]
+	public int? Rowspan { get; set; }
+
+	[Parameter]
+	public int? Colspan { get; set; }
+
+	[Parameter]
+	public GdsTableHeaderScope Scope { get; set; } = GdsTableHeaderScope.Column;
+
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+	[Parameter(CaptureUnmatchedValues = true)]
+	public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+	[Parameter]
+	public string? AdditionalCssClasses { get; set; }
+
+	private static string? Span(int? span) => span > 1 ? span.Value.ToString() : null;
+}

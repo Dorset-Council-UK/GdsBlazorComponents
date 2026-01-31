@@ -1,0 +1,60 @@
+﻿@typeparam T
+
+<table class="@($"govuk-table {Density.GetDescription()} {AdditionalTableCssClasses}")" @attributes="@AdditionalAttributes">
+	@if (!string.IsNullOrEmpty(Caption))
+	{
+		<caption class="@($"govuk-table__caption {CaptionSize.GetDescription()} {AdditionalCaptionCssClasses}")">@Caption</caption>
+	}
+
+	@if (HeaderContent is not null)
+	{
+		<thead class="govuk-table__head">
+			<tr class="govuk-table__row">
+				@HeaderContent
+			</tr>
+		</thead>
+	}
+
+	<tbody class="govuk-table__body">
+		@if (Items is not null && RowTemplate is not null)
+		{
+			foreach (T item in Items)
+			{
+				<GdsTableRow FirstCellIsHeader="@FirstCellIsHeader">
+					@RowTemplate(item)
+				</GdsTableRow>
+			}
+		}
+	</tbody>
+</table>
+
+@code {
+	[Parameter]
+	public IEnumerable<T>? Items { get; set; }
+
+	[Parameter]
+	public GdsTableDensity Density { get; set; } = GdsTableDensity.Default;
+
+	[Parameter]
+	public string? Caption { get; set; }
+
+	[Parameter]
+	public GdsTableCaptionSize CaptionSize { get; set; } = GdsTableCaptionSize.Default;
+
+	[Parameter]
+	public bool FirstCellIsHeader { get; set; }
+
+	[Parameter(CaptureUnmatchedValues = true)]
+	public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+	[Parameter]
+	public string? AdditionalTableCssClasses { get; set; }
+
+	[Parameter]
+	public string? AdditionalCaptionCssClasses { get; set; }
+
+	[Parameter]
+	public RenderFragment? HeaderContent { get; set; }
+	[Parameter]
+	public RenderFragment<T>? RowTemplate { get; set; }
+}

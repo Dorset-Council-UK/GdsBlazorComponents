@@ -1,0 +1,31 @@
+﻿<CascadingValue Value="context" IsFixed="true">
+	<tr class="govuk-table__row">
+		@ChildContent
+	</tr>
+</CascadingValue>
+
+@code {
+	[Parameter]
+	public bool FirstCellIsHeader { get; set; }
+
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+	private readonly RowContext context = new();
+
+	protected override void OnParametersSet() => context.Reset(FirstCellIsHeader);
+
+	public class RowContext
+	{
+		private int index;
+		public bool FirstCellIsHeader { get; private set; }
+
+		public int NextIndex() => index++;
+
+		public void Reset(bool firstCellIsHeader)
+		{
+			FirstCellIsHeader = firstCellIsHeader;
+			index = 0;
+		}
+	}
+}
