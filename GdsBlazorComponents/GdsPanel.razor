@@ -1,0 +1,29 @@
+﻿<div class="@($"govuk-panel govuk-panel--confirmation {AdditionalCssClasses}")" @attributes="@AdditionalAttributes">
+	@if (!string.IsNullOrEmpty(Title))
+	{
+		<h1 class="govuk-panel__title">
+			@Title
+		</h1>
+	}
+
+	@if (ChildContent is not null)
+	{
+		<div class="govuk-panel__body">
+			@ChildContent
+		</div>
+	}
+</div>
+
+@code {
+	[Parameter, EditorRequired]
+	public string? Title { get; set; }
+
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+	[Parameter]
+	public string? AdditionalCssClasses { get; set; }
+
+	[Parameter(CaptureUnmatchedValues = true)]
+	public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+}
