@@ -3,10 +3,10 @@ using System.Reflection;
 
 namespace GdsBlazorComponents;
 
-public static class EnumExtensions
+internal static class EnumExtensions
 {
-	public static string GetDescription<T>(this T enumValue) where T : Enum
+	public static string? GetDescription<T>(this T enumValue) where T : Enum
 	{
-		return typeof(T).GetMember(enumValue.ToString()).First().GetCustomAttribute<DescriptionAttribute>()?.Description ?? enumValue.ToString();
+		return typeof(T).GetMember(enumValue.ToString()).First().GetCustomAttribute<DescriptionAttribute>()?.Description;
 	}
 }
