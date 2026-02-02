@@ -10,7 +10,7 @@ Render a single GOV.UK Design System styled panel component.
 
 - Renders a GDS panel
 - Displays title using the `Title` parameter.
-- Displays body content using `ChildContnet`.
+- Displays body content using `ChildContent`.
 
 ## Example
 
