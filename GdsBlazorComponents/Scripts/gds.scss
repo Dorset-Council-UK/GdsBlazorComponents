@@ -1,8 +1,9 @@
-﻿$govuk-new-typography-scale: true;
-$govuk-font-family: arial, sans-serif;
-$govuk-assets-path: "/_content/Dorset-Council-UK.GdsBlazorComponents/";
-
-@use "govuk-frontend/dist/govuk";
+﻿@use "govuk-frontend/dist/govuk" with (
+    $govuk-new-typography-scale: true,
+    $govuk-font-family: (arial, sans-serif),
+    $govuk-include-default-font-face: false,
+    $govuk-assets-path: "/_content/Dorset-Council-UK.GdsBlazorComponents/",
+);
 
 // Colour variables to help with user styling
 :root {
