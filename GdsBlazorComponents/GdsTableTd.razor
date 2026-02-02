@@ -8,7 +8,7 @@
 }
 else
 {
-	<td class="@($"govuk-table__cell {(Numeric ? "govuk-table__cell--numeric" : string.Empty)} {AdditionalAttributes}")"
+	<td class="@($"govuk-table__cell {(Numeric ? "govuk-table__cell--numeric" : string.Empty)} {AdditionalCssClasses}")"
 		colspan="@Span(Colspan)"
 		rowspan="@Span(Rowspan)"
 		@attributes="@AdditionalAttributes">
