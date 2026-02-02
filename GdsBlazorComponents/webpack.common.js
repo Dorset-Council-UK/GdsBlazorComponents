@@ -1,6 +1,5 @@
 ﻿const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -65,14 +64,6 @@ module.exports = {
         ]
     },
     plugins: [
-        // Copy the assets to the output folder for GDS gov frontend
-        new CopyPlugin({
-            patterns: [
-                { from: 'node_modules/govuk-frontend/dist/govuk/assets/rebrand/images', to: 'rebrand/images' },
-                { from: 'node_modules/govuk-frontend/dist/govuk/assets/fonts', to: 'fonts' },
-                { from: 'Scripts/images', to: 'images' },
-            ]
-        }),
         // Extract the CSS into a separate file
         new MiniCssExtractPlugin({
             filename: '[name].css'

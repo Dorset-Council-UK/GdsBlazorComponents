@@ -6,17 +6,17 @@
                 <span class="govuk-header__product-name">@ServiceName</span>
             </a>
         </div>
-        <div class="govuk-header__content">
-            @if (NavLinks != null)
-            {
+        @if (NavLinks != null)
+        {
+            <div class="govuk-header__content">
                 <nav aria-label="Menu" class="govuk-header__navigation">
                     <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide menu" aria-expanded="false">Menu</button>
                     <ul id="navigation" class="govuk-header__navigation-list">
                         @NavLinks
                     </ul>
                 </nav>
-            }
-        </div>
+            </div>
+        }
     </div>
 </header>
 
@@ -32,5 +32,4 @@
 
     [Parameter]
     public RenderFragment? NavLinks { get; set; }
-
 }
