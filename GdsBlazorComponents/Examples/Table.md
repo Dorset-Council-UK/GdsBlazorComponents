@@ -38,7 +38,7 @@ Render a GOV.UK Design System styled table component.
 }
 ```
 
-## Example using ChildContnet
+## Example using ChildContent
 
 ```csharp
 <GdsTable T="Member" Items="@Members" Caption="Members" Density="GdsTableDensity.SmallTextUntilTablet">
