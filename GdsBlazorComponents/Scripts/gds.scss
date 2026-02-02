@@ -58,3 +58,14 @@ section.related-navigation, .related-navigation {
         margin-top: govuk.govuk-spacing(3);
     }
 }
+
+// Override GDS footer copyright logo styles to remove background image
+.govuk-footer__copyright-logo::before {
+    padding-top: unset;
+    background: unset;
+
+    @supports ((-webkit-mask-position: initial) or (mask-position: initial)) {
+        -webkit-mask-image: unset;
+        mask-image: unset;
+    }
+}
