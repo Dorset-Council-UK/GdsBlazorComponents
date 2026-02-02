@@ -9,7 +9,7 @@ Render a GOV.UK Design System styled table component.
 
 ## How it works
 
-- Renders a ```<table class="govuk-table>``` element styled according to the GOV.UK Design System.
+- Renders a ```<table class="govuk-table">``` element styled according to the GOV.UK Design System.
 - Table supports `Caption`, `CaptionSize` and `FirstCellIsHeader`.
   - Cells (`GdsTableTh` and `GdsTableTd`) support `Numeric`.
 
