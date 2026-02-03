@@ -1,0 +1,79 @@
+﻿@using System.Globalization
+
+@if (IsRowHeader)
+{
+	<GdsTableTh Scope="GdsTableHeaderScope.Row" Rowspan="@Rowspan" Colspan="@Colspan" AdditionalCssClasses="@AdditionalCssClasses" @attributes="@AdditionalAttributes">
+		@Render(Value, Format, FormatProvider, ChildContent)
+	</GdsTableTh>
+}
+else
+{
+	<td class="@($"govuk-table__cell {(Numeric ? "govuk-table__cell--numeric" : string.Empty)} {AdditionalCssClasses}")"
+		colspan="@Span(Colspan)"
+		rowspan="@Span(Rowspan)"
+		@attributes="@AdditionalAttributes">
+		@Render(Value, Format, FormatProvider, ChildContent)
+	</td>
+}
+
+@code {
+	[CascadingParameter]
+	public GdsTableRow.RowContext? Row { get; set; }
+
+	[Parameter]
+	public bool Numeric { get; set; }
+
+	[Parameter]
+	public int? Rowspan { get; set; }
+
+	[Parameter]
+	public int? Colspan { get; set; }
+
+	[Parameter]
+	public object? Value { get; set; }
+
+	[Parameter]
+	public string? Format { get; set; }
+
+	[Parameter]
+	public IFormatProvider? FormatProvider { get; set; }
+
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+	[Parameter(CaptureUnmatchedValues = true)]
+	public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+	[Parameter]
+	public string? AdditionalCssClasses { get; set; }
+
+	private bool IsRowHeader
+	{
+		get
+		{
+			int id = Row?.NextIndex() ?? 0;
+			return id == 0 && (Row?.FirstCellIsHeader ?? false);
+		}
+	}
+
+	private static string? Span(int? span) => span > 1 ? span.Value.ToString() : null;
+
+	private RenderFragment Render(object? value, string? format, IFormatProvider? formatProvider, RenderFragment? childContent) => builder =>
+	{
+		if (value is not null)
+		{
+			if (!string.IsNullOrWhiteSpace(format) && value is IFormattable formattable)
+			{
+				IFormatProvider provider = formatProvider ?? CultureInfo.CurrentCulture;
+				builder.AddContent(0, formattable.ToString(format, provider));
+				return;
+			}
+
+			builder.AddContent(1, value);
+			return;
+		}
+
+		if (childContent is not null)
+			builder.AddContent(2, childContent);
+	};
+}
