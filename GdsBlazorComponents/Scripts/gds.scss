@@ -1,44 +1,32 @@
-﻿$govuk-new-typography-scale: true;
-$govuk-font-family: "Arial",sans-serif;
-$govuk-assets-path: "/_content/Dorset-Council-UK.GdsBlazorComponents/";
-
-// Use our image for the copyright notice
-$govuk-footer-crest-image-width: 188px;
-$govuk-footer-crest-image-height: 80px;
-$govuk-footer-crest-image-width-2x: $govuk-footer-crest-image-width * 2;
-$govuk-footer-crest-image-height-2x: $govuk-footer-crest-image-height * 2;
-
-@import "govuk-frontend/dist/govuk";
+﻿@use "govuk-frontend/dist/govuk" with (
+    $govuk-new-typography-scale: true,
+    $govuk-font-family: (arial, sans-serif),
+    $govuk-include-default-font-face: false,
+    $govuk-assets-path: "/_content/Dorset-Council-UK.GdsBlazorComponents/",
+);
 
 // Colour variables to help with user styling
 :root {
-    --govuk-frontend-color-red: #{govuk-colour("red")};
-    --govuk-frontend-color-yellow: #{govuk-colour("yellow")};
-    --govuk-frontend-color-green: #{govuk-colour("green")};
-    --govuk-frontend-color-blue: #{govuk-colour("blue")};
-    --govuk-frontend-color-dark-blue: #{govuk-colour("dark-blue")};
-    --govuk-frontend-color-light-blue: #{govuk-colour("light-blue")};
-    --govuk-frontend-color-purple: #{govuk-colour("purple")};
-    --govuk-frontend-color-black: #{govuk-colour("black")};
-    --govuk-frontend-color-dark-grey: #{govuk-colour("dark-grey")};
-    --govuk-frontend-color-mid-grey: #{govuk-colour("mid-grey")};
-    --govuk-frontend-color-light-grey: #{govuk-colour("light-grey")};
-    --govuk-frontend-color-white: #{govuk-colour("white")};
-    --govuk-frontend-color-light-purple: #{govuk-colour("light-purple")};
-    --govuk-frontend-color-bright-purple: #{govuk-colour("bright-purple")};
-    --govuk-frontend-color-pink: #{govuk-colour("pink")};
-    --govuk-frontend-color-light-pink: #{govuk-colour("light-pink")};
-    --govuk-frontend-color-orange: #{govuk-colour("orange")};
-    --govuk-frontend-color-brown: #{govuk-colour("brown")};
-    --govuk-frontend-color-light-green: #{govuk-colour("light-green")};
-    --govuk-frontend-color-turquoise: #{govuk-colour("turquoise")};
-}
-
-// Adjust the header logo to make the focus link colour cover the entire logo
-.govuk-header__link--homepage {
-    @include govuk-media-query($from: desktop) {
-        display: inline-block;
-    }
+    --govuk-frontend-color-red: #{govuk.govuk-colour("red")};
+    --govuk-frontend-color-yellow: #{govuk.govuk-colour("yellow")};
+    --govuk-frontend-color-green: #{govuk.govuk-colour("green")};
+    --govuk-frontend-color-blue: #{govuk.govuk-colour("blue")};
+    --govuk-frontend-color-dark-blue: #{govuk.govuk-colour("dark-blue")};
+    --govuk-frontend-color-light-blue: #{govuk.govuk-colour("light-blue")};
+    --govuk-frontend-color-purple: #{govuk.govuk-colour("purple")};
+    --govuk-frontend-color-black: #{govuk.govuk-colour("black")};
+    --govuk-frontend-color-dark-grey: #{govuk.govuk-colour("dark-grey")};
+    --govuk-frontend-color-mid-grey: #{govuk.govuk-colour("mid-grey")};
+    --govuk-frontend-color-light-grey: #{govuk.govuk-colour("light-grey")};
+    --govuk-frontend-color-white: #{govuk.govuk-colour("white")};
+    --govuk-frontend-color-light-purple: #{govuk.govuk-colour("light-purple")};
+    --govuk-frontend-color-bright-purple: #{govuk.govuk-colour("bright-purple")};
+    --govuk-frontend-color-pink: #{govuk.govuk-colour("pink")};
+    --govuk-frontend-color-light-pink: #{govuk.govuk-colour("light-pink")};
+    --govuk-frontend-color-orange: #{govuk.govuk-colour("orange")};
+    --govuk-frontend-color-brown: #{govuk.govuk-colour("brown")};
+    --govuk-frontend-color-light-green: #{govuk.govuk-colour("light-green")};
+    --govuk-frontend-color-turquoise: #{govuk.govuk-colour("turquoise")};
 }
 
 //make sure header navigation is right aligned
@@ -46,39 +34,38 @@ $govuk-footer-crest-image-height-2x: $govuk-footer-crest-image-height * 2;
     text-align: right;
 }
 
-// Use our image for the copyright notice
-.govuk-footer__copyright-logo::before {
-    padding-top: ($govuk-footer-crest-image-height + govuk-spacing(2));
-    background: unset;
-    background-image: govuk-image-url("copyright.webp");
-    background-repeat: no-repeat;
-    background-position: 50% 0%;
-    background-size: $govuk-footer-crest-image-width $govuk-footer-crest-image-height;
-    -webkit-mask: unset;
-    mask: unset;
-}
-
 // Make GDS errors without links look like errors
 .govuk-error-summary__list {
     li {
-        @include govuk-typography-weight-bold;
-        color: govuk-colour("red");
+        @include govuk.govuk-typography-weight-bold();
+        color: govuk.govuk-colour("red");
     }
 }
 
 // related content section
 section.related-navigation, .related-navigation {
-    border-top: 2px solid govuk-colour("blue");
+    border-top: 2px solid govuk.govuk-colour("blue");
 
-    @include govuk-media-query($media-type: print) {
+    @media print {
         display: none !important;
     }
 
-    @include govuk-media-query($from: tablet) {
+    @media #{govuk.govuk-from-breakpoint(tablet)} {
         padding: 0;
     }
 
     h2, h3, h4 {
-        margin-top: govuk-spacing(3);
+        margin-top: govuk.govuk-spacing(3);
+    }
+}
+
+// Override GDS footer copyright logo styles to remove background image
+.govuk-footer__copyright-logo::before {
+    padding-top: unset;
+    background: unset;
+
+    @supports ((-webkit-mask-position: initial) or (mask-position: initial)) {
+        -webkit-mask-image: unset;
+        mask-image: unset;
     }
 }
