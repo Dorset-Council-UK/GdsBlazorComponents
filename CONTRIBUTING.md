@@ -55,4 +55,9 @@ Examples:
 ### Be possible to merge automatically
 Occasionally other changes to main might mean that your pull request cannot be merged automatically. In this case you may need to rebase your branch on a more recent main, resolve any conflicts, and git push --force to update your branch so that it can be merged automatically.
 
+### Add or update example code for new or changed components
+If you make a new component, or fundamentally change a component, update the examples in the `Examples` folder.
+
+Optionally, you can also update the [demo site repo](https://github.com/Dorset-Council-UK/GdsBlazorComponents-Demo) with your changes.
+
 

@@ -60,6 +60,9 @@ This is a partial example to show the required setup. Combine these lines into y
 ```
 
 ## Component Examples
+There is a [demo website available here](https://gds-blazor-components-demo-dvg2fghvhyfrfzcd.uksouth-01.azurewebsites.net/) where you can see the components in action. It runs on a free Azure App Service so may take some time to start up.
+
+Actual code samples can be found in this repo alongside each component.
 
 - [GdsBreadcrumbs](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Breadcrumbs.md)
 - [GdsCheckbox](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Checkbox.md)
