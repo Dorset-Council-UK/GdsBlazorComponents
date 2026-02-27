@@ -1,0 +1,19 @@
+﻿@inherits InputText
+
+<div class="govuk-input__wrapper">
+    <GdsInputText @bind-Value="CurrentValueAsString" class="@CssClass" />
+    <GdsButton IsSubmit="false" ElementStyle="margin-bottom: 0.1;" ButtonText="Search" OnClick="@OnClick" />
+</div>
+
+@code {
+    [CascadingParameter]
+    private string Id { get; set; } = default!;
+
+    [Parameter]
+    public int InputWidth { get; set; } = 10;
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private string CssClass => $"govuk-input govuk-input--width-{InputWidth}";
+}
