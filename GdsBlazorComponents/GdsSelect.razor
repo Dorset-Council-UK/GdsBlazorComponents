@@ -1,0 +1,20 @@
+@typeparam T
+
+<select class="govuk-select" id="@Id" @onchange="OnChange">
+    @foreach (var option in Options)
+    {
+        <option value="@option.Value">@option.Label</option>
+    }
+</select>
+
+
+@code {
+    [CascadingParameter]
+    private string Id { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public required IReadOnlyCollection<GdsOptionItem<T>> Options { get; set; }
+
+    [Parameter]
+    public EventCallback<ChangeEventArgs> OnChange { get; set; }
+}
