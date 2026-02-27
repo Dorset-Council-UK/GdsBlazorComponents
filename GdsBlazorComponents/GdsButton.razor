@@ -1,0 +1,63 @@
+@if (IsSubmit){
+    <button type="submit"
+    @attributes="GetButtonAttributes()" 
+    class="govuk-button @CssClass"  
+    data-module="govuk-button">
+        @ButtonText
+</button>
+} else
+{
+    <button type="button"
+    @attributes="GetButtonAttributes()" 
+    class="govuk-button @CssClass" 
+    data-module="govuk-button" 
+    @onclick="OnClick">
+        @ButtonText
+</button>
+}
+
+@code{
+    [Parameter]
+    public string? ButtonText { get; set; } = "Continue";
+
+    [Parameter]
+    public string? CssClass { get; set; }
+
+    [Parameter]
+    public string? ElementStyle { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; } = false;
+
+    [Parameter]
+    public bool PreventDoubleClick { get; set; } = false;
+
+    [Parameter]
+    public bool IsSubmit { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private Dictionary<string, object> GetButtonAttributes()
+    {
+        var attributes = new Dictionary<string, object>{};
+
+        if (PreventDoubleClick)
+        {
+            attributes.Add("data-prevent-double-click", "true");
+        }
+
+        if (!string.IsNullOrEmpty(ElementStyle))
+        {
+            attributes.Add("style", ElementStyle);
+        }
+
+        if (Disabled)
+        {
+            attributes.Add("disabled", true);
+            attributes.Add("aria-disabled", "true");
+        }
+
+        return attributes;
+    }
+}
