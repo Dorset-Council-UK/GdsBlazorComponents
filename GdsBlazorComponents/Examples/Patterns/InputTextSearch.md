@@ -2,7 +2,7 @@
 
 This pattern renders an inline search box using GOV.UK Design System styled controls.
 
-> [!INFO]
+> [!NOTE]
 > This is a pattern developed by Dorset Council. 
 > The implementation is not documented or recommended by GDS.
 > Not recommended for public facing applications. 
