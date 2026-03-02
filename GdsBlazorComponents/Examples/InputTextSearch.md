@@ -2,7 +2,10 @@
 
 This component renders an inline search box using GOV.UK Design System styled controls.
 
-The implementation is not documented or recommended by GDS but is included as a component being tested. 
+> [!WARNING]
+> This is a proposal component in testing by Dorset Council. 
+> The implementation is not documented or recommended by GDS and may require further accessibility testing.
+> Not recommended for public facing applications. 
 
 ## Example image
 
