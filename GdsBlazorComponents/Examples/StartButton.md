@@ -1,6 +1,6 @@
 # Start Button
 
-Render a GOV.UK Design System styled button that can be used to submit forms or trigger actions.
+Render a GOV.UK Design System styled start button link that triggers actions.
 
 ## Example image
 
