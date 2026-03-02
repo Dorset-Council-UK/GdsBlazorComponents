@@ -1,0 +1,42 @@
+<div class="govuk-accordion__section" @attributes="@AdditionalAttributes">
+    @if (Header is not null)
+    {
+        <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+                <span class="govuk-accordion__section-button" id="@HeadingId">
+                    @Header
+                </span>
+            </h2>
+        </div>
+    }
+    <div id="@ContentId" class="govuk-accordion__section-content">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [CascadingParameter]
+    public GdsAccordion.AccordionContext? Accordion { get; set; }
+
+    [Parameter]
+    public RenderFragment? Header { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private int _index;
+    private string HeadingId => $"{Accordion?.AccordionId}-heading-{_index}";
+    private string ContentId => $"{Accordion?.AccordionId}-content-{_index}";
+
+    protected override void OnParametersSet()
+    {
+        if (Accordion is null)
+        {
+            throw new InvalidOperationException($"A {nameof(GdsAccordionSection)} must be a child of a {nameof(GdsAccordion)}.");
+        }
+        _index = Accordion.NextIndex();
+    }
+}
