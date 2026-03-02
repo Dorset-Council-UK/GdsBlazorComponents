@@ -9,9 +9,12 @@
             </h2>
         </div>
     }
-    <div id="@ContentId" class="govuk-accordion__section-content">
-        @ChildContent
-    </div>
+    @if (Content is not null)
+    {
+        <div id="@ContentId" class="govuk-accordion__section-content">
+            @Content
+        </div>
+    }
 </div>
 
 @code {
@@ -22,7 +25,7 @@
     public RenderFragment? Header { get; set; }
 
     [Parameter]
-    public RenderFragment? ChildContent { get; set; }
+    public RenderFragment? Content { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
