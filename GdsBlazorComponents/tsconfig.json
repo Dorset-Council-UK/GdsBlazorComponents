@@ -4,10 +4,11 @@
     "noEmitOnError": true,
     "removeComments": true,
     "sourceMap": true,
-    "target": "ES2022",
+    "target": "es2022",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "noUnusedLocals": true,
-    "moduleResolution": "Node",
     "skipLibCheck": true,
     "strict": true
   },
