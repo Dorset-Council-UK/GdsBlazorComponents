@@ -41,7 +41,7 @@
         if (attributes.ContainsKey("class"))
         {
             var existingClass = attributes["class"]?.ToString() ?? string.Empty;
-            if (!existingClass.Contains("govuk-button "))
+            if (!(existingClass.Contains("govuk-button ") || existingClass == "govuk-button"))
             {
                 attributes["class"] = $"govuk-button {existingClass}".Trim();
             }

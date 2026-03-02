@@ -11,7 +11,7 @@ Render a GOV.UK Design System styled button that can be used to submit forms or 
 - Renders a `<button class="govuk-button">` element.
 - The `Text` parameter sets the button text content.
 - The default is a submit button, but you can set `IsSubmit` to `false` to render a regular button.
-- If using the button type (not submit), you can use the `OnClick` event callback to trigger actions when the button is clicked.
+- The `OnClick` event is only used if you select `IsSubmit` to `false`.
 - You can pass the `style` can `class` attributes for to this component.
 - The `Disabled` parameter disables the button when set to `true`.
 - The `PreventDoubleClick` parameter adds the `govuk-button--prevent-double-click` class to prevent multiple submissions.
