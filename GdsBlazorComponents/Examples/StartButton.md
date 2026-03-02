@@ -9,7 +9,8 @@ Render a GOV.UK Design System styled start button link that triggers actions.
 ## How it works
 
 - Renders a `<a href="#" role="button">` element.
-- The `ServiceUrl` parameter sets the `href` attribute to navigate to a URL when clicked. If `ServiceUrl` is not provided, it defaults to `#`.
+- The `Text` parameter sets the button text content. The default is "Start now".
+- The `Href` parameter sets the URL to navigate to when clicked. If `Href` is not provided, it defaults to `#`.
 - Start buttons do not usually submit form data, so use a link tag instead of a button tag.
 - This follows the example of the start button on the GOV.UK Design System website.
 
@@ -20,7 +21,7 @@ Render a GOV.UK Design System styled start button link that triggers actions.
 ```
 
 ```csharp
-<GdsStartButton ServiceUrl="./somepage" />
+<GdsStartButton Text="Sign in" Href="./somepage" />
 ```
 
 ## Notes
