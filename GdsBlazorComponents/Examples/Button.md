@@ -29,6 +29,10 @@ Render a GOV.UK Design System styled button that can be used to submit forms or 
 ```
 
 ```csharp
+<GdsButton AdditionalCssClasses="govuk-button--secondary" Text="Find address" />
+```
+
+```csharp
 <GdsButton AdditionalCssClasses="govuk-button--warning" Text="Delete account" />
 ```
 
