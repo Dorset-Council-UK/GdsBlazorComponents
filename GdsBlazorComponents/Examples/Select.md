@@ -19,7 +19,7 @@ Render GOV.UK Design System styled select lists using the options from a list of
 ## Simple example
 
 ```csharp
-IReadOnlyCollection<GdsOptionItem<int>> contactTypes = [
+    IReadOnlyCollection<GdsOptionItem<int>> contactTypes = [
     new ("contactTypeNone", "Select an option", 0),
     new ("contactTypePhone", "Phone", 1),
     new ("contactTypeEmail", "Email", 2),
