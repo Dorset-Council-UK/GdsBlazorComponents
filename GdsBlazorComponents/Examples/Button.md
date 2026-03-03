@@ -8,13 +8,13 @@ Render a GOV.UK Design System styled button that can be used to submit forms or 
 
 ## How it works
 
-- Renders a `<button class="govuk-button">` element.
-- The `ButtonText` parameter sets the button text content.
+- Renders a `<button>` element.
+- The `Text` parameter sets the button text content.
 - The default is a submit button, but you can set `IsSubmit` to `false` to render a regular button.
-- If using the button type (not submit), you can use the `OnClick` event callback to trigger actions when the button is clicked.
-- The `ElementStyle` parameter allows you to set the `style` attribute for custom inline styles.
-- The `Disabled` parameter disables the button when set to `true`.
-- The `PreventDoubleClick` parameter adds the `govuk-button--prevent-double-click` class to prevent multiple submissions.
+- The `OnClick` event is only used if you select `IsSubmit` to `false`.
+- The default class is `govuk-button`, but you can use `AdditionalCssClasses` to style the button.
+- You can also pass additional HTML attributes, such as `style`, to this component.
+- The `PreventDoubleClick` parameter adds `data-prevent-double-click` to prevent multiple submissions.
 
 ## Simple example (Continue button)
 
@@ -25,19 +25,27 @@ Render a GOV.UK Design System styled button that can be used to submit forms or 
 ## Other Examples
 
 ```csharp
-<GdsButton ButtonText="Save and continue" />
+<GdsButton Text="Save and continue" />
 ```
 
 ```csharp
-<GdsButton Disabled ButtonText="Save and continue" />
+<GdsButton AdditionalCssClasses="govuk-button--secondary" Text="Find address" />
 ```
 
 ```csharp
-<GdsButton CssClass="govuk-button--warning" ButtonText="Delete account" />
+<GdsButton AdditionalCssClasses="govuk-button--warning" Text="Delete account" />
 ```
 
 ```csharp
-<GdsButton IsSubmit="false" OnClick="@somefunction" ButtonText="Search" />
+<GdsButton disabled aria-disabled="true" Text="Disabled button" />
+```
+
+```csharp
+<GdsButton AdditionalCssClasses="govuk-button--inverse" Text="Create an account" />
+```
+
+```csharp
+<GdsButton IsSubmit="false" OnClick="@somefunction" Text="Search" />
 ```
 
 ## Notes
