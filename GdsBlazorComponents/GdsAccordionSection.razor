@@ -3,7 +3,7 @@
     {
         <div class="govuk-accordion__section-header">
             <h2 class="govuk-accordion__section-heading">
-                <span class="govuk-accordion__section-button" id="@HeadingId">
+                <span id="@_headingId" class="govuk-accordion__section-button">
                     @Header
                 </span>
             </h2>
@@ -11,7 +11,7 @@
     }
     @if (Content is not null)
     {
-        <div id="@ContentId" class="govuk-accordion__section-content">
+        <div id="@_contentId" class="govuk-accordion__section-content">
             @Content
         </div>
     }
@@ -30,16 +30,21 @@
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
-    private int _index;
-    private string HeadingId => $"{Accordion?.AccordionId}-heading-{_index}";
-    private string ContentId => $"{Accordion?.AccordionId}-content-{_index}";
+    private int? _index;
+    private string? _headingId;
+    private string? _contentId;
 
-    protected override void OnParametersSet()
+    protected override void OnInitialized()
     {
         if (Accordion is null)
         {
             throw new InvalidOperationException($"A {nameof(GdsAccordionSection)} must be a child of a {nameof(GdsAccordion)}.");
         }
-        _index = Accordion.NextIndex();
+        if (_index is null)
+        {
+            _index = Accordion.NextIndex();
+            _headingId = $"{Accordion.AccordionId}-heading-{_index}";
+            _contentId = $"{Accordion.AccordionId}-content-{_index}";
+        }
     }
 }
