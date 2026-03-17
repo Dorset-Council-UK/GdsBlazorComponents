@@ -3,7 +3,7 @@
 <select class="govuk-select" id="@Id" @onchange="OnChange">
     @foreach (var option in Options)
     {
-        <option @key="option.Id" value="@option.Value">@option.Label</option>
+        <option @key="option.Id" value="@option.Value" selected="@option.Selected">@option.Label</option>
     }
 </select>
 
