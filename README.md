@@ -98,7 +98,6 @@ Actual code samples can be found in this repo alongside each component.
 ### Other examples and patterns:
 
 - [Colours](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Colours.md)
-- [Input Text Search](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Patterns/InputTextSearch.md)
 - [Validation Classes](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/ValidationClasses.md)
 
 ## Bugs
