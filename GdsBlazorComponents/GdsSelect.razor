@@ -1,6 +1,6 @@
 @typeparam T
 
-<select class="govuk-select" id="@Id" @onchange="OnChange">
+<select class="govuk-select" id="@Id" @onchange="HandleOnChange">
     @foreach (var option in Options)
     {
         <option @key="option.Id" value="@option.Value" selected="@option.Selected">@option.Label</option>
@@ -19,10 +19,22 @@
     public required IReadOnlyCollection<GdsOptionItem<T>> Options { get; set; }
 
     [Parameter]
-    public EventCallback<ChangeEventArgs> OnChange { get; set; }
+    public EventCallback<GdsOptionItem<T>> OnChange { get; set; }
 
     protected override void OnParametersSet()
     {
         Id ??= CascadedId;
+    }
+
+    private async Task HandleOnChange(ChangeEventArgs args)
+    {
+        if (OnChange.HasDelegate)
+        {
+            GdsOptionItem<T>? option = Options.FirstOrDefault(o => o.Value?.ToString() == args.Value?.ToString());
+            if (option is not null)
+            {
+                await OnChange.InvokeAsync(option);
+            }
+        }
     }
 }
