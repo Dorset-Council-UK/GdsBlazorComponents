@@ -1,0 +1,142 @@
+<nav class="@_classes" aria-label="Pagination" @attributes="@AdditionalAttributes">
+    <CascadingValue Value="@BlockStyle">
+        <CascadingValue Value="@CurrentPage">
+            <GdsPaginationPrevious Href="@PreviousHref" OnPrevious="HandlePrevious" Label="@PreviousLabel" />
+            @if (!BlockStyle && _pageNumbers.Count > 0)
+            {
+                <ul class="govuk-pagination__list">
+                    @foreach (var pageNumber in _pageNumbers)
+                    {
+                        if (pageNumber is null)
+                        {
+                            <GdsPaginationItem />
+                        }
+                        else
+                        {
+                            <GdsPaginationItem Href="@GetPageHref(pageNumber.Value)" PageNumber="@pageNumber" OnPageChanged="HandlePageChanged" />
+                        }
+                    }
+                </ul>
+            }
+            <GdsPaginationNext Href="@NextHref" OnNext="HandleNext" Label="@NextLabel" />
+        </CascadingValue>
+    </CascadingValue>
+</nav>
+
+@code {
+    [Parameter]
+    public bool BlockStyle { get; set; }
+
+    [Parameter]
+    public int CurrentPage { get; set; } = 1;
+
+    [Parameter]
+    public EventCallback<int> OnPageChanged { get; set; }
+
+    // PREVIOUS
+    [Parameter]
+    public string? PreviousHref { get; set; } = "#";
+    [Parameter]
+    public string? PreviousLabel { get; set; }
+
+    // NEXT
+    [Parameter]
+    public string? NextHref { get; set; } = "#";
+    [Parameter]
+    public string? NextLabel { get; set; }
+
+    [Parameter]
+    public int TotalPages { get; set; } = 1;
+
+    /// <summary>
+    /// Example: HrefGenerator="@(pageNumber => $"search?page={pageNumber}")"
+    /// </summary>
+    [Parameter]
+    public Func<int, string>? HrefGenerator { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _classes;
+    private List<int?> _pageNumbers = [];
+
+    protected override void OnParametersSet()
+    {
+        _classes = BlockStyle ? "govuk-pagination govuk-pagination--block" : "govuk-pagination";
+        _pageNumbers = CalculatePageNumbers();
+    }
+
+    private async Task HandlePrevious(MouseEventArgs args)
+    {
+        var pageNumber = Math.Max(1, CurrentPage - 1);
+        await HandlePageChanged(pageNumber);
+    }
+
+    private async Task HandleNext(MouseEventArgs args)
+    {
+        var pageNumber = Math.Min(TotalPages, CurrentPage + 1);
+        await HandlePageChanged(pageNumber);
+    }
+
+    private async Task HandlePageChanged(int pageNumber)
+    {
+        if (OnPageChanged.HasDelegate)
+        {
+            await OnPageChanged.InvokeAsync(pageNumber);
+        }
+    }
+
+    /// <summary>
+    /// Works out which page numbers to display, inserting <see langword="null" /> where ellipses should appear,
+    /// following the <see href="https://design-system.service.gov.uk/components/pagination/">GDS pagination guidelines</see>
+    /// </summary>
+    /// <returns>
+    /// A list of page numbers, with <see langword="null" /> representing an ellipsis placeholder.
+    /// </returns>
+    private List<int?> CalculatePageNumbers()
+    {
+        var items = new List<int?>();
+
+        if (TotalPages <= 1) return items;
+
+        // Always show page 1
+        items.Add(1);
+
+        // Ellipsis before current page range
+        if (CurrentPage > 3)
+        {
+            items.Add(null); // ellipsis
+        }
+
+        // Pages around current
+        var start = Math.Max(2, CurrentPage - 1);
+        var end = Math.Min(TotalPages - 1, CurrentPage + 1);
+
+        for (var i = start; i <= end; i++)
+        {
+            if (i != 1 && i != TotalPages)
+            {
+                items.Add(i);
+            }
+        }
+
+        // Ellipsis after current page range
+        if (CurrentPage < TotalPages - 2)
+        {
+            items.Add(null); // ellipsis
+        }
+
+        // Always show last page
+        if (TotalPages > 1)
+        {
+            items.Add(TotalPages);
+        }
+
+        return items;
+    }
+
+    private string GetPageHref(int pageNumber)
+    {
+        return HrefGenerator?.Invoke(pageNumber) ?? "#";
+    }
+}
