@@ -1,7 +1,11 @@
 <nav class="@_classes" aria-label="Pagination" @attributes="@AdditionalAttributes">
-    <CascadingValue Value="@BlockStyle">
-        <CascadingValue Value="@CurrentPage">
-            <GdsPaginationPrevious Href="@PreviousHref" OnPrevious="HandlePrevious" Label="@PreviousLabel" />
+    <CascadingValue Name="GdsPagination.BlockStyle" Value="@BlockStyle">
+        <CascadingValue Name="GdsPagination.CurrentPage" Value="@CurrentPage">
+            @if (CurrentPage > 1)
+            {
+                <GdsPaginationPrevious Href="@_previousHref" OnPrevious="@_onPrevious" Label="@PreviousLabel" />
+            }
+
             @if (!BlockStyle && _pageNumbers.Count > 0)
             {
                 <ul class="govuk-pagination__list">
@@ -13,12 +17,16 @@
                         }
                         else
                         {
-                            <GdsPaginationItem Href="@GetPageHref(pageNumber.Value)" PageNumber="@pageNumber" OnPageChanged="HandlePageChanged" />
+                            <GdsPaginationItem Href="@GetPageHref(pageNumber.Value)" PageNumber="@pageNumber.Value" OnPageChanged="@_onItemPageChanged" />
                         }
                     }
                 </ul>
             }
-            <GdsPaginationNext Href="@NextHref" OnNext="HandleNext" Label="@NextLabel" />
+
+            @if (CurrentPage < TotalPages)
+            {
+                <GdsPaginationNext Href="@_nextHref" OnNext="@_onNext" Label="@NextLabel" />
+            }
         </CascadingValue>
     </CascadingValue>
 </nav>
@@ -33,15 +41,9 @@
     [Parameter]
     public EventCallback<int> OnPageChanged { get; set; }
 
-    // PREVIOUS
-    [Parameter]
-    public string? PreviousHref { get; set; } = "#";
     [Parameter]
     public string? PreviousLabel { get; set; }
 
-    // NEXT
-    [Parameter]
-    public string? NextHref { get; set; } = "#";
     [Parameter]
     public string? NextLabel { get; set; }
 
@@ -58,33 +60,42 @@
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
     private string? _classes;
+    private string? _previousHref;
+    private string? _nextHref;
     private List<int?> _pageNumbers = [];
+
+    private EventCallback<int> _onItemPageChanged;
+    private EventCallback<MouseEventArgs> _onPrevious;
+    private EventCallback<MouseEventArgs> _onNext;
 
     protected override void OnParametersSet()
     {
         _classes = BlockStyle ? "govuk-pagination govuk-pagination--block" : "govuk-pagination";
         _pageNumbers = CalculatePageNumbers();
-    }
+        _previousHref = HrefGenerator?.Invoke(PreviousPageNumber);
+        _nextHref = HrefGenerator?.Invoke(NextPageNumber);
 
-    private async Task HandlePrevious(MouseEventArgs args)
-    {
-        var pageNumber = Math.Max(1, CurrentPage - 1);
-        await HandlePageChanged(pageNumber);
-    }
-
-    private async Task HandleNext(MouseEventArgs args)
-    {
-        var pageNumber = Math.Min(TotalPages, CurrentPage + 1);
-        await HandlePageChanged(pageNumber);
-    }
-
-    private async Task HandlePageChanged(int pageNumber)
-    {
         if (OnPageChanged.HasDelegate)
         {
-            await OnPageChanged.InvokeAsync(pageNumber);
+            _onItemPageChanged = EventCallback.Factory.Create<int>(this, HandlePageChanged);
+            _onPrevious = EventCallback.Factory.Create<MouseEventArgs>(this, HandlePrevious);
+            _onNext = EventCallback.Factory.Create<MouseEventArgs>(this, HandleNext);
+        }
+        else
+        {
+            _onItemPageChanged = default;
+            _onPrevious = default;
+            _onNext = default;
         }
     }
+
+    private int PreviousPageNumber => Math.Max(1, CurrentPage - 1);
+    private int NextPageNumber => Math.Min(TotalPages, CurrentPage + 1);
+    private string? GetPageHref(int pageNumber) => HrefGenerator?.Invoke(pageNumber);
+
+    private Task HandlePrevious(MouseEventArgs args) => HandlePageChanged(PreviousPageNumber);
+    private Task HandleNext(MouseEventArgs args) => HandlePageChanged(NextPageNumber);
+    private Task HandlePageChanged(int pageNumber) => OnPageChanged.InvokeAsync(pageNumber);
 
     /// <summary>
     /// Works out which page numbers to display, inserting <see langword="null" /> where ellipses should appear,
@@ -96,6 +107,9 @@
     private List<int?> CalculatePageNumbers()
     {
         var items = new List<int?>();
+
+        // Block style doesn't show page numbers
+        if (BlockStyle) return items;
 
         if (TotalPages <= 1) return items;
 
@@ -133,10 +147,5 @@
         }
 
         return items;
-    }
-
-    private string GetPageHref(int pageNumber)
-    {
-        return HrefGenerator?.Invoke(pageNumber) ?? "#";
     }
 }

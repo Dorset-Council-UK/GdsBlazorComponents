@@ -1,8 +1,14 @@
 <div class="govuk-pagination__next" @attributes="@AdditionalAttributes">
-    <a class="govuk-link govuk-pagination__link" href="@Href" rel="next" @onclick="HandleNext" @onclick:preventDefault="OnNext.HasDelegate">
+    <a class="govuk-link govuk-pagination__link"
+       href="@Href"
+       rel="next"
+       @onclick="HandleNext"
+       @onclick:preventDefault="OnNext.HasDelegate"
+       data-enhance-nav="@(OnNext.HasDelegate ? "false" : null)"
+       data-prevent-double-click="true">
         @if (BlockStyle)
         {
-            NextArrow();
+            @NextArrow();
         }
         <span class="govuk-pagination__link-title">
             @Title<span class="govuk-visually-hidden"> page</span>
@@ -14,17 +20,17 @@
         }
         @if (!BlockStyle)
         {
-            NextArrow();
+            @NextArrow();
         }
     </a>
 </div>
 
 @code {
-    [CascadingParameter]
+    [CascadingParameter(Name = "GdsPagination.BlockStyle")]
     public bool BlockStyle { get; set; }
 
     [Parameter]
-    public string? Href { get; set; } = "#";
+    public string? Href { get; set; } = "";
 
     [Parameter]
     public string? Label { get; set; }
