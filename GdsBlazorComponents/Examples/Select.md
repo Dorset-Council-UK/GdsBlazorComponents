@@ -26,5 +26,5 @@ IReadOnlyCollection<GdsOptionItem<int>> contactTypes = [
     new ("contactTypeText", "Text message", 3),
     new ("contactTypePost", "Post", 4),
 ];
-<GdsSelect Options="@contactTypes" OnChange="@OnContactTypeChange" />
+<GdsSelect T="int" Options="@contactTypes" OnChange="@OnContactTypeChange" />
 ```
