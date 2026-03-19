@@ -78,8 +78,8 @@ The component supports both standard pagination (with page numbers) and block st
 <GdsPagination CurrentPage="@CurrentPage"
                TotalPages="@TotalPages"
                OnPageChanged="OnPageChanged"
-               PreviousLabel="@($"A previous page (goto page {_model.CurrentPage - 1})")"
-               NextLabel="@($"A next page (goto page {_model.CurrentPage + 1})")"
+               PreviousLabel="@($"A previous page (goto page {CurrentPage - 1})")"
+               NextLabel="@($"A next page (goto page {CurrentPage + 1})")"
                BlockStyle />
 
 @code {
