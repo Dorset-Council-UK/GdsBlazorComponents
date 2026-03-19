@@ -32,11 +32,14 @@
 </nav>
 
 @code {
-    [Parameter]
-    public bool BlockStyle { get; set; }
+    [Parameter, EditorRequired]
+    public int CurrentPage { get; set; } = 1;
+
+    [Parameter, EditorRequired]
+    public int TotalPages { get; set; } = 1;
 
     [Parameter]
-    public int CurrentPage { get; set; } = 1;
+    public bool BlockStyle { get; set; }
 
     [Parameter]
     public EventCallback<int> OnPageChanged { get; set; }
@@ -46,9 +49,6 @@
 
     [Parameter]
     public string? NextLabel { get; set; }
-
-    [Parameter]
-    public int TotalPages { get; set; } = 1;
 
     /// <summary>
     /// Example: HrefGenerator="@(pageNumber => $"search?page={pageNumber}")"
