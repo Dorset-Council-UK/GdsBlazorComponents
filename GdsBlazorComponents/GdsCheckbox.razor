@@ -6,7 +6,14 @@
 }
 
 <div @key="_id" class="govuk-checkboxes__item">
-    <InputCheckbox id="@_id" name="@Name" @bind-Value="Option.Selected" class="govuk-checkboxes__input" data-behaviour="@_exclusiveBehaviour" aria-describedby="@_hintId" data-aria-controls="@ConditionalId" />
+    <InputCheckbox id="@_id"
+                   name="@Name"
+                   class="govuk-checkboxes__input"
+                   data-behaviour="@_exclusiveBehaviour"
+                   aria-describedby="@_hintId"
+                   data-aria-controls="@ConditionalId"
+                   @bind-Value="Option.Selected"
+                   @bind-Value:after="HandleOnChange" />
     <GdsLabel For="@_id" AdditionalCssClasses="govuk-checkboxes__label" Text="@Option.Label" />
     @if (_hasHint)
     {
@@ -23,6 +30,9 @@
 
     [Parameter]
     public string? ConditionalId { get; set; }
+
+    [Parameter]
+    public EventCallback<GdsOptionItem<T>> OnChanged { get; set; }
 
     private string? _exclusiveBehaviour;
     private string _id = "";
@@ -41,4 +51,6 @@
         _hasHint = Option.Hint != null;
         _hintId = Option.Hint == null ? null : $"{_id}-hint";
     }
+
+    private Task HandleOnChange() => OnChanged.HasDelegate ? OnChanged.InvokeAsync(Option) : Task.CompletedTask;
 }
