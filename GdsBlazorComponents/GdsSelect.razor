@@ -33,6 +33,14 @@
             GdsOptionItem<T>? option = Options.FirstOrDefault(o => o.Value?.ToString() == args.Value?.ToString());
             if (option is not null)
             {
+                if (!option.Selected)
+                {
+                    foreach (var o in Options)
+                    {
+                        o.Selected = o.Id.Equals(option.Id);
+                    }
+                }
+
                 await OnChange.InvokeAsync(option);
             }
         }
