@@ -1,0 +1,49 @@
+<div class="govuk-pagination__prev" @attributes="@AdditionalAttributes">
+    <a class="govuk-link govuk-pagination__link"
+       href="@Href"
+       rel="prev"
+       @onclick="HandlePrevious"
+       @onclick:preventDefault="OnPrevious.HasDelegate"
+       data-enhance-nav="@(OnPrevious.HasDelegate ? "false" : null)"
+       data-prevent-double-click="true">
+        <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+            <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
+        </svg>
+        <span class="govuk-pagination__link-title">
+            @Title<span class="govuk-visually-hidden"> page</span>
+        </span>
+        @if (BlockStyle && !string.IsNullOrWhiteSpace(Label))
+        {
+            <span class="govuk-visually-hidden">:</span>
+            <span class="govuk-pagination__link-label">@Label</span>
+        }
+    </a>
+</div>
+
+@code {
+    [CascadingParameter(Name = "GdsPagination.BlockStyle")]
+    public bool BlockStyle { get; set; }
+
+    [Parameter]
+    public string? Href { get; set; } = "";
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public string Title { get; set; } = "Previous";
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnPrevious { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private async Task HandlePrevious(MouseEventArgs args)
+    {
+        if (OnPrevious.HasDelegate)
+        {
+            await OnPrevious.InvokeAsync(args);
+        }
+    }
+}
