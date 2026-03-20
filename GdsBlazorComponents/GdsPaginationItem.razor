@@ -1,0 +1,57 @@
+@if (IsSkippedPages)
+{
+    <li class="govuk-pagination__item govuk-pagination__item--ellipsis" @attributes="@AdditionalAttributes">&ctdot;</li>
+}
+else
+{
+    <li class="@_classes" @attributes="@AdditionalAttributes">
+        <a class="govuk-link govuk-pagination__link"
+           href="@Href"
+           aria-label="@_ariaLabel"
+           aria-current="@_ariaCurrent"
+           @onclick="HandlePageChanged"
+           @onclick:preventDefault="OnPageChanged.HasDelegate"
+           data-enhance-nav="@(OnPageChanged.HasDelegate ? "false" : null)"
+           data-prevent-double-click="true">
+            @PageNumber
+        </a>
+    </li>
+}
+
+@code {
+    [CascadingParameter(Name = "GdsPagination.CurrentPage")]
+    public int? CurrentPage { get; set; }
+
+    [Parameter]
+    public string? Href { get; set; } = "";
+
+    [Parameter]
+    public int? PageNumber { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnPageChanged { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private bool IsSkippedPages => string.IsNullOrWhiteSpace(Href) && PageNumber is null;
+    private string? _classes;
+    private string? _ariaLabel;
+    private string? _ariaCurrent;
+
+    protected override void OnParametersSet()
+    {
+        bool isCurrentPage = CurrentPage is not null && CurrentPage == PageNumber;
+        _classes = isCurrentPage ? "govuk-pagination__item govuk-pagination__item--current" : "govuk-pagination__item";
+        _ariaLabel = $"Page {PageNumber}";
+        _ariaCurrent = isCurrentPage ? "page" : null;
+    }
+
+    private async Task HandlePageChanged(MouseEventArgs args)
+    {
+        if (OnPageChanged.HasDelegate && PageNumber.HasValue)
+        {
+            await OnPageChanged.InvokeAsync(PageNumber.Value);
+        }
+    }
+}

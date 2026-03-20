@@ -19,12 +19,23 @@ Render GOV.UK Design System styled select lists using the options from a list of
 ## Simple example
 
 ```csharp
-IReadOnlyCollection<GdsOptionItem<int>> contactTypes = [
-    new ("contactTypeNone", "Select an option", 0),
-    new ("contactTypePhone", "Phone", 1),
-    new ("contactTypeEmail", "Email", 2),
-    new ("contactTypeText", "Text message", 3),
-    new ("contactTypePost", "Post", 4),
-];
-<GdsSelect Options="@contactTypes" OnChange="@OnContactTypeChange" />
+<GdsSelect Options="@ContactTypes" T="int" OnChange="OnContactTypeChange" />
+<span id="result-body">@Result</span>
+
+@code {
+    private string Result = string.Empty;
+    private IReadOnlyCollection<GdsOptionItem<int>> ContactTypes = [
+        new ("contactTypeNone", "Select an option", 0),
+        new ("contactTypePhone", "Phone", 1),
+        new ("contactTypeEmail", "Email", 2),
+        new ("contactTypeText", "Text message", 3),
+        new ("contactTypePost", "Post", 4),
+    ];
+
+    private async Task OnContactTypeChange(GdsOptionItem<int> option)
+    {
+        // Do something when the select value changes
+        Result = $"Selected contact type: {option.Value} - {option.Label}";
+    }
+}
 ```

@@ -3,9 +3,9 @@
 @if (Options.Count > 0)
 {
     <div class="@_cssClass" data-module="govuk-checkboxes">
-        @foreach (var option in Options)
+        @foreach (GdsOptionItem<T> option in Options)
         {
-            <GdsCheckbox Option="option" Name="@Name" />
+            <GdsCheckbox T="T" Option="option" Name="@Name" OnChanged="@_onChanged" />
         }
     </div>
 }
@@ -20,5 +20,18 @@
     [Parameter]
     public string Name { get; set; } = Guid.NewGuid().ToString();
 
+    [Parameter]
+    public EventCallback<GdsOptionItem<T>> OnChanged { get; set; }
+
     private string _cssClass => Smaller ? "govuk-checkboxes govuk-checkboxes--small" : "govuk-checkboxes";
+    private EventCallback<GdsOptionItem<T>> _onChanged;
+
+    protected override void OnParametersSet()
+    {
+        _onChanged = OnChanged.HasDelegate
+            ? EventCallback.Factory.Create<GdsOptionItem<T>>(this, HandleOnChanged)
+            : default;
+    }
+
+    private Task HandleOnChanged(GdsOptionItem<T> option) => OnChanged.HasDelegate ? OnChanged.InvokeAsync(option) : Task.CompletedTask;
 }

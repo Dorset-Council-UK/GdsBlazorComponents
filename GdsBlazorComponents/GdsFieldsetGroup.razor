@@ -1,7 +1,7 @@
 ﻿<fieldset class="govuk-fieldset" role="group" aria-describedby="@_describedBy">
     @if (Heading != null)
     {
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <legend class="govuk-fieldset__legend @LegendSize.GetDescription()">
             @Heading
         </legend>
     }
@@ -18,6 +18,9 @@
 
     [CascadingParameter]
     private FieldIdentifier FieldIdentifier { get; set; } = default!;
+
+    [Parameter]
+    public GdsFieldsetLegendSize LegendSize { get; set; } = GdsFieldsetLegendSize.Large;
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
