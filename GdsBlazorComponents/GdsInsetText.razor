@@ -1,6 +1,26 @@
-<div class="govuk-inset-text">@Text</div>
+<div class="govuk-inset-text">@_renderFragment</div>
 
 @code {
-    [Parameter, EditorRequired]
-    public required string Text { get; set; }
+    [Parameter]
+    public string? Text { get; set; }
+
+    [Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+    private RenderFragment? _renderFragment;
+
+    protected override void OnParametersSet()
+    {
+        if (Text is not null && ChildContent is not null)
+        {
+            throw new InvalidOperationException("Cannot set both Text and ChildContent parameters.");
+        }
+
+        if (Text is null && ChildContent is null)
+        {
+            throw new InvalidOperationException("Either Text or ChildContent parameter must be provided.");
+        }
+
+        _renderFragment = ChildContent ?? (builder => builder.AddContent(0, Text!));
+    }
 }
