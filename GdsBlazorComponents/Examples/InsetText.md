@@ -19,3 +19,13 @@ We are currently using an older style of header component. We are planning to up
 ```html
 <GdsInsetText Text="Some text here.." />
 ```
+
+or 
+
+```html
+<GdsInsetText>
+    Some text here..
+</GdsInsetText>
+```
+
+You can't use both the `Text` property and child content at the same time or you will get an exception. 
