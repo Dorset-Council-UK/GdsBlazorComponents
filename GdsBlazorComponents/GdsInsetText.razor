@@ -14,7 +14,7 @@
         _renderFragment = ChildContent ?? (Text is not null ? builder => builder.AddContent(0, Text) : null);
         if (Text is not null && ChildContent is not null)
         {
-            throw new InvalidOperationException("Cannot set both Text and ChildContent parameters.");
+            throw new InvalidOperationException("GdsInsetText: invalid parameters. Set exactly one of 'Text' or 'ChildContent', but not both.");
         }
     }
 }

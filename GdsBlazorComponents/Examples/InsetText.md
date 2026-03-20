@@ -28,4 +28,4 @@ or
 </GdsInsetText>
 ```
 
-You can't use both the `Text` property and child content at the same time or you will get an exception. 
+You must use exactly one of the `Text` property or child content. If you use both or neither, an exception will be thrown.
