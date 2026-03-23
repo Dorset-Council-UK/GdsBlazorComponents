@@ -1,12 +1,17 @@
 @typeparam T
 
-<select class="govuk-select" id="@Id" @onchange="HandleOnChange">
+<select class="@ComponentClass" id="@Id" @onchange="HandleOnChange" @attributes="@AdditionalAttributes">
     @foreach (var option in Options)
     {
         <option @key="option.Id" value="@option.Value" selected="@option.Selected">@option.Label</option>
     }
 </select>
 
+<style>
+    .govuk-select-full {
+        width: 100%;
+    }
+</style>
 
 @code {
     [Parameter]
@@ -20,6 +25,17 @@
 
     [Parameter]
     public EventCallback<GdsOptionItem<T>> OnChange { get; set; }
+
+    [Parameter]
+    public string BaseClass { get; set; } = "govuk-select";
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    private string ComponentClass => $"{BaseClass} {AdditionalCssClasses}";
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
     protected override void OnParametersSet()
     {
