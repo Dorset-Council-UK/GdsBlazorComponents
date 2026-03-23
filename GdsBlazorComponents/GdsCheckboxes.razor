@@ -2,7 +2,7 @@
 
 @if (Options.Count > 0)
 {
-    <div class="@_cssClass" data-module="govuk-checkboxes">
+    <div class="@_cssClass" data-module="govuk-checkboxes" @attributes="@AdditionalAttributes">
         @foreach (GdsOptionItem<T> option in Options)
         {
             <GdsCheckbox T="T" Option="option" Name="@Name" OnChanged="@_onChanged" />
@@ -34,4 +34,8 @@
     }
 
     private Task HandleOnChanged(GdsOptionItem<T> option) => OnChanged.HasDelegate ? OnChanged.InvokeAsync(option) : Task.CompletedTask;
+
+    // Use attribute splatting on non-input components and inheritance on others.
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
 }

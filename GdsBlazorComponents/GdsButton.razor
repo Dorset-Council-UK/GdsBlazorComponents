@@ -27,6 +27,7 @@
 
     private string ComponentClass => $"{BaseClass} {AdditionalCssClasses}";
 
+    // Use attribute splatting on non-input components and inheritance on others.
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object>? AdditionalAttributes { get; set; }
 }

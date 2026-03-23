@@ -1,4 +1,4 @@
-<div class="govuk-notification-banner @_class" role="@_role" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+<div class="govuk-notification-banner @_class" role="@_role" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner" @attributes="@AdditionalAttributes">
     <div class="govuk-notification-banner__header">
         @if (BannerTitleSize == BannerSizeOption.small)
         {
@@ -31,6 +31,10 @@
 
     [Parameter, EditorRequired]
     public required RenderFragment? ChildContent { get; set; }
+
+    // Use attribute splatting on non-input components and inheritance on others.
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
     public enum BannerSizeOption
     {

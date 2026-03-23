@@ -50,7 +50,7 @@ section.related-navigation, .related-navigation {
         display: none !important;
     }
 
-    @media #{govuk.govuk-from-breakpoint(tablet)} {
+    @include govuk.govuk-media-query($from: tablet) {
         padding: 0;
     }
 

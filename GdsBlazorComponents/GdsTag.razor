@@ -1,4 +1,4 @@
-﻿<strong class="@($"govuk-tag {Colour?.GetDescription()} {AdditionalCssClasses}")">
+﻿<strong class="@ComponentClass" @attributes="@AdditionalAttributes">
 	@Text
 </strong>
 
@@ -9,6 +9,14 @@
 	[Parameter]
 	public GdsTagColour? Colour { get; set; }
 
+	private string BaseClass = "govuk-tag";
+
 	[Parameter]
 	public string? AdditionalCssClasses { get; set; }
+
+	private string ComponentClass => $"{BaseClass} {Colour?.GetDescription()} {AdditionalCssClasses}";
+
+	// Use attribute splatting on non-input components and inheritance on others.
+	[Parameter(CaptureUnmatchedValues = true)]
+	public Dictionary<string, object>? AdditionalAttributes { get; set; }
 }

@@ -1,4 +1,4 @@
-﻿<label for="@For" class="@LabelCssClass">@Text</label>
+﻿<label for="@For" class="@LabelCssClass" @attributes="@AdditionalAttributes">@Text</label>
 
 @code {
     [CascadingParameter]
@@ -17,6 +17,10 @@
     public string? AdditionalCssClasses { get; set; }
 
     private string LabelCssClass => $"{CssClass} {AdditionalCssClasses}";
+
+    // Use attribute splatting on non-input components and inheritance on others.
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
     protected override void OnInitialized()
     {

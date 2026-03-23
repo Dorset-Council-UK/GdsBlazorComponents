@@ -2,7 +2,7 @@
 
 @if (Show)
 {
-    <div class="@FormGroupCssClass" data-module="@DataModule" data-maxlength="@DataMaxLength">
+    <div class="@FormGroupCssClass" data-module="@DataModule" data-maxlength="@DataMaxLength" @attributes="@AdditionalAttributes">
         <CascadingValue Value="Id" IsFixed="true">
             <CascadingValue Value="FieldIdentifier" IsFixed="false">
                 @ChildContent
@@ -35,6 +35,10 @@
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
+
+    // Use attribute splatting on non-input components and inheritance on others.
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
     private const string GroupCssClass = "govuk-form-group";
     private const string GroupErrorCssClass = "govuk-form-group--error";

@@ -2,7 +2,7 @@
 
 @if (Options.Count > 0)
 {
-    <div class="@_cssClass" data-module="govuk-radios">
+    <div class="@_cssClass" data-module="govuk-radios" @attributes="@AdditionalAttributes">
         @foreach (var option in Options)
         {
             <GdsRadio Option="option" />
@@ -21,4 +21,8 @@
     public bool Inline { get; set; }
 
     private string _cssClass => string.Format("govuk-radios{0}{1}", Inline ? " govuk-radios--inline" : "", Smaller ? " govuk-radios--small" : "");
+
+    // Use attribute splatting on non-input components and inheritance on others.
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
 }

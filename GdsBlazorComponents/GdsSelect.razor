@@ -1,9 +1,14 @@
 @typeparam T
+@inherits InputSelect<T>
 
-<select class="@ComponentClass" id="@Id" @onchange="HandleOnChange" @attributes="@AdditionalAttributes">
+<select class="@ComponentClass" 
+        id="@Id" 
+        @attributes="AdditionalAttributes"
+        @bind="CurrentValue" 
+        @bind:after="HandleValueChanged">
     @foreach (var option in Options)
     {
-        <option @key="option.Id" value="@option.Value" selected="@option.Selected">@option.Label</option>
+        <option @key="option.Id" value="@option.Value">@option.Label</option>
     }
 </select>
 
@@ -27,27 +32,25 @@
 
     private string ComponentClass => $"{BaseClass} {AdditionalCssClasses}";
 
-    [Parameter(CaptureUnmatchedValues = true)]
-    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+    // Use attribute splatting on non-input components and inheritance on others.
+    // [Parameter(CaptureUnmatchedValues = true)]
+    // public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
     protected override void OnParametersSet()
     {
         Id ??= CascadedId;
     }
 
-    private async Task HandleOnChange(ChangeEventArgs args)
+    private async Task HandleValueChanged()
     {
         if (OnChange.HasDelegate)
         {
-            GdsOptionItem<T>? option = Options.FirstOrDefault(o => o.Value?.ToString() == args.Value?.ToString());
+            GdsOptionItem<T>? option = Options.FirstOrDefault(o => EqualityComparer<T>.Default.Equals(o.Value, CurrentValue));
             if (option is not null)
             {
-                if (!option.Selected)
+                foreach (var o in Options)
                 {
-                    foreach (var o in Options)
-                    {
-                        o.Selected = o.Id.Equals(option.Id);
-                    }
+                    o.Selected = EqualityComparer<T>.Default.Equals(o.Value, CurrentValue);
                 }
 
                 await OnChange.InvokeAsync(option);

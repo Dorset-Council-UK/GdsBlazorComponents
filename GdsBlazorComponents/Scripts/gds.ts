@@ -24,6 +24,16 @@ function stopGdsObserver() {
     if (gdsObserver) gdsObserver.stopObserving();
 }
 
+// Reinitialize GDS Observer - useful after Blazor navigation
+function reinitializeGdsObserver() {
+    if (gdsObserver) {
+        gdsObserver.stopObserving();
+        gdsObserver.startObserving();
+    } else {
+        startGdsObserver();
+    }
+}
+
 // Setup GDS - called automatically when module loads
 function setupGDS() {
     setupGdsFrontend();
@@ -35,6 +45,12 @@ function cleanupGDS() {
     stopGdsObserver();
 }
 
+// Handle Blazor Enhanced Navigation
+function handleBlazorNavigation() {
+    // Reinitialize components after Blazor navigation
+    reinitializeGdsObserver();
+}
+
 // Automatically initialize when DOM is ready. Ensure it works whether the script is loaded before or after DOMContentLoaded.
 if (document.readyState === 'loading') {
     // Loading hasn't finished yet
@@ -43,6 +59,9 @@ if (document.readyState === 'loading') {
     // `DOMContentLoaded` has already fired
     setupGDS();
 }
+
+// Listen for Blazor Enhanced Navigation events
+document.addEventListener('enhancednavigation', handleBlazorNavigation);
 
 // Automatically cleanup on page unload
 window.addEventListener('beforeunload', cleanupGDS);
