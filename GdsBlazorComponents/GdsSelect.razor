@@ -20,8 +20,7 @@
     [Parameter]
     public EventCallback<GdsOptionItem<T>> OnChange { get; set; }
 
-    [Parameter]
-    public string BaseClass { get; set; } = "govuk-select";
+    private string BaseClass = "govuk-select";
 
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
