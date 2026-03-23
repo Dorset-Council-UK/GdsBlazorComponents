@@ -16,7 +16,7 @@ Render GOV.UK Design System styled select lists using the options from a list of
 - You can use the `OnChange` event callback to trigger actions when the selection changes.
 - The default class is `govuk-select`, but you can use `AdditionalCssClasses` to style the select.
 - You can also pass additional HTML attributes, such as `style`, to this component.
-- The `id` attribute can be set with the `Id` property. If omitted, it falls back to a cascaded id provided by `GdsFormGroup`.
+- The `id` attribute must be set via the `Id` parameter (not an `id=` attribute). If `Id` is omitted, it falls back to a cascaded id provided by `GdsFormGroup`. Using both a cascaded `Id` and an `id=` attribute can cause Blazor to throw a duplicate attribute error at runtime.
 
 ## Simple example
 
