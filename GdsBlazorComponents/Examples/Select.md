@@ -13,18 +13,22 @@ Render GOV.UK Design System styled select lists using the options from a list of
 
 - Renders a list of [GdsOptionItem](GdsOptionItem.md) under a ```<select class="govuk-select">```.
 - Supports binding to any value type (e.g., string, int, enum, bool, custom types).
+- Bind this component to a property using `@bind-Value` to track and set the selected value.
 - You can use the `OnChange` event callback to trigger actions when the selection changes.
 - The default class is `govuk-select`, but you can use `CssClass` to style the select.
-- The `id` attribute must be set via the `Id` parameter (not an `id=` attribute). If `Id` is omitted, it falls back to a cascaded id provided by `GdsFormGroup`. Using both a cascaded `Id` and an `id=` attribute can cause Blazor to throw a duplicate attribute error at runtime.
+
+> [!NOTE]
+> To pre-select an option, set the initial value of the bound property. The `selected` parameter in `GdsOptionItem` is maintained for internal state tracking and is not used for initialization.
 
 ## Simple example
 
 ```csharp
-<GdsSelect Options="@ContactTypes" T="int" OnChange="OnContactTypeChange" />
+<GdsSelect Options="@ContactTypes" @bind-Value="SelectedContactType" T="int" OnChange="OnContactTypeChange" />
 <span id="result-body">@Result</span>
 
 @code {
     private string Result = string.Empty;
+    private int SelectedContactType = 1;
     private IReadOnlyCollection<GdsOptionItem<int>> ContactTypes = [
         new ("contactTypeNone", "Select an option", 0),
         new ("contactTypePhone", "Phone", 1),

@@ -17,9 +17,6 @@
     [Parameter]
     public string? Id { get; set; }
 
-    [CascadingParameter]
-    public string? CascadedId { get; set; }
-
     [Parameter, EditorRequired]
     public required IReadOnlyCollection<GdsOptionItem<T>> Options { get; set; }
 
@@ -33,11 +30,6 @@
     // Use attribute splatting on non-input components and inheritance on others.
     // [Parameter(CaptureUnmatchedValues = true)]
     // public Dictionary<string, object>? AdditionalAttributes { get; set; }
-
-    protected override void OnParametersSet()
-    {
-        Id ??= CascadedId;
-    }
 
     private async Task HandleValueChanged()
     {
