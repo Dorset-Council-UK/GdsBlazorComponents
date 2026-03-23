@@ -1,6 +1,6 @@
 <button type="@(IsSubmit ? "submit" : "button")"
     @attributes="@AdditionalAttributes"
-    class="@ButtonCssClass"
+    class="@ComponentClass"
     data-module="govuk-button"
     data-prevent-double-click=@(PreventDoubleClick ? "true": null)
     @onclick="@(IsSubmit ? default : OnClick)">
@@ -21,14 +21,13 @@
     public EventCallback<MouseEventArgs> OnClick { get; set; }
 
     [Parameter]
-    public string CssClass { get; set; } = "govuk-button";
+    public string BaseClass { get; set; } = "govuk-button";
 
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
 
-    private string ButtonCssClass => $"{CssClass} {AdditionalCssClasses}";
+    private string ComponentClass => $"{BaseClass} {AdditionalCssClasses}";
 
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object>? AdditionalAttributes { get; set; }
-
 }
