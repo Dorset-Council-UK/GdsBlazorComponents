@@ -14,7 +14,9 @@ Render GOV.UK Design System styled select lists using the options from a list of
 - Renders a list of [GdsOptionItem](GdsOptionItem.md) under a ```<select class="govuk-select">```.
 - Supports binding to any value type (e.g., string, int, enum, bool, custom types).
 - You can use the `OnChange` event callback to trigger actions when the selection changes.
-- - The `id` attribute can be set with the `Id` property. If omitted, it falls back to a cascaded id provided by `GdsFormGroup`.
+- The default class is `govuk-select`, but you can use `AdditionalCssClasses` to style the select.
+- You can also pass additional HTML attributes, such as `style`, to this component.
+- The `id` attribute can be set with the `Id` property. If omitted, it falls back to a cascaded id provided by `GdsFormGroup`.
 
 ## Simple example
 
