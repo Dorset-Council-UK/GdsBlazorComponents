@@ -20,6 +20,10 @@
 
     private string BaseClass = "govuk-hint";
 
+    [Obsolete("Use AdditionalCssClasses instead.")]
+    [Parameter]
+    public string? CssClass { get; set; }
+
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
 

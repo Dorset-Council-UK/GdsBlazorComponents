@@ -14,7 +14,7 @@ Render GOV.UK Design System styled select lists using the options from a list of
 - Renders a list of [GdsOptionItem](GdsOptionItem.md) under a ```<select class="govuk-select">```.
 - Supports binding to any value type (e.g., string, int, enum, bool, custom types).
 - You can use the `OnChange` event callback to trigger actions when the selection changes.
-- The default class is `govuk-select`, but you can use `AdditionalCssClasses` to style the select.
+- The default class is `govuk-select`, but you can use `CssClass` to style the select.
 - The `id` attribute must be set via the `Id` parameter (not an `id=` attribute). If `Id` is omitted, it falls back to a cascaded id provided by `GdsFormGroup`. Using both a cascaded `Id` and an `id=` attribute can cause Blazor to throw a duplicate attribute error at runtime.
 
 ## Simple example

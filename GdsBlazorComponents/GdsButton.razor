@@ -22,6 +22,10 @@
 
     private string BaseClass = "govuk-button";
 
+    [Obsolete("Use AdditionalCssClasses instead.")]
+    [Parameter]
+    public string? CssClass { get; set; }
+
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
 

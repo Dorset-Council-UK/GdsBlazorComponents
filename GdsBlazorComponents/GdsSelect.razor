@@ -3,6 +3,7 @@
 
 <select class="@ComponentClass" 
         id="@Id" 
+        name="@NameAttributeValue"
         @attributes="AdditionalAttributes"
         @bind="CurrentValue" 
         @bind:after="HandleValueChanged">
@@ -27,10 +28,7 @@
 
     private string BaseClass = "govuk-select";
 
-    [Parameter]
-    public string? AdditionalCssClasses { get; set; }
-
-    private string ComponentClass => $"{BaseClass} {AdditionalCssClasses}";
+    private string ComponentClass => $"{BaseClass} {CssClass}"; // Using CssClass from the base InputSelect component
 
     // Use attribute splatting on non-input components and inheritance on others.
     // [Parameter(CaptureUnmatchedValues = true)]
