@@ -24,18 +24,13 @@ export class GdsObserver {
             return
         }
 
-        // Initialize any existing components before starting to observe
-        this.scanAndInitialise(target)
-
         this.observer = new MutationObserver((mutations) => {
             this.handleMutations(mutations)
         })
 
         this.observer.observe(target, {
             childList: true,
-            subtree: true,
-            attributes: true,
-            attributeFilter: ['data-module']
+            subtree: true
         })
 
         this.isObserving = true
@@ -59,37 +54,13 @@ export class GdsObserver {
         const moduleNames = new Set<string>()
 
         mutations.forEach((mutation) => {
-            // Handle added nodes
             mutation.addedNodes.forEach((node) => {
                 if (node.nodeType === Node.ELEMENT_NODE) {
                     const element = node as Element
                     this.findModuleNames(element, moduleNames)
                 }
             })
-
-            // Handle attribute changes on existing elements
-            if (mutation.type === 'attributes' && mutation.target.nodeType === Node.ELEMENT_NODE) {
-                const element = mutation.target as Element
-                if (element.hasAttribute('data-module')) {
-                    const moduleName = element.getAttribute('data-module')
-                    if (moduleName) {
-                        moduleNames.add(moduleName)
-                    }
-                }
-            }
         })
-
-        if (moduleNames.size > 0) {
-            this.initialiseModules(moduleNames)
-        }
-    }
-
-    /**
-     * Scan the target element for existing GDS components and initialize them
-     */
-    private scanAndInitialise(target: HTMLElement): void {
-        const moduleNames = new Set<string>()
-        this.findModuleNames(target, moduleNames)
 
         if (moduleNames.size > 0) {
             this.initialiseModules(moduleNames)
