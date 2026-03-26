@@ -1,50 +1,10 @@
 @typeparam T
 @inherits InputSelect<T>
 
-<select class="@ComponentClass" 
-        id="@Id" 
-        name="@NameAttributeValue"
-        @attributes="AdditionalAttributes"
-        @bind="CurrentValue" 
-        @bind:after="HandleValueChanged">
-    @foreach (var option in Options)
-    {
-        <option @key="option.Id" value="@option.Value">@option.Label</option>
-    }
+<select class="@ComponentClass" @attributes="AdditionalAttributes" @bind="CurrentValue" @bind:event="onchange">
+    @ChildContent
 </select>
 
 @code {
-    [Parameter]
-    public string? Id { get; set; }
-
-    [Parameter, EditorRequired]
-    public required IReadOnlyCollection<GdsOptionItem<T>> Options { get; set; }
-
-    [Parameter]
-    public EventCallback<GdsOptionItem<T>> OnChange { get; set; }
-
-    private string BaseClass = "govuk-select";
-
-    private string ComponentClass => $"{BaseClass} {CssClass}"; // Using CssClass from the base InputSelect component
-
-    // Use attribute splatting on non-input components and inheritance on others.
-    // [Parameter(CaptureUnmatchedValues = true)]
-    // public Dictionary<string, object>? AdditionalAttributes { get; set; }
-
-    private async Task HandleValueChanged()
-    {
-        if (OnChange.HasDelegate)
-        {
-            GdsOptionItem<T>? option = Options.FirstOrDefault(o => EqualityComparer<T>.Default.Equals(o.Value, CurrentValue));
-            if (option is not null)
-            {
-                foreach (var o in Options)
-                {
-                    o.Selected = EqualityComparer<T>.Default.Equals(o.Value, CurrentValue);
-                }
-
-                await OnChange.InvokeAsync(option);
-            }
-        }
-    }
+    private string ComponentClass => $"govuk-select {CssClass}".Trim();
 }
