@@ -1,6 +1,6 @@
 <button type="@(IsSubmit ? "submit" : "button")"
     @attributes="@AdditionalAttributes"
-    class="@ButtonCssClass"
+    class="@ComponentClass"
     data-module="govuk-button"
     data-prevent-double-click=@(PreventDoubleClick ? "true": null)
     @onclick="@(IsSubmit ? default : OnClick)">
@@ -20,15 +20,18 @@
     [Parameter]
     public EventCallback<MouseEventArgs> OnClick { get; set; }
 
+    private string BaseClass = "govuk-button";
+
+    [Obsolete("Use AdditionalCssClasses instead.")]
     [Parameter]
-    public string CssClass { get; set; } = "govuk-button";
+    public string? CssClass { get; set; }
 
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
 
-    private string ButtonCssClass => $"{CssClass} {AdditionalCssClasses}";
+    private string ComponentClass => $"{BaseClass} {AdditionalCssClasses}";
 
+    // Use attribute splatting on non-input components and inheritance on others.
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object>? AdditionalAttributes { get; set; }
-
 }

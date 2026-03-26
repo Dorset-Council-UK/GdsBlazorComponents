@@ -1,6 +1,6 @@
 ﻿@if (Show)
 {
-    <div id="@Id" class="@CssClass">
+    <div id="@Id" class="@ComponentClass" @attributes="@AdditionalAttributes">
         @ChildContent
     </div>
 }
@@ -18,8 +18,20 @@
     [Parameter]
     public bool Show { get; set; } = true;
 
+    private string BaseClass = "govuk-hint";
+
+    [Obsolete("Use AdditionalCssClasses instead.")]
     [Parameter]
-    public string CssClass { get; set; } = "govuk-hint";
+    public string? CssClass { get; set; }
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    private string ComponentClass => $"{BaseClass} {AdditionalCssClasses}";
+
+    // Use attribute splatting on non-input components and inheritance on others.
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
     protected override void OnInitialized()
     {

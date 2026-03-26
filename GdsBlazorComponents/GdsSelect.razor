@@ -1,48 +1,10 @@
 @typeparam T
+@inherits InputSelect<T>
 
-<select class="govuk-select" id="@Id" @onchange="HandleOnChange">
-    @foreach (var option in Options)
-    {
-        <option @key="option.Id" value="@option.Value" selected="@option.Selected">@option.Label</option>
-    }
+<select class="@ComponentClass" @attributes="AdditionalAttributes" @bind="CurrentValue" @bind:event="onchange">
+    @ChildContent
 </select>
 
-
 @code {
-    [Parameter]
-    public string? Id { get; set; }
-
-    [CascadingParameter]
-    public string? CascadedId { get; set; }
-
-    [Parameter, EditorRequired]
-    public required IReadOnlyCollection<GdsOptionItem<T>> Options { get; set; }
-
-    [Parameter]
-    public EventCallback<GdsOptionItem<T>> OnChange { get; set; }
-
-    protected override void OnParametersSet()
-    {
-        Id ??= CascadedId;
-    }
-
-    private async Task HandleOnChange(ChangeEventArgs args)
-    {
-        if (OnChange.HasDelegate)
-        {
-            GdsOptionItem<T>? option = Options.FirstOrDefault(o => o.Value?.ToString() == args.Value?.ToString());
-            if (option is not null)
-            {
-                if (!option.Selected)
-                {
-                    foreach (var o in Options)
-                    {
-                        o.Selected = o.Id.Equals(option.Id);
-                    }
-                }
-
-                await OnChange.InvokeAsync(option);
-            }
-        }
-    }
+    private string ComponentClass => $"govuk-select {CssClass}".Trim();
 }

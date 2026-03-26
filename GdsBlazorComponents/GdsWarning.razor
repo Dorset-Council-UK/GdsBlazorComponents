@@ -1,4 +1,4 @@
-﻿<div class="govuk-warning-text">
+﻿<div class="govuk-warning-text" @attributes="@AdditionalAttributes">
     <span class="govuk-warning-text__icon" aria-hidden="true">@Icon</span>
     <strong class="govuk-warning-text__text">
         <span class="govuk-visually-hidden">Warning</span> @Text
@@ -11,4 +11,8 @@
 
     [Parameter]
     public string Icon { get; set; } = "!";
+
+    // Use attribute splatting on non-input components and inheritance on others.
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
 }
