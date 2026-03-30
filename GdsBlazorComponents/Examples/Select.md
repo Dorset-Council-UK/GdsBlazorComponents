@@ -14,6 +14,7 @@ Render GOV.UK Design System styled select lists. Option definition is controlled
 - Renders a ```<select class="govuk-select">```.
 - Bind this component to a property using `@bind-Value` to track and set the selected value.
 - The default class is `govuk-select`, but you can use `CssClass` to style the select.
+- The `id` attribute is set from the `Id` component property. If omitted, it falls back to a cascaded id provided by `GdsFormGroup`.
 
 ## Simple examples
 
