@@ -12,5 +12,10 @@
     [Parameter]
     public string? Id { get; set; }
 
+    protected override void OnParametersSet()
+    {
+        Id ??= CascadedId;
+        base.OnParametersSet();
+    }
     private string ComponentClass => $"govuk-select {CssClass}".Trim();
 }
