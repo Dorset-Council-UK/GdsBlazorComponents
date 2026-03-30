@@ -18,7 +18,7 @@ Render GOV.UK Design System styled select lists. Option definition is controlled
 ## Simple examples
 
 ```csharp
-<<p>
+<p>
     <GdsSelect @bind-Value="SelectedContactType" T="int">
         @foreach(var value in ContactTypes)
         {
