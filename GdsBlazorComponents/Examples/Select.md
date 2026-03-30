@@ -11,7 +11,7 @@ Render GOV.UK Design System styled select lists. Option definition is controlled
 
 ## How it works
 
-- Renders a ```<InputSelect class="govuk-select">```.
+- Renders a ```<Select class="govuk-select">```.
 - Bind this component to a property using `@bind-Value` to track and set the selected value.
 - The default class is `govuk-select`, but you can use `CssClass` to style the select.
 

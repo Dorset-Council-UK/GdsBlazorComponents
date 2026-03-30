@@ -1,10 +1,16 @@
 @typeparam T
 @inherits InputSelect<T>
 
-<select class="@ComponentClass" @attributes="AdditionalAttributes" @bind="CurrentValue" @bind:event="onchange">
+<select id="@Id" class="@ComponentClass" @attributes="AdditionalAttributes" @bind="CurrentValueAsString" @bind:event="onchange">
     @ChildContent
 </select>
 
 @code {
+    [CascadingParameter]
+    private string? CascadedId { get; set; }
+
+    [Parameter]
+    public string? Id { get; set; }
+
     private string ComponentClass => $"govuk-select {CssClass}".Trim();
 }
