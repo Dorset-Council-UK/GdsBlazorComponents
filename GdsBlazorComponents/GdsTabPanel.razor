@@ -1,0 +1,84 @@
+﻿@implements IDisposable
+
+<div class="@($"govuk-tabs__panel {( Parent is not null && !Parent.IsFirst(this) ? "govuk-tabs__panel--hidden" : string.Empty )} {AdditionalCssClasses}")" id="@Id" @attributes="AdditionalAttributes">
+    <h2 class="@HeadingClass">@Heading</h2>
+    @ChildContent
+</div>
+
+@code {
+    /// <summary>
+    /// Gets or sets the parent <see cref="GdsTabs"/> component.
+    /// </summary>
+    /// <remarks>
+    /// This is provided via a cascading parameter and is required for registration.
+    /// </remarks>
+    [CascadingParameter]
+    public GdsTabs? Parent { get; set; }
+
+    /// <summary>
+    /// Gets or sets the unique identifier for the tab panel.
+    /// </summary>
+    /// <remarks>
+    /// This value is used as the HTML <c>id</c> attribute and must match the corresponding tab link fragment.
+    /// Must be unique within a <see cref="GdsTabs"/> instance.
+    /// </remarks>
+    [Parameter, EditorRequired]
+    public required string Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the heading displayed for the tab panel.
+    /// </summary>
+    /// <remarks>
+    /// This is rendered within a heading element inside the panel.
+    /// </remarks>
+    [Parameter, EditorRequired]
+    public string Heading { get; set; }
+
+    /// <summary>
+    /// Gets or sets the CSS class applied to the heading element.
+    /// </summary>
+    /// <remarks>
+    /// Defaults to <c>govuk-heading-l</c>.
+    /// </remarks>
+    [Parameter]
+    public string HeadingClass { get; set; } = "govuk-heading-l";
+
+    /// <summary>
+    /// Gets or sets the content of the tab panel.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// Gets or sets additional CSS classes applied to the panel container.
+    /// </summary>
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    /// <summary>
+    /// Gets or sets additional HTML attributes applied to the panel container.
+    /// </summary>
+    /// <remarks>
+    /// Allows arbitrary attributes (for example, data attributes) to be passed through.
+    /// </remarks>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    /// Initialises the component and registers it with the parent <see cref="GdsTabs"/>.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if the component is not used within a <see cref="GdsTabs"/> container.
+    /// </exception>
+    protected override void OnInitialized()
+    {
+        if (Parent is null)
+            throw new InvalidOperationException($"The {nameof(GdsTabPanel)} component must be used within a {nameof(GdsTabs)} component.");
+
+        Parent?.RegisterPanel(this);
+    }
+
+    /// <summary>
+    /// Releases resources and unregisters the panel from the parent component.
+    /// </summary>
+    public void Dispose() => Parent?.UnregisterPanel(this);
+}
