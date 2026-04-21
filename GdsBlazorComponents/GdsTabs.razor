@@ -1,0 +1,101 @@
+﻿<CascadingValue Value="this" IsFixed="true">
+    <div class="@($"govuk-tabs {AdditionalCssClasses}")" data-module="govuk-tabs" @attributes="@AdditionalAttributes">
+        <h2 class="govuk-tabs__title">
+            @Title
+        </h2>
+
+        @if (panels.Count > 0)
+        {
+            <ul class="govuk-tabs__list">
+                @for (var i = 0; i < panels.Count; i++)
+                {
+                    GdsTabPanel panel = panels[i];
+
+                    <li class="govuk-tabs__list-item @(i == 0 ? "govuk-tabs__list-item--selected" : string.Empty)">
+                        <a class="govuk-tabs__tab" href="@($"#{panel.Id}")">
+                            @panel.Heading
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+
+        @ChildContent
+    </div>
+</CascadingValue>
+
+@code {
+    /// <summary>
+    /// Gets or sets the title displayed above the tabs.
+    /// </summary>
+    /// <remarks>
+    /// Rendered using the GOV.UK <c>govuk-tabs__title</c> class.
+    /// </remarks>
+    [Parameter, EditorRequired]
+    public required string Title { get; set; }
+
+    /// <summary>
+    /// Gets or sets the content of the tabs, typically a collection of <see cref="GdsTabPanel"/> components.
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>
+    /// Gets or sets additional CSS classes applied to the root tabs container.
+    /// </summary>
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    /// <summary>
+    /// Gets or sets additional HTML attributes applied to the root tabs container.
+    /// </summary>
+    /// <remarks>
+    /// Allows arbitrary attributes (for example, data attributes) to be passed through.
+    /// </remarks>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    /// <summary>
+    /// Stores the registered tab panels in the order they are added.
+    /// </summary>
+    /// <remarks>
+    /// Panels are added and removed via <see cref="RegisterPanel"/> and <see cref="UnregisterPanel"/>.
+    /// The order determines both the navigation rendering and which tab is active by default.
+    /// </remarks>
+    private readonly List<GdsTabPanel> panels = [];
+
+    /// <summary>
+    /// Determines whether the specified panel is the first registered tab.
+    /// </summary>
+    /// <param name="panel">The panel to evaluate.</param>
+    /// <returns>
+    /// <c>true</c> if the panel is the first; otherwise, <c>false</c>.
+    /// </returns>
+    public bool IsFirst(GdsTabPanel panel) => panels.IndexOf(panel) == 0;
+
+    /// <summary>
+    /// Registers a tab panel with the container.
+    /// </summary>
+    /// <param name="panel">The panel to register.</param>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when a panel with the same <see cref="GdsTabPanel.Id"/> has already been registered.
+    /// </exception>
+    public void RegisterPanel(GdsTabPanel panel)
+    {
+        if (panels.Any(x => ReferenceEquals(x, panel))) return;
+        if (panels.Any(x => string.Equals(x.Id, panel.Id, StringComparison.Ordinal))) throw new InvalidOperationException($"Duplicate tab id '{panel.Id}' detected.");
+
+        panels.Add(panel);
+        InvokeAsync(StateHasChanged);
+    }
+
+    /// <summary>
+    /// Unregisters a tab panel from the container.
+    /// </summary>
+    /// <param name="panel">The panel to unregister.</param>
+    public void UnregisterPanel(GdsTabPanel panel)
+    {
+        if (panels.Remove(panel))
+            InvokeAsync(StateHasChanged);
+    }
+}
