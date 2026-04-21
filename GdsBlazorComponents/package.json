@@ -16,10 +16,10 @@
     "outdated": "npm outdated"
   },
   "dependencies": {
-    "@types/govuk-frontend": "5.11.0",
     "govuk-frontend": "5.14.0"
   },
   "devDependencies": {
+    "@types/govuk-frontend": "5.11.0",
     "@types/node": "24.12.2",
     "css-loader": "7.1.4",
     "mini-css-extract-plugin": "2.10.2",
