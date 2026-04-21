@@ -32,7 +32,7 @@
     /// This is rendered within a heading element inside the panel.
     /// </remarks>
     [Parameter, EditorRequired]
-    public string Heading { get; set; }
+    public required string Heading { get; set; }
 
     /// <summary>
     /// Gets or sets the CSS class applied to the heading element.
@@ -64,6 +64,7 @@
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
+    /// <summary>
     /// Initialises the component and registers it with the parent <see cref="GdsTabs"/>.
     /// </summary>
     /// <exception cref="InvalidOperationException">
@@ -74,7 +75,7 @@
         if (Parent is null)
             throw new InvalidOperationException($"The {nameof(GdsTabPanel)} component must be used within a {nameof(GdsTabs)} component.");
 
-        Parent?.RegisterPanel(this);
+        Parent.RegisterPanel(this);
     }
 
     /// <summary>

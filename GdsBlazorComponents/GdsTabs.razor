@@ -32,7 +32,7 @@
     /// Rendered using the GOV.UK <c>govuk-tabs__title</c> class.
     /// </remarks>
     [Parameter, EditorRequired]
-    public string Title { get; set; }
+    public required string Title { get; set; }
 
     /// <summary>
     /// Gets or sets the content of the tabs, typically a collection of <see cref="GdsTabPanel"/> components.
@@ -89,6 +89,7 @@
         InvokeAsync(StateHasChanged);
     }
 
+    /// <summary>
     /// Unregisters a tab panel from the container.
     /// </summary>
     /// <param name="panel">The panel to unregister.</param>
