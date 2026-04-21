@@ -1,6 +1,6 @@
 {
   "name": "gds-blazor-components",
-  "version": "2.1.0",
+  "version": "3.2.0",
   "description": "Blazor components styled to match GOV.UK Design System.",
   "repository": "https://github.com/Dorset-Council-UK/GdsBlazorComponents",
   "author": "Dorset Council",
@@ -16,20 +16,20 @@
     "outdated": "npm outdated"
   },
   "dependencies": {
-    "@types/govuk-frontend": "^5.11.0",
-    "govuk-frontend": "^5.14.0"
+    "@types/govuk-frontend": "5.11.0",
+    "govuk-frontend": "5.14.0"
   },
   "devDependencies": {
-    "@types/node": "^24.10.1",
-    "css-loader": "^7.1.2",
-    "mini-css-extract-plugin": "^2.8.0",
-    "sass": "^1.70.0",
-    "sass-loader": "^16.0.6",
-    "ts-loader": "^9.5.1",
-    "typescript": "^5.3.3",
-    "webpack": "^5.90.1",
-    "webpack-cli": "^6.0.1",
-    "webpack-merge": "^6.0.1"
+    "@types/node": "24.12.2",
+    "css-loader": "7.1.4",
+    "mini-css-extract-plugin": "2.10.2",
+    "sass": "1.99.0",
+    "sass-loader": "16.0.7",
+    "ts-loader": "9.5.7",
+    "typescript": "5.9.3",
+    "webpack": "5.106.2",
+    "webpack-cli": "6.0.1",
+    "webpack-merge": "6.0.1"
   },
   "-vs-binding": {
     "ProjectOpened": [
