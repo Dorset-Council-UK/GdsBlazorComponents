@@ -18,13 +18,13 @@ Render GOV.UK Design System styled breadcrumbs that are defined per page and ren
 ```csharp
 @using Microsoft.AspNetCore.Components.Sections
 
-<div class="govuk-width-container">
+<GdsContainer>
     <SectionOutlet SectionName="Layout.GdsBreadcrumbs" />
 
     <main class="govuk-main-wrapper govuk-body" id="main-content" role="main">
         @Body
     </main>
-</div>
+</GdsContainer>
 
 ```
 
