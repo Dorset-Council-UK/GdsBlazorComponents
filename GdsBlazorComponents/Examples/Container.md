@@ -17,7 +17,7 @@ Render GOV.UK Design System styled container.
 ```
 
 ```csharp
-<GdsContainer AdditionalCssClasses="flex-fill">
+<GdsContainer AdditionalCssClasses="govuk-!-margin-bottom-6">
     <div>Container example</div>
 </GdsContainer>
 ```
