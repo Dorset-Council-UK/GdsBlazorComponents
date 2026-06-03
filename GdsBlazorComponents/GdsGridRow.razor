@@ -1,0 +1,21 @@
+<div class="@_class" @attributes="AdditionalAttributes">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _class;
+
+    protected override void OnParametersSet()
+    {
+        _class = $"govuk-grid-row {AdditionalCssClasses}".TrimEnd();
+    }
+}
