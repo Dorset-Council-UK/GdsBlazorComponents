@@ -1,0 +1,26 @@
+<main class="@_class" @attributes="AdditionalAttributes" role="main">
+    @ChildContent
+</main>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    [Parameter]
+    public bool AutoSpacing { get; set; }
+
+    private string? _class;
+
+    protected override void OnParametersSet()
+    {
+        _class = AutoSpacing
+            ? $"govuk-main-wrapper govuk-main-wrapper--auto-spacing {AdditionalCssClasses}".TrimEnd()
+            : $"govuk-main-wrapper {AdditionalCssClasses}".TrimEnd();
+    }
+}
