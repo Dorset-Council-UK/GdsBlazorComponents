@@ -15,9 +15,9 @@ Render a single GOV.UK Design System styled skip link to help keyboard-only user
   <GdsSkipLink Href="#main-content" />
 
   <GdsContainer>
-    <main class="govuk-main-wrapper govuk-body" id="main-content" role="main">
+    <GdsMainWrapper id="main-content" AdditionalCssClasses="govuk-body">
       @Body
-    </main>
+    </GdsMainWrapper>
   </GdsContainer>
 </body>
 ```

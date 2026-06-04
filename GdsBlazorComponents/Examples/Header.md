@@ -49,9 +49,9 @@ This component is intentionally restrictive. If you need more control over the h
   <GdsHeader ServiceName="My Service" ServiceUrl="home" LogoUrl="@Assets["images/logos/logo.webp"]" />
 
   <GdsContainer>
-    <main class="govuk-main-wrapper govuk-body" id="main-content" role="main">
+    <GdsMainWrapper id="main-content" AdditionalCssClasses="govuk-body">
       @Body
-    </main>
+    </GdsMainWrapper>
   </GdsContainer>
 
   <GdsFooter />
@@ -78,10 +78,11 @@ This works similar to how Blazor NavLink components function, with the `Href` pa
         </NavLinks>
     </GdsHeader>
     <GdsContainer>
-        <main class="govuk-main-wrapper govuk-body" id="main-content" role="main">
+        <GdsMainWrapper id="main-content" AdditionalCssClasses="govuk-body">
             @Body
-        </main>
+        </GdsMainWrapper>
     </GdsContainer>
 
     <GdsFooter />
 </body>
+```

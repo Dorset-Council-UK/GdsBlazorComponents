@@ -21,9 +21,9 @@ Render GOV.UK Design System styled breadcrumbs that are defined per page and ren
 <GdsContainer>
     <SectionOutlet SectionName="Layout.GdsBreadcrumbs" />
 
-    <main class="govuk-main-wrapper govuk-body" id="main-content" role="main">
+    <GdsMainWrapper id="main-content" AdditionalCssClasses="govuk-body">
         @Body
-    </main>
+    </GdsMainWrapper>
 </GdsContainer>
 
 ```
