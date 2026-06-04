@@ -1,0 +1,53 @@
+@switch (Level)
+{
+    case 2:
+        <h2 class="@_class" @attributes="AdditionalAttributes">@ChildContent</h2>
+        break;
+    case 3:
+        <h3 class="@_class" @attributes="AdditionalAttributes">@ChildContent</h3>
+        break;
+    case 4:
+        <h4 class="@_class" @attributes="AdditionalAttributes">@ChildContent</h4>
+        break;
+    case 5:
+        <h5 class="@_class" @attributes="AdditionalAttributes">@ChildContent</h5>
+        break;
+    case 6:
+        <h6 class="@_class" @attributes="AdditionalAttributes">@ChildContent</h6>
+        break;
+    default:
+        <h1 class="@_class" @attributes="AdditionalAttributes">@ChildContent</h1>
+        break;
+}
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    [Parameter, EditorRequired]
+    public byte Level { get; set; }
+
+    [Parameter]
+    public GdsSize Size { get; set; } = GdsSize.ExtraLarge;
+
+    private string? _class;
+
+    protected override void OnParametersSet()
+    {
+        string sizeClass = Size switch
+        {
+            GdsSize.Small => "govuk-heading-s",
+            GdsSize.Medium => "govuk-heading-m",
+            GdsSize.Large => "govuk-heading-l",
+            GdsSize.ExtraLarge => "govuk-heading-xl",
+            _ => "govuk-heading-xl",
+        };
+        _class = $"{sizeClass} {AdditionalCssClasses}".Trim();
+    }
+}
