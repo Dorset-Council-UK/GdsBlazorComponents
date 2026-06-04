@@ -74,6 +74,7 @@ Actual code samples can be found in this repo alongside each component.
 - [GdsFieldsetGroup](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/FieldsetGroup.md)
 - [GdsFileInput](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/FileInput.md)
 - [GdsFooter](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Footer.md)
+- [GdsFooterSection](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/FooterSection.md)
 - [GdsFormGroup](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/FormGroup.md)
 - [GdsGridRow](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/GridRow.md)
 - [GdsGridColumn](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/GridColumn.md)
