@@ -12,39 +12,39 @@ Render GOV.UK Design System styled grid row.
 
 ```csharp
 <GdsGridRow>
-    <div class="govuk-grid-column-two-thirds">
+    <GdsGridColumn Width="GdsGridColumnWidth.TwoThirds">
         <h1 class="govuk-heading-xl">Two-thirds column</h1>
         <p class="govuk-body">This is a paragraph inside a two-thirds wide column</p>
-    </div>
-    <div class="govuk-grid-column-one-third">
+    </GdsGridColumn>
+    <GdsGridColumn Width="GdsGridColumnWidth.OneThird">
         <h2 class="govuk-heading-m">One-third column</h2>
         <p class="govuk-body">This is a paragraph inside a one-third wide column</p>
-    </div>
+    </GdsGridColumn>
 </GdsGridRow>
 ```
 
 ```csharp
 <GdsGridRow AdditionalCssClasses="govuk-!-padding-bottom-6">
-    <div class="govuk-grid-column-two-thirds">
+    <GdsGridColumn Width="GdsGridColumnWidth.TwoThirds">
         <h1 class="govuk-heading-xl">Two-thirds column</h1>
         <p class="govuk-body">A two-thirds wide column with additional CSS classes</p>
-    </div>
-    <div class="govuk-grid-column-one-third">
+    </GdsGridColumn>
+    <GdsGridColumn Width="GdsGridColumnWidth.OneThird">
         <h2 class="govuk-heading-m">One-third column</h2>
         <p class="govuk-body">This is a paragraph inside a one-third wide column</p>
-    </div>
+    </GdsGridColumn>
 </GdsGridRow>
 ```
 
 ```csharp
 <GdsGridRow id="my-row" data-something="testing">
-    <div class="govuk-grid-column-two-thirds">
+    <GdsGridColumn Widths="[GdsGridColumnWidth.TwoThirds, GdsGridColumnWidth.OneHalfFromDesktop]">
         <h1 class="govuk-heading-xl">Two-thirds column</h1>
         <p class="govuk-body">A two-thirds wide column with additional HTML attributes</p>
-    </div>
-    <div class="govuk-grid-column-one-third">
+    </GdsGridColumn>
+    <GdsGridColumn Widths="[GdsGridColumnWidth.OneThird, GdsGridColumnWidth.OneHalfFromDesktop]">
         <h2 class="govuk-heading-m">One-third column</h2>
         <p class="govuk-body">This is a paragraph inside a one-third wide column</p>
-    </div>
+    </GdsGridColumn>
 </GdsGridRow>
 ```
