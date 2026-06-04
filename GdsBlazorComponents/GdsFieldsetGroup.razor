@@ -1,7 +1,7 @@
-﻿<fieldset class="govuk-fieldset" role="group" aria-describedby="@_describedBy">
+﻿<fieldset class="govuk-fieldset" role="group" aria-describedby="@_describedBy" @attributes="AdditionalAttributes">
     @if (Heading != null)
     {
-        <legend class="govuk-fieldset__legend @LegendSize.GetDescription()">
+        <legend class="@_legendClass">
             @Heading
         </legend>
     }
@@ -20,7 +20,7 @@
     private FieldIdentifier FieldIdentifier { get; set; } = default!;
 
     [Parameter]
-    public GdsFieldsetLegendSize LegendSize { get; set; } = GdsFieldsetLegendSize.Large;
+    public GdsSize LegendSize { get; set; } = GdsSize.Large;
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -31,5 +31,22 @@
     [Parameter]
     public RenderFragment? Content { get; set; }
 
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
     private string _describedBy => EditContext.IsValid(FieldIdentifier) ? $"{CascadedId}-hint" : $"{CascadedId}-hint {CascadedId}-error";
+    private string? _legendClass;
+
+    protected override void OnParametersSet()
+    {
+        var sizeClass = LegendSize switch
+        {
+            GdsSize.Small => "govuk-fieldset__legend--s",
+            GdsSize.Medium => "govuk-fieldset__legend--m",
+            GdsSize.Large => "govuk-fieldset__legend--l",
+            GdsSize.ExtraLarge => "govuk-fieldset__legend--xl",
+            _ => "govuk-fieldset__legend--l",
+        };
+        _legendClass = $"govuk-fieldset__legend {sizeClass}";
+    }
 }
