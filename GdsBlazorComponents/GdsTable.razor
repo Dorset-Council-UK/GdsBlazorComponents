@@ -3,7 +3,7 @@
 <table class="@($"govuk-table {Density.GetDescription()} {AdditionalTableCssClasses}")" @attributes="@AdditionalAttributes">
 	@if (!string.IsNullOrEmpty(Caption))
 	{
-		<caption class="@($"govuk-table__caption {CaptionSize.GetDescription()} {AdditionalCaptionCssClasses}")">@Caption</caption>
+		<caption class="@_captionClass">@Caption</caption>
 	}
 
 	@if (HeaderContent is not null)
@@ -39,7 +39,7 @@
 	public string? Caption { get; set; }
 
 	[Parameter]
-	public GdsTableCaptionSize CaptionSize { get; set; } = GdsTableCaptionSize.Default;
+	public GdsSize CaptionSize { get; set; } = GdsSize.Large;
 
 	[Parameter]
 	public bool FirstCellIsHeader { get; set; }
@@ -57,4 +57,19 @@
 	public RenderFragment? HeaderContent { get; set; }
 	[Parameter]
 	public RenderFragment<T>? RowTemplate { get; set; }
+
+	private string? _captionClass;
+
+	protected override void OnParametersSet()
+	{
+		var sizeClass = CaptionSize switch
+		{
+			GdsSize.Small => "govuk-table__caption--s",
+			GdsSize.Medium => "govuk-table__caption--m",
+			GdsSize.Large => "govuk-table__caption--l",
+			GdsSize.ExtraLarge => "govuk-table__caption--xl",
+			_ => "govuk-table__caption--l",
+		};
+		_captionClass = $"govuk-table__caption {sizeClass} {AdditionalCaptionCssClasses}".TrimEnd();
+	}
 }

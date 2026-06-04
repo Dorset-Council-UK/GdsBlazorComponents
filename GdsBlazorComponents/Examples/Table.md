@@ -16,7 +16,7 @@ Render a GOV.UK Design System styled table component.
 ## Simple example (using Formatting)
 
 ```csharp
-<GdsTable T="Payment" Items="@Payments" Caption="Months and rates" CaptionSize="GdsTableCaptionSize.Large" FirstCellIsHeader>
+<GdsTable T="Payment" Items="@Payments" Caption="Months and rates" FirstCellIsHeader>
     <HeaderContent>
         <GdsTableTh>Month you apply</GdsTableTh>
         <GdsTableTh Numeric>Rate for vehicles</GdsTableTh>
@@ -41,7 +41,7 @@ Render a GOV.UK Design System styled table component.
 ## Example using ChildContent
 
 ```csharp
-<GdsTable T="Member" Items="@Members" Caption="Members" Density="GdsTableDensity.SmallTextUntilTablet">
+<GdsTable T="Member" Items="@Members" Caption="Members" CaptionSize="GdsSize.Medium" Density="GdsTableDensity.SmallTextUntilTablet">
     <HeaderContent>
         <GdsTableTh>Date started</GdsTableTh>
         <GdsTableTh>Full name</GdsTableTh>
