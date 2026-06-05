@@ -10,8 +10,10 @@ Render a GOV.UK Design System styled table component.
 ## How it works
 
 - Renders a ```<table class="govuk-table">``` element styled according to the GOV.UK Design System.
-- Table supports `Caption`, `CaptionSize` and `FirstCellIsHeader`.
-  - Cells (`GdsTableTh` and `GdsTableTd`) support `Numeric`.
+- Table supports `Caption`, `CaptionTextSize` and `FirstCellIsHeader`.
+- Cells (`GdsTableTh` and `GdsTableTd`) support `Numeric`.
+
+*Warning:* `CaptionSize` was deprecated in version 3.3.0 use `CaptionTextSize` instead. `CaptionSize` will be removed in a future release.
 
 ## Simple example (using Formatting)
 
@@ -41,7 +43,7 @@ Render a GOV.UK Design System styled table component.
 ## Example using ChildContent
 
 ```csharp
-<GdsTable T="Member" Items="@Members" Caption="Members" CaptionSize="GdsSize.Medium" Density="GdsTableDensity.SmallTextUntilTablet">
+<GdsTable T="Member" Items="@Members" Caption="Members" CaptionTextSize="GdsSize.Medium" Density="GdsTableDensity.SmallTextUntilTablet">
     <HeaderContent>
         <GdsTableTh>Date started</GdsTableTh>
         <GdsTableTh>Full name</GdsTableTh>

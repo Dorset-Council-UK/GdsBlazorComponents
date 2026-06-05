@@ -20,7 +20,10 @@
     private FieldIdentifier FieldIdentifier { get; set; } = default!;
 
     [Parameter]
-    public GdsSize LegendSize { get; set; } = GdsSize.Large;
+    [Obsolete("Deprecated in v3.3.0, use LegendTextSize instead.")]
+    public GdsFieldsetLegendSize? LegendSize { get; set; }
+    [Parameter]
+    public GdsSize LegendTextSize { get; set; } = GdsSize.Large;
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -39,7 +42,19 @@
 
     protected override void OnParametersSet()
     {
-        var sizeClass = LegendSize switch
+        // convert deprecated LegendSize to LegendTextSize if it has a value
+        var legendSize = LegendSize.HasValue
+            ? LegendSize.Value switch
+            {
+                GdsFieldsetLegendSize.Small => GdsSize.Small,
+                GdsFieldsetLegendSize.Medium => GdsSize.Medium,
+                GdsFieldsetLegendSize.Large => GdsSize.Large,
+                GdsFieldsetLegendSize.ExtraLarge => GdsSize.ExtraLarge,
+                _ => GdsSize.Large,
+            }
+            : LegendTextSize;
+
+        var sizeClass = legendSize switch
         {
             GdsSize.Small => "govuk-fieldset__legend--s",
             GdsSize.Medium => "govuk-fieldset__legend--m",

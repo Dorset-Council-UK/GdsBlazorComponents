@@ -39,7 +39,10 @@
 	public string? Caption { get; set; }
 
 	[Parameter]
-	public GdsSize CaptionSize { get; set; } = GdsSize.Large;
+	[Obsolete("Deprecated in v3.3.0, use CaptionTextSize instead.")]
+	public GdsTableCaptionSize? CaptionSize { get; set; }
+	[Parameter]
+	public GdsSize CaptionTextSize { get; set; } = GdsSize.Large;
 
 	[Parameter]
 	public bool FirstCellIsHeader { get; set; }
@@ -62,7 +65,19 @@
 
 	protected override void OnParametersSet()
 	{
-		var sizeClass = CaptionSize switch
+        // convert deprecated CaptionSize to CaptionTextSize if it has a value
+        var captionSize = CaptionSize.HasValue
+            ? CaptionSize.Value switch
+            {
+                GdsTableCaptionSize.Small => GdsSize.Small,
+                GdsTableCaptionSize.Medium => GdsSize.Medium,
+                GdsTableCaptionSize.Large => GdsSize.Large,
+                GdsTableCaptionSize.ExtraLarge => GdsSize.ExtraLarge,
+                _ => GdsSize.Large,
+            }
+            : CaptionTextSize;
+
+		var sizeClass = captionSize switch
 		{
 			GdsSize.Small => "govuk-table__caption--s",
 			GdsSize.Medium => "govuk-table__caption--m",
