@@ -18,7 +18,7 @@ See [GdsCheckboxes](Checkboxes.md) and [GdsRadios](Radios.md) for complete examp
 ```csharp
 <GdsFieldsetGroup>
     <Heading>
-        <h2 class="govuk-fieldset__heading">How can we contact you?</h2>
+        <GdsHeading Level="2" class="govuk-fieldset__heading">How can we contact you?</GdsHeading>
     </Heading>
 </GdsFieldsetGroup>
 ```
@@ -28,7 +28,7 @@ See [GdsCheckboxes](Checkboxes.md) and [GdsRadios](Radios.md) for complete examp
 ```csharp
 <GdsFieldsetGroup LegendSize="GdsSize.Medium">
     <Heading>
-        <h2 class="govuk-fieldset__heading">How can we contact you?</h2>
+        <GdsHeading Level="2" class="govuk-fieldset__heading">How can we contact you?</GdsHeading>
     </Heading>
     <Content>
         <div>Anything can go here.</div>

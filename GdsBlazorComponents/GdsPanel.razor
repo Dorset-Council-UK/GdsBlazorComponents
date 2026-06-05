@@ -1,9 +1,9 @@
 ﻿<div class="@($"govuk-panel govuk-panel--confirmation {AdditionalCssClasses}")" @attributes="@AdditionalAttributes">
 	@if (!string.IsNullOrEmpty(Title))
 	{
-		<h1 class="govuk-panel__title">
-			@Title
-		</h1>
+        <GdsHeading Level="1" class="govuk-panel__title">
+            @Title
+		</GdsHeading>
 	}
 
 	@if (ChildContent is not null)

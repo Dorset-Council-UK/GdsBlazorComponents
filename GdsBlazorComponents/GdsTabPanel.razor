@@ -1,7 +1,7 @@
 ﻿@implements IDisposable
 
 <div class="@($"govuk-tabs__panel {( Parent is not null && !Parent.IsFirst(this) ? "govuk-tabs__panel--hidden" : string.Empty )} {AdditionalCssClasses}")" id="@Id" @attributes="AdditionalAttributes">
-    <h2 class="@HeadingClass">@Heading</h2>
+    <GdsHeading Level="2" class="@HeadingClass">@Heading</GdsHeading>
     @ChildContent
 </div>
 

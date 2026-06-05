@@ -1,16 +1,8 @@
 <div class="govuk-notification-banner @_class" role="@_role" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
-        @if (BannerTitleSize == BannerSizeOption.small)
-        {
-            <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-                @BannerTitle
-            </h3>
-        } else
-        {
-            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-                @BannerTitle
-            </h2>
-        }
+        <GdsHeading Level="@(BannerTitleSize == BannerSizeOption.small ? 3 : 2)" class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+            @BannerTitle
+        </GdsHeading>
     </div>
     <div class="govuk-notification-banner__content">
         <p class="govuk-notification-banner__heading">
