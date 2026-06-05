@@ -30,17 +30,25 @@
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
+    /// <summary>
+    /// Heading level (1-6). This determines the HTML tag used (h1, h2, etc.) and the default size of the heading
+    /// </summary>
+    /// <remarks>Levels outside of 1-6 will default to h1 and the largest size</remarks>
     [Parameter, EditorRequired]
-    public byte Level { get; set; }
+    public int Level { get; set; }
 
+    /// <summary>
+    /// Size override for the heading. If not set, the size will be determined by the level of the heading (h1, h2, etc.)
+    /// </summary>
     [Parameter]
-    public GdsSize Size { get; set; } = GdsSize.ExtraLarge;
+    public GdsSize? Size { get; set; }
 
     private string? _class;
 
     protected override void OnParametersSet()
     {
-        string sizeClass = Size switch
+        var size = Size ?? AutomaticSize();
+        string sizeClass = size switch
         {
             GdsSize.Small => "govuk-heading-s",
             GdsSize.Medium => "govuk-heading-m",
@@ -49,5 +57,19 @@
             _ => "govuk-heading-xl",
         };
         _class = $"{sizeClass} {AdditionalCssClasses}".Trim();
+    }
+
+    protected GdsSize AutomaticSize()
+    {
+        return Level switch
+        {
+            1 => GdsSize.ExtraLarge,
+            2 => GdsSize.Large,
+            3 => GdsSize.Medium,
+            4 => GdsSize.Small,
+            5 => GdsSize.Small,
+            6 => GdsSize.Small,
+            _ => GdsSize.ExtraLarge,
+        };
     }
 }
