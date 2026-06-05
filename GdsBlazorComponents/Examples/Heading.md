@@ -6,7 +6,6 @@ Render GOV.UK Design System styled heading.
 - renders a `<h1>` to `<h6>` heading element styled according to the GOV.UK Design System
 - use the `Level` parameter to specify the heading level 1 to 6
 - use the `Size` parameter to override the automatic heading size (small, medium, large, extra large)
-- if no size is specified, the heading will default to extra large size
 - optional `AdditionalCssClasses` parameter to add additional CSS classes to the heading element
 - any additional HTML attributes passed to the component will be added to the heading element
 
