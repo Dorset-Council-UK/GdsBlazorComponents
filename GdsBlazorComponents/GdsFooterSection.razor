@@ -1,0 +1,27 @@
+<GdsGridColumn AdditionalAttributes="@AdditionalAttributes" AdditionalCssClasses="@_class" Width="@Width" Widths="@Widths">
+    @ChildContent
+</GdsGridColumn>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    [Parameter]
+    public GdsGridColumnWidth? Width { get; set; }
+
+    [Parameter]
+    public GdsGridColumnWidth[] Widths { get; set; } = [];
+
+    private string? _class;
+
+    protected override void OnParametersSet()
+    {
+        _class = $"govuk-footer__section {AdditionalCssClasses}".TrimEnd();
+    }
+}

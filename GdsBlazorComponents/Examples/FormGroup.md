@@ -46,9 +46,9 @@ The ID of `phone-number` on the `GdsFormGroup` is cascaded down to:
 
 ```csharp
 <GdsFormGroup For="() => Model.OtherAction" AdditionalCssClasses="govuk-character-count govuk-!-margin-top-4" DataModule="govuk-character-count" DataMaxLength="100">
-    <h2 class="govuk-label-wrapper">
+    <GdsHeading Level="2" class="govuk-label-wrapper">
         <GdsLabel Text="Can you provide more details?" AdditionalCssClasses="govuk-label--m" />
-    </h2>
+    </GdsHeading>
     <GdsHint>Do not include personal or financial information</GdsHint>
     <GdsErrorMessage />
     <InputTextArea id="@nameof(Model.OtherAction)" @bind-Value="Model.OtherAction" class="govuk-textarea govuk-js-character-count" rows="5" />

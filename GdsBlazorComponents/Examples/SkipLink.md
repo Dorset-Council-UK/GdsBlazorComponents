@@ -14,10 +14,10 @@ Render a single GOV.UK Design System styled skip link to help keyboard-only user
 <body class="govuk-template__body">
   <GdsSkipLink Href="#main-content" />
 
-  <div class="govuk-width-container">
-    <main class="govuk-main-wrapper govuk-body" id="main-content" role="main">
+  <GdsContainer>
+    <GdsMainWrapper id="main-content" AdditionalCssClasses="govuk-body">
       @Body
-    </main>
-  </div>
+    </GdsMainWrapper>
+  </GdsContainer>
 </body>
 ```

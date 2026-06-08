@@ -49,7 +49,7 @@ ICollection<GdsOptionItem<int>> contactTypes = [
 <GdsFormGroup For="() => Model.ContactType">
     <GdsFieldsetGroup>
         <Heading>
-            <h2 class="govuk-fieldset__heading">How can we contact you?</h2>
+            <GdsHeading Level="2" class="govuk-fieldset__heading">How can we contact you?</GdsHeading>
         </Heading>
         <Content>
             <GdsHint>Select all that apply.</GdsHint>
@@ -72,7 +72,7 @@ ICollection<GdsOptionItem<int>> contactTypes = [
 <GdsFormGroup For="() => Model.ContactType">
     <GdsFieldsetGroup>
         <Heading>
-            <h2 class="govuk-fieldset__heading">How can we contact you?</h2>
+            <GdsHeading Level="2" class="govuk-fieldset__heading">How can we contact you?</GdsHeading>
         </Heading>
         <Content>
             <GdsHint>Select all that apply.</GdsHint>

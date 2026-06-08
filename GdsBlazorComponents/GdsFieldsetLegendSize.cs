@@ -1,18 +1,10 @@
-﻿using System.ComponentModel;
+﻿namespace GdsBlazorComponents;
 
-namespace GdsBlazorComponents;
-
+[Obsolete("This enum is deprecated. Use GdsSize instead.")]
 public enum GdsFieldsetLegendSize
 {
-	[Description("govuk-fieldset__legend--s")]
 	Small,
-
-	[Description("govuk-fieldset__legend--m")]
 	Medium,
-
-	[Description("govuk-fieldset__legend--l")]
 	Large,
-
-	[Description("govuk-fieldset__legend--xl")]
 	ExtraLarge,
 }

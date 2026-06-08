@@ -51,7 +51,7 @@ Please see [InputDate.md](InputDate.md#validating-the-date) for more information
 ```csharp
 <GdsInputPartialDate For="() => Model.ExpiryDate" ShowMonth="true" ShowYear="true" Id="expiry">
     <Heading>
-        <h1 class="govuk-fieldset__heading">What month and year did it expire?</h1>
+        <GdsHeading Level="1" class="govuk-fieldset__heading">What month and year did it expire?</GdsHeading>
     </Heading>
     <Hint>For example, 3 2025</Hint>
 </GdsInputPartialDate>
@@ -62,7 +62,7 @@ Please see [InputDate.md](InputDate.md#validating-the-date) for more information
 ```csharp
 <GdsInputPartialDate For="() => Model.ApproxDateOfBirth" Id="dob" IsDateOfBirth="true" ShowMonth="true" ShowYear="true">
     <Heading>
-        <h1 class="govuk-fieldset__heading">What month and year were you born?</h1>
+        <GdsHeading Level="1" class="govuk-fieldset__heading">What month and year were you born?</GdsHeading>
     </Heading>
     <Hint>For example, 3 1980</Hint>
 </GdsInputPartialDate>
@@ -73,7 +73,7 @@ Please see [InputDate.md](InputDate.md#validating-the-date) for more information
 ```csharp
 <GdsInputPartialDate For="() => Model.EstimatedYear" ShowYear="true">
     <Heading>
-        <h1 class="govuk-fieldset__heading">Which year did the event occur?</h1>
+        <GdsHeading Level="1" class="govuk-fieldset__heading">Which year did the event occur?</GdsHeading>
     </Heading>
     <Hint>For example, 2025</Hint>
 </GdsInputPartialDate>

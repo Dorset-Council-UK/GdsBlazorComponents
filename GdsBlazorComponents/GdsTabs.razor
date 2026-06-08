@@ -1,8 +1,8 @@
 ﻿<CascadingValue Value="this" IsFixed="true">
     <div class="@($"govuk-tabs {AdditionalCssClasses}")" data-module="govuk-tabs" @attributes="@AdditionalAttributes">
-        <h2 class="govuk-tabs__title">
+        <GdsHeading Level="2" class="govuk-tabs__title">
             @Title
-        </h2>
+        </GdsHeading>
 
         @if (panels.Count > 0)
         {

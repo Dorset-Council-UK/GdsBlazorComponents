@@ -48,11 +48,11 @@ This component is intentionally restrictive. If you need more control over the h
 <body class="govuk-template__body">
   <GdsHeader ServiceName="My Service" ServiceUrl="home" LogoUrl="@Assets["images/logos/logo.webp"]" />
 
-  <div class="govuk-width-container">
-    <main class="govuk-main-wrapper govuk-body" id="main-content" role="main">
+  <GdsContainer>
+    <GdsMainWrapper id="main-content" AdditionalCssClasses="govuk-body">
       @Body
-    </main>
-  </div>
+    </GdsMainWrapper>
+  </GdsContainer>
 
   <GdsFooter />
 </body>
@@ -77,11 +77,12 @@ This works similar to how Blazor NavLink components function, with the `Href` pa
             </AuthorizeView>
         </NavLinks>
     </GdsHeader>
-  <div class="govuk-width-container">
-    <main class="govuk-main-wrapper govuk-body" id="main-content" role="main">
-      @Body
-    </main>
-  </div>
+    <GdsContainer>
+        <GdsMainWrapper id="main-content" AdditionalCssClasses="govuk-body">
+            @Body
+        </GdsMainWrapper>
+    </GdsContainer>
 
-  <GdsFooter />
+    <GdsFooter />
 </body>
+```

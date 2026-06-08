@@ -12,7 +12,7 @@ Allowing you to use your own content in the footer, via the GDS `Navigation` and
 
 - Renders a ```<footer class="govuk-footer">``` element.
 - Supports flexible `Navigation` and `Meta` optional sections.
-- The navigation section typically uses columns of links with `govuk-footer__section` and `govuk-footer__list`.
+- For navigation columns use the `<GdsFooterSection>` component.
 - The meta section supports multiple types of meta items with `govuk-footer__meta-item` examples include:
   - open government licence
   - support links with `govuk-footer__list`
@@ -35,5 +35,51 @@ Full examples from the GOV.UK Design System can be at [Footer with links and sec
             <div>Copyright &copy; @(DateTimeOffset.UtcNow.Year) Your company</div>
         </div>
     </Meta>
+</GdsFooter>
+```
+
+## Example - Navigation columns
+
+```csharp
+<GdsFooter>
+    <Navigation>
+        <GdsFooterSection Width="GdsGridColumnWidth.TwoThirds">
+            <GdsHeading Level="2" Size="GdsSize.Medium" AdditionalCssClasses="govuk-footer__heading">Two column list</GdsHeading>
+            <ul class="govuk-footer__list govuk-footer__list--columns-2">
+                <li class="govuk-footer__list-item">
+                    <a class="govuk-footer__link" href="#">Navigation item 1</a>
+                </li>
+                <li class="govuk-footer__list-item">
+                    <a class="govuk-footer__link" href="#">Navigation item 2</a>
+                </li>
+                <li class="govuk-footer__list-item">
+                    <a class="govuk-footer__link" href="#">Navigation item 3</a>
+                </li>
+                <li class="govuk-footer__list-item">
+                    <a class="govuk-footer__link" href="#">Navigation item 4</a>
+                </li>
+                <li class="govuk-footer__list-item">
+                    <a class="govuk-footer__link" href="#">Navigation item 5</a>
+                </li>
+                <li class="govuk-footer__list-item">
+                    <a class="govuk-footer__link" href="#">Navigation item 6</a>
+                </li>
+            </ul>
+        </GdsFooterSection>
+        <GdsFooterSection Width="GdsGridColumnWidth.OneThird">
+            <GdsHeading Level="2" Size="GdsSize.Medium" AdditionalCssClasses="govuk-footer__heading">Single column list</GdsHeading>
+            <ul class="govuk-footer__list">
+                <li class="govuk-footer__list-item">
+                    <a class="govuk-footer__link" href="#">Navigation item 1</a>
+                </li>
+                <li class="govuk-footer__list-item">
+                    <a class="govuk-footer__link" href="#">Navigation item 2</a>
+                </li>
+                <li class="govuk-footer__list-item">
+                    <a class="govuk-footer__link" href="#">Navigation item 3</a>
+                </li>
+            </ul>
+        </GdsFooterSection>
+    </Navigation>
 </GdsFooter>
 ```

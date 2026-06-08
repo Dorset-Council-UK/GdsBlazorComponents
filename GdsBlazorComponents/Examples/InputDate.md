@@ -80,7 +80,7 @@ RuleFor(o => o.StartDate)
 ```csharp
 <GdsInputDate For="() => Model.StartDate" Id="flood-start">
     <Heading>
-        <h1 class="govuk-fieldset__heading">When did the flooding start?</h1>
+        <GdsHeading Level="1" class="govuk-fieldset__heading">When did the flooding start?</GdsHeading>
     </Heading>
     <Hint>For example, 27 3 2025</Hint>
 </GdsInputDate>
@@ -91,7 +91,7 @@ RuleFor(o => o.StartDate)
 ```csharp
 <GdsInputDate For="() => Model.DateOfBirth" Id="dob" IsDateOfBirth="true">
     <Heading>
-        <h1 class="govuk-fieldset__heading">What is your date of birth?</h1>
+        <GdsHeading Level="1" class="govuk-fieldset__heading">What is your date of birth?</GdsHeading>
     </Heading>
     <Hint>For example, 27 3 1980</Hint>
 </GdsInputDate>

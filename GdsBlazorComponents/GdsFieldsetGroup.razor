@@ -1,7 +1,7 @@
-﻿<fieldset class="govuk-fieldset" role="group" aria-describedby="@_describedBy">
+﻿<fieldset class="govuk-fieldset" role="group" aria-describedby="@_describedBy" @attributes="AdditionalAttributes">
     @if (Heading != null)
     {
-        <legend class="govuk-fieldset__legend @LegendSize.GetDescription()">
+        <legend class="@_legendClass">
             @Heading
         </legend>
     }
@@ -20,7 +20,10 @@
     private FieldIdentifier FieldIdentifier { get; set; } = default!;
 
     [Parameter]
-    public GdsFieldsetLegendSize LegendSize { get; set; } = GdsFieldsetLegendSize.Large;
+    [Obsolete("Deprecated in v3.3.0, use LegendTextSize instead.")]
+    public GdsFieldsetLegendSize? LegendSize { get; set; }
+    [Parameter]
+    public GdsSize LegendTextSize { get; set; } = GdsSize.Large;
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -31,5 +34,34 @@
     [Parameter]
     public RenderFragment? Content { get; set; }
 
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
     private string _describedBy => EditContext.IsValid(FieldIdentifier) ? $"{CascadedId}-hint" : $"{CascadedId}-hint {CascadedId}-error";
+    private string? _legendClass;
+
+    protected override void OnParametersSet()
+    {
+        // convert deprecated LegendSize to LegendTextSize if it has a value
+        var legendSize = LegendSize.HasValue
+            ? LegendSize.Value switch
+            {
+                GdsFieldsetLegendSize.Small => GdsSize.Small,
+                GdsFieldsetLegendSize.Medium => GdsSize.Medium,
+                GdsFieldsetLegendSize.Large => GdsSize.Large,
+                GdsFieldsetLegendSize.ExtraLarge => GdsSize.ExtraLarge,
+                _ => GdsSize.Large,
+            }
+            : LegendTextSize;
+
+        var sizeClass = legendSize switch
+        {
+            GdsSize.Small => "govuk-fieldset__legend--s",
+            GdsSize.Medium => "govuk-fieldset__legend--m",
+            GdsSize.Large => "govuk-fieldset__legend--l",
+            GdsSize.ExtraLarge => "govuk-fieldset__legend--xl",
+            _ => "govuk-fieldset__legend--l",
+        };
+        _legendClass = $"govuk-fieldset__legend {sizeClass}";
+    }
 }

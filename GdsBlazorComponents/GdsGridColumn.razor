@@ -1,0 +1,58 @@
+<div class="@_class" @attributes="AdditionalAttributes">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    [Parameter]
+    public GdsGridColumnWidth? Width { get; set; }
+
+    [Parameter]
+    public GdsGridColumnWidth[] Widths { get; set; } = [];
+
+    private string? _class;
+
+    protected override void OnParametersSet()
+    {
+        _class = $"{GetWidthCssClasses()} {AdditionalCssClasses}".TrimEnd();
+    }
+
+    private string GetWidthCssClasses()
+    {
+        if (Width is not null)
+        {
+            // Width specified, use it
+            var columnClass = Width.Value.GetDescription();
+            if (columnClass is not null)
+            {
+                return columnClass;
+            }
+        }
+
+        List<string> classes = [];
+        foreach (GdsGridColumnWidth columnWidth in Widths)
+        {
+            var columnClass = columnWidth.GetDescription();
+            if (columnClass is not null)
+            {
+                classes.Add(columnClass);
+            }
+        }
+        if (classes.Count > 0)
+        {
+            // Widths specified, use all of them
+            return string.Join(' ', classes);
+        }
+
+        // No widths specified, use default full width
+        return GdsGridColumnWidth.Full.GetDescription() ?? "";
+    }
+}

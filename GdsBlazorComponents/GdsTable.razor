@@ -3,7 +3,7 @@
 <table class="@($"govuk-table {Density.GetDescription()} {AdditionalTableCssClasses}")" @attributes="@AdditionalAttributes">
 	@if (!string.IsNullOrEmpty(Caption))
 	{
-		<caption class="@($"govuk-table__caption {CaptionSize.GetDescription()} {AdditionalCaptionCssClasses}")">@Caption</caption>
+		<caption class="@_captionClass">@Caption</caption>
 	}
 
 	@if (HeaderContent is not null)
@@ -39,7 +39,10 @@
 	public string? Caption { get; set; }
 
 	[Parameter]
-	public GdsTableCaptionSize CaptionSize { get; set; } = GdsTableCaptionSize.Default;
+	[Obsolete("Deprecated in v3.3.0, use CaptionTextSize instead.")]
+	public GdsTableCaptionSize? CaptionSize { get; set; }
+	[Parameter]
+	public GdsSize CaptionTextSize { get; set; } = GdsSize.Large;
 
 	[Parameter]
 	public bool FirstCellIsHeader { get; set; }
@@ -57,4 +60,31 @@
 	public RenderFragment? HeaderContent { get; set; }
 	[Parameter]
 	public RenderFragment<T>? RowTemplate { get; set; }
+
+	private string? _captionClass;
+
+	protected override void OnParametersSet()
+	{
+        // convert deprecated CaptionSize to CaptionTextSize if it has a value
+        var captionSize = CaptionSize.HasValue
+            ? CaptionSize.Value switch
+            {
+                GdsTableCaptionSize.Small => GdsSize.Small,
+                GdsTableCaptionSize.Medium => GdsSize.Medium,
+                GdsTableCaptionSize.Large => GdsSize.Large,
+                GdsTableCaptionSize.ExtraLarge => GdsSize.ExtraLarge,
+                _ => GdsSize.Large,
+            }
+            : CaptionTextSize;
+
+		var sizeClass = captionSize switch
+		{
+			GdsSize.Small => "govuk-table__caption--s",
+			GdsSize.Medium => "govuk-table__caption--m",
+			GdsSize.Large => "govuk-table__caption--l",
+			GdsSize.ExtraLarge => "govuk-table__caption--xl",
+			_ => "govuk-table__caption--l",
+		};
+		_captionClass = $"govuk-table__caption {sizeClass} {AdditionalCaptionCssClasses}".TrimEnd();
+	}
 }
