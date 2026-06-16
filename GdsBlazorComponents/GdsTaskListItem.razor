@@ -57,6 +57,10 @@
         _hintId = Hint is null ? null : $"tasklist-item-{_itemId}-hint";
         _statusId = Status is null ? null : $"tasklist-item-{_itemId}-status";
         _describedBy = $"{_statusId} {_hintId}".Trim();
+        if (string.IsNullOrWhiteSpace(_describedBy))
+        {
+            _describedBy = null;
+        }
     }
 
     protected override void OnParametersSet()

@@ -21,12 +21,7 @@
     public class TaskListContext
     {
         private int _currentId;
-        public int GetNextItemId()
-        {
-            int nextId = _currentId = _currentId + 1;
-            _currentId = nextId;
-            return nextId;
-        }
+        public int GetNextItemId() => ++_currentId;
     }
 
     protected override void OnParametersSet()

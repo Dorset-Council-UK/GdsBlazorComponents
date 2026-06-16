@@ -101,7 +101,7 @@ Actual code samples can be found in this repo alongside each component.
 - [GdsTable](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Table.md)
 - [GdsPanel](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Panel.md)
 - [GdsTabs](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Tabs.md)
-- [GdsTaskList](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/TaaskList.md)
+- [GdsTaskList](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/TaskList.md)
 
 ### Other examples and patterns:
 
