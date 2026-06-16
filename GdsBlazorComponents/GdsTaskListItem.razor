@@ -1,0 +1,68 @@
+<li class="@_class" @attributes="AdditionalAttributes">
+    <div class="govuk-task-list__name-and-hint">
+        @if (Text is not null)
+        {
+            <a class="govuk-link govuk-task-list__link" href="@Href" aria-describedby="@_describedBy">@Text</a>
+        }
+        @if (Hint is not null)
+        {
+            <div class="govuk-task-list__hint" id="@_hintId">@Hint</div>
+        }
+    </div>
+    @if (Status is not null)
+    {
+        <div class="govuk-task-list__status" id="@_statusId">@Status</div>
+    }
+</li>
+
+@code {
+    [Parameter]
+    public RenderFragment? Hint { get; set; }
+
+    [Parameter]
+    public RenderFragment? Status { get; set; }
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    [CascadingParameter]
+    private GdsTaskList.TaskListContext? TaskListContext { get; set; }
+
+    [Parameter, EditorRequired]
+    public string Text { get; set; }
+
+    [Parameter, EditorRequired]
+    public string Href { get; set; }
+
+    [Parameter]
+    public bool WithLink { get; set; } = true;
+
+    private int _itemId;
+    private string? _class;
+    private string? _hintId;
+    private string? _statusId;
+    private string? _describedBy;
+
+    protected override void OnInitialized()
+    {
+        if (TaskListContext is null)
+        {
+            throw new InvalidOperationException($"{nameof(GdsTaskListItem)} must be used within a {nameof(GdsTaskList)}.");
+        }
+
+        _itemId = TaskListContext.GetNextItemId();
+        _hintId = Hint is null ? null : $"tasklist-item-{_itemId}-hint";
+        _statusId = Status is null ? null : $"tasklist-item-{_itemId}-status";
+        _describedBy = $"{_statusId} {_hintId}".Trim();
+    }
+
+    protected override void OnParametersSet()
+    {
+        _class = WithLink
+            ? $"govuk-task-list__item govuk-task-list__item--with-link {AdditionalCssClasses}".TrimEnd()
+            : $"govuk-task-list__item {AdditionalCssClasses}".TrimEnd();
+    }
+}

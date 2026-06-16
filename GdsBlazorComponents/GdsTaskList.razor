@@ -1,0 +1,36 @@
+<ul class="@_class" @attributes="AdditionalAttributes">
+    <CascadingValue Value="@_context" IsFixed>
+        @ChildContent
+    </CascadingValue>
+</ul>
+
+@code {
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _class;
+
+    private TaskListContext _context = new();
+
+    public class TaskListContext
+    {
+        private int _currentId;
+        public int GetNextItemId()
+        {
+            int nextId = _currentId = _currentId + 1;
+            _currentId = nextId;
+            return nextId;
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        _class = $"govuk-task-list {AdditionalCssClasses}".TrimEnd();
+    }
+}
