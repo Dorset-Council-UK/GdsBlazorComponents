@@ -44,6 +44,19 @@
     private string? _describedBy;
     private GdsSize _legendSize;
 
+    protected override void OnInitialized()
+    {
+        if (EditContext is not null)
+        {
+            // Subscribe to validation state changes
+            EditContext.OnValidationStateChanged += (sender, args) =>
+            {
+                _describedBy = CalculateDescribedBy();
+                StateHasChanged();
+            };
+        }
+    }
+
     protected override void OnParametersSet()
     {
         // convert deprecated LegendSize to LegendTextSize if it has a value
