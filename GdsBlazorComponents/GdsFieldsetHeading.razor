@@ -1,0 +1,34 @@
+<GdsHeading Level="@Level" class="@_class" @attributes="AdditionalAttributes">
+    @ChildContent
+</GdsHeading>
+
+@code {
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    /// <summary>
+    /// Heading level (1-6). This determines the HTML tag used (h1, h2, etc.) and the default size of the heading
+    /// </summary>
+    /// <remarks>Levels outside of 1-6 will default to h1 and the largest size</remarks>
+    [Parameter, EditorRequired]
+    public int Level { get; set; }
+
+    /// <summary>
+    /// Size override for the heading. If not set, the size will be determined by the level of the heading (h1, h2, etc.)
+    /// </summary>
+    [Parameter]
+    public GdsSize? Size { get; set; }
+
+    private string? _class;
+
+    protected override void OnParametersSet()
+    {
+        _class = $"govuk-fieldset__heading {AdditionalCssClasses}".TrimEnd();
+    }
+}
