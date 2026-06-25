@@ -10,15 +10,18 @@ Render a GOV.UK Design System styled fieldset that associates with a form contro
 - The component tries to calculate aria-describedby based on hint and field errors.
 - It is recommended to use this component within a [GdsFormGroup](FormGroup.md) to fully support correct HTML and accessibility.
 
-*Warning:* `LegendSize` was deprecated in version 3.3.0 use `LegendTextSize` instead. `LegendSize` will be removed in a future release.
-
 See [GdsCheckboxes](Checkboxes.md) and [GdsRadios](Radios.md) for complete examples of using this component.
+
+## Warning
+`LegendSize` was deprecated in version 3.3.0 `LegendSize` will be removed in a future release.
+
+Use `GdsFieldsetLegend` with the `Size` parameter instead. 
 
 ## Simple example
 
 ```csharp
 <GdsFieldsetGroup>
-    <GdsFieldsetLegend Size="@GdsSize.Large">
+    <GdsFieldsetLegend>
         How can we contact you?
     </GdsFieldsetLegend>
     <div>Your content goes here</div>
@@ -28,7 +31,7 @@ See [GdsCheckboxes](Checkboxes.md) and [GdsRadios](Radios.md) for complete examp
 ## Example with heading
 
 ```csharp
-<GdsFieldsetGroup LegendTextSize="GdsSize.Medium">
+<GdsFieldsetGroup>
     <GdsFieldsetLegend Size="@GdsSize.Medium">
         <GdsFieldsetHeading Level="2">How can we contact you?</GdsFieldsetHeading>
     </GdsFieldsetLegend>
