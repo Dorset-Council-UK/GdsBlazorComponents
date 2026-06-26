@@ -25,7 +25,7 @@ Render GOV.UK Design System styled link component
 
 ### Additional CSS classes
 ```csharp
-<GdsLink Href="user/something" AdditionalCssClasses="??">Something</GdsLink>
+<GdsLink Href="user/something" AdditionalCssClasses="govuk-!-font-size-27">Something</GdsLink>
 ```
 
 ### Attributes
