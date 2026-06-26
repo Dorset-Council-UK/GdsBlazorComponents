@@ -5,35 +5,36 @@ Render a GOV.UK Design System styled fieldset that associates with a form contro
 ## How it works
 
 - Renders ```<fieldset class="govuk-fieldset">``` with any child content you provide.
-- An optional heading can be provided using the `Heading` parameter.
-  - This will be wrapped in a legend element with the correct GDS classes.
-  - You can change the size of the legend using the `LegendTextSize` parameter.
+- Use `GdsFieldsetLegend` to provide a legend for the fieldset.
+- Optionally use `GdsFieldsetHeading` to provide a heading for the legend.
 - The component tries to calculate aria-describedby based on hint and field errors.
 - It is recommended to use this component within a [GdsFormGroup](FormGroup.md) to fully support correct HTML and accessibility.
 
-*Warning:* `LegendSize` was deprecated in version 3.3.0 use `LegendTextSize` instead. `LegendSize` will be removed in a future release.
-
 See [GdsCheckboxes](Checkboxes.md) and [GdsRadios](Radios.md) for complete examples of using this component.
+
+## Warning
+`LegendSize` was deprecated in version 3.3.0 `LegendSize` will be removed in a future release.
+
+Use `GdsFieldsetLegend` with the `Size` parameter instead. 
 
 ## Simple example
 
 ```csharp
 <GdsFieldsetGroup>
-    <Heading>
-        <GdsHeading Level="2" class="govuk-fieldset__heading">How can we contact you?</GdsHeading>
-    </Heading>
+    <GdsFieldsetLegend>
+        How can we contact you?
+    </GdsFieldsetLegend>
+    <div>Your content goes here</div>
 </GdsFieldsetGroup>
 ```
 
-## Example
+## Example with heading
 
 ```csharp
-<GdsFieldsetGroup LegendTextSize="GdsSize.Medium">
-    <Heading>
-        <GdsHeading Level="2" class="govuk-fieldset__heading">How can we contact you?</GdsHeading>
-    </Heading>
-    <Content>
-        <div>Anything can go here.</div>
-    </Content>
+<GdsFieldsetGroup>
+    <GdsFieldsetLegend Size="@GdsSize.Medium">
+        <GdsFieldsetHeading Level="2">How can we contact you?</GdsFieldsetHeading>
+    </GdsFieldsetLegend>
+    <div>Your content goes here</div>
 </GdsFieldsetGroup>
 ```

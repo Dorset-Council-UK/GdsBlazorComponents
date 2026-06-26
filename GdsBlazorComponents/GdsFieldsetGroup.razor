@@ -1,9 +1,9 @@
 ﻿<fieldset class="@_class" role="group" aria-describedby="@_describedBy" @attributes="AdditionalAttributes">
     @if (Heading != null)
     {
-        <legend class="@_legendClass">
+        <GdsFieldsetLegend Size="@_legendSize">
             @Heading
-        </legend>
+        </GdsFieldsetLegend>
     }
     @ChildContent
     @Content
@@ -11,13 +11,13 @@
 
 @code {
     [CascadingParameter]
-    private EditContext EditContext { get; set; } = default!;
+    private EditContext? EditContext { get; set; }
 
     [CascadingParameter]
     private string? CascadedId { get; set; }
 
     [CascadingParameter]
-    private FieldIdentifier FieldIdentifier { get; set; } = default!;
+    private FieldIdentifier? FieldIdentifier { get; set; }
 
     [Parameter]
     [Obsolete("Deprecated in v3.3.0, use LegendTextSize instead.")]
@@ -41,8 +41,21 @@
     public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
     private string? _class;
-    private string _describedBy => EditContext.IsValid(FieldIdentifier) ? $"{CascadedId}-hint" : $"{CascadedId}-hint {CascadedId}-error";
-    private string? _legendClass;
+    private string? _describedBy;
+    private GdsSize _legendSize;
+
+    protected override void OnInitialized()
+    {
+        if (EditContext is not null)
+        {
+            // Subscribe to validation state changes
+            EditContext.OnValidationStateChanged += (sender, args) =>
+            {
+                _describedBy = CalculateDescribedBy();
+                StateHasChanged();
+            };
+        }
+    }
 
     protected override void OnParametersSet()
     {
@@ -51,7 +64,7 @@
             .Build();
 
         // convert deprecated LegendSize to LegendTextSize if it has a value
-        var legendSize = LegendSize.HasValue
+        _legendSize = LegendSize.HasValue
             ? LegendSize.Value switch
             {
                 GdsFieldsetLegendSize.Small => GdsSize.Small,
@@ -62,14 +75,24 @@
             }
             : LegendTextSize;
 
-        var sizeClass = legendSize switch
+        _describedBy = CalculateDescribedBy();
+    }
+
+    private string? CalculateDescribedBy()
+    {
+        if (string.IsNullOrWhiteSpace(CascadedId) || EditContext is null)
         {
-            GdsSize.Small => "govuk-fieldset__legend--s",
-            GdsSize.Medium => "govuk-fieldset__legend--m",
-            GdsSize.Large => "govuk-fieldset__legend--l",
-            GdsSize.ExtraLarge => "govuk-fieldset__legend--xl",
-            _ => "govuk-fieldset__legend--l",
-        };
-        _legendClass = $"govuk-fieldset__legend {sizeClass}";
+            return null;
+        }
+
+        string hintId = $"{CascadedId}-hint";
+        string errorId = $"{CascadedId}-error";
+
+        if (FieldIdentifier is null)
+        {
+            return $"{hintId} {errorId}";
+        }
+
+        return EditContext.IsValid(FieldIdentifier.Value) ? hintId : $"{hintId} {errorId}";
     }
 }

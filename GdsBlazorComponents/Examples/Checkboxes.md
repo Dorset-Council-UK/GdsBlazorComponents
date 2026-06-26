@@ -48,14 +48,13 @@ ICollection<GdsOptionItem<int>> contactTypes = [
 ];
 <GdsFormGroup For="() => Model.ContactType">
     <GdsFieldsetGroup>
-        <Heading>
-            <GdsHeading Level="2" class="govuk-fieldset__heading">How can we contact you?</GdsHeading>
-        </Heading>
-        <Content>
-            <GdsHint>Select all that apply.</GdsHint>
-            <GdsErrorMessage />
-            <GdsCheckboxes Options="@contactTypes" Name="ContactTypes" />
-        </Content>
+        <GdsFieldsetLegend>
+            <GdsFieldsetHeading Level="2">How can we contact you?</GdsFieldsetHeading>
+        </GdsFieldsetLegend>
+
+        <GdsHint>Select all that apply.</GdsHint>
+        <GdsErrorMessage />
+        <GdsCheckboxes Options="@contactTypes" Name="ContactTypes" />
     </GdsFieldsetGroup>
 </GdsFormGroup>
 ```
@@ -71,30 +70,29 @@ ICollection<GdsOptionItem<int>> contactTypes = [
 ];
 <GdsFormGroup For="() => Model.ContactType">
     <GdsFieldsetGroup>
-        <Heading>
-            <GdsHeading Level="2" class="govuk-fieldset__heading">How can we contact you?</GdsHeading>
-        </Heading>
-        <Content>
-            <GdsHint>Select all that apply.</GdsHint>
-            <GdsErrorMessage />
-            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                @foreach (var option in contactTypes)
+        <GdsFieldsetLegend>
+            <GdsFieldsetHeading Level="2">How can we contact you?</GdsFieldsetHeading>
+        </GdsFieldsetLegend>
+
+        <GdsHint>Select all that apply.</GdsHint>
+        <GdsErrorMessage />
+        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            @foreach (var option in contactTypes)
+            {
+                var conditionalId = option.Value == 1 ? $"{option.Id}-conditional" : null;
+                <GdsCheckbox Option="@option" ConditionalId="@conditionalId" Name="ContactTypes" />
+                if (option.Value == 1)
                 {
-                    var conditionalId = option.Value == 1 ? $"{option.Id}-conditional" : null;
-                    <GdsCheckbox Option="@option" ConditionalId="@conditionalId" Name="ContactTypes" />
-                    if (option.Value == 1)
-                    {
-                        <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="@conditionalId">
-                            <GdsFormGroup For="() => Model.PhoneNumber">
-                                <GdsLabel Text="What is your phone number?" />
-                                <GdsErrorMessage />
-                                <GdsInputText @bind-Value=Model.PhoneNumber class="govuk-input govuk-input--width-50" />
-                            </GdsFormGroup>
-                        </div>
-                    }
+                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="@conditionalId">
+                        <GdsFormGroup For="() => Model.PhoneNumber">
+                            <GdsLabel Text="What is your phone number?" />
+                            <GdsErrorMessage />
+                            <GdsInputText @bind-Value=Model.PhoneNumber class="govuk-input govuk-input--width-50" />
+                        </GdsFormGroup>
+                    </div>
                 }
-            </div>
-        </Content>
+            }
+        </div>
     </GdsFieldsetGroup>
 </GdsFormGroup>
 ```
