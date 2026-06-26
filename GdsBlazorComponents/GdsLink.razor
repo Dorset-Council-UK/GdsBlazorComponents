@@ -1,4 +1,4 @@
-<a href="@Href" class="@_class" @attributes="AdditionalAttributes">
+<a href="@Href" class="@_class" @onclick="HandleClick" @onclick:preventDefault="PreventDefault" @attributes="AdditionalAttributes">
     @ChildContent
 </a>
 
@@ -24,6 +24,12 @@
     [Parameter]
     public bool NoUnderline { get; set; }
 
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    [Parameter]
+    public bool PreventDefault { get; set; }
+
     private string? _class;
 
     protected override void OnParametersSet()
@@ -34,5 +40,13 @@
             .AddIf(NoUnderline, "govuk-link--no-underline")
             .Add(AdditionalCssClasses)
             .Build();
+    }
+
+    private async Task HandleClick(MouseEventArgs args)
+    {
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync(args);
+        }
     }
 }

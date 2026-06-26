@@ -8,6 +8,8 @@ Render GOV.UK Design System styled link component
 - use `NoVisitedState` parameter to remove the visited state styling from the link
 - use `Inverse` parameter to render the link in inverse mode (white text on dark background)
 - use `NoUnderline` parameter to remove the underline from the link
+- use `OnClick` parameter to specify a callback to invoke when the link is clicked
+- use `PreventDefault` parameter to prevent the default link navigation behavior when clicked
 - supports additional CSS classes via the `AdditionalCssClasses` parameter
 - supports any additional HTML attributes via the `AdditionalAttributes` parameter
 
@@ -37,5 +39,5 @@ Render GOV.UK Design System styled link component
 
 ### Using Blazor features
 ```csharp
-<GdsLink Href="user/something" @onclick="DoSomething" @onclick:preventDefault>Something</GdsLink>
+<GdsLink Href="user/something" OnClick="DoSomething" PreventDefault>Something</GdsLink>
 ```
