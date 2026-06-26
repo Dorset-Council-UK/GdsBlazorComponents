@@ -19,6 +19,8 @@
 
     protected override void OnParametersSet()
     {
+        base.OnParametersSet();
+
         Id ??= CascadedId;
         _class = new CssClassBuilder("govuk-select")
             .Add(CssClass)

@@ -46,6 +46,8 @@ public partial class GdsInputNumber<TNumberValue>
 
     protected override void OnParametersSet()
     {
+        base.OnParametersSet();
+
         _class = new CssClassBuilder("govuk-input")
             .Add(CssClass)
             .Add(AdditionalCssClasses)
