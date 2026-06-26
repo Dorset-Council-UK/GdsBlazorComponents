@@ -1,0 +1,38 @@
+<a href="@Href" class="@_class" @attributes="AdditionalAttributes">
+    @ChildContent
+</a>
+
+@code {
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    [Parameter, EditorRequired]
+    public string Href { get; set; }
+
+    [Parameter]
+    public bool NoVisitedState { get; set; }
+
+    [Parameter]
+    public bool Inverse { get; set; }
+
+    [Parameter]
+    public bool NoUnderline { get; set; }
+
+    private string? _class;
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-link")
+            .AddIf(NoVisitedState, "govuk-link--no-visited-state")
+            .AddIf(Inverse, "govuk-link--inverse")
+            .AddIf(NoUnderline, "govuk-link--no-underline")
+            .Add(AdditionalCssClasses)
+            .Build();
+    }
+}
