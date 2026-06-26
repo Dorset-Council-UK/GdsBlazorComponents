@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write  # enable GitHub OIDC token issuance for this job
 
 jobs:
   build:
@@ -56,4 +57,11 @@ jobs:
         with:
           name: nuget-package
 
-      - run: dotnet nuget push **/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}} --skip-duplicate --no-symbols
+      # Get a short-lived NuGet API key
+      - name: NuGet login (OIDC → temp API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{secrets.NUGET_USER}} # Recommended: use a secret like ${{ secrets.NUGET_USER }} for your nuget.org username (profile name), NOT your email address
+    
+      - run: dotnet nuget push **/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{steps.login.outputs.NUGET_API_KEY}} --skip-duplicate --no-symbols
