@@ -1,7 +1,7 @@
 @typeparam T
 @inherits InputSelect<T>
 
-<select id="@Id" class="@ComponentClass" @attributes="AdditionalAttributes" @bind="CurrentValueAsString" @bind:event="onchange">
+<select id="@Id" class="@_class" @attributes="AdditionalAttributes" @bind="CurrentValueAsString" @bind:event="onchange">
     @ChildContent
 </select>
 
@@ -11,11 +11,20 @@
 
     [Parameter]
     public string? Id { get; set; }
+    
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    private string? _class;
 
     protected override void OnParametersSet()
     {
-        Id ??= CascadedId;
         base.OnParametersSet();
+
+        Id ??= CascadedId;
+        _class = new CssClassBuilder("govuk-select")
+            .Add(CssClass)
+            .Add(AdditionalCssClasses)
+            .Build();
     }
-    private string ComponentClass => $"govuk-select {CssClass}".Trim();
 }

@@ -1,4 +1,4 @@
-﻿<header class="govuk-header" role="banner" data-module="govuk-header">
+﻿<header class="@_class" role="banner" data-module="govuk-header" @attributes="AdditionalAttributes">
     <GdsContainer AdditionalCssClasses="govuk-header__container">
         <div class="govuk-header__logo">
             <a href="@ServiceUrl" class="govuk-header__link govuk-header__link--homepage">
@@ -21,6 +21,12 @@
 </header>
 
 @code {
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
     [Parameter, EditorRequired]
     public string ServiceName { get; set; }
 
@@ -32,4 +38,13 @@
 
     [Parameter]
     public RenderFragment? NavLinks { get; set; }
+
+    private string? _class;
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-header")
+            .Add(AdditionalCssClasses)
+            .Build();
+    }
 }

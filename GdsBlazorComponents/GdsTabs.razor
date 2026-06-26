@@ -1,5 +1,5 @@
 ﻿<CascadingValue Value="this" IsFixed="true">
-    <div class="@($"govuk-tabs {AdditionalCssClasses}")" data-module="govuk-tabs" @attributes="@AdditionalAttributes">
+    <div class="@_class" data-module="govuk-tabs" @attributes="@AdditionalAttributes">
         <GdsHeading Level="2" class="govuk-tabs__title">
             @Title
         </GdsHeading>
@@ -64,6 +64,8 @@
     /// </remarks>
     private readonly List<GdsTabPanel> panels = [];
 
+    private string? _class;
+
     /// <summary>
     /// Determines whether the specified panel is the first registered tab.
     /// </summary>
@@ -97,5 +99,12 @@
     {
         if (panels.Remove(panel))
             InvokeAsync(StateHasChanged);
+    }
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-tabs")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 }

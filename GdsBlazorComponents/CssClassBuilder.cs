@@ -5,7 +5,6 @@ namespace GdsBlazorComponents;
 internal sealed class CssClassBuilder
 {
     private readonly StringBuilder _builder;
-    private const char Space = ' ';
 
     public CssClassBuilder()
     {
@@ -42,7 +41,7 @@ internal sealed class CssClassBuilder
 
         if (_builder.Length > 0)
         {
-            _builder.Append(Space);
+            _builder.Append(' ');
         }
         _builder.Append(trimmed);
 

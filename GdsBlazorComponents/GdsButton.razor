@@ -1,6 +1,6 @@
 <button type="@(IsSubmit ? "submit" : "button")"
     @attributes="@AdditionalAttributes"
-    class="@ButtonCssClass"
+    class="@_class"
     data-module="govuk-button"
     data-prevent-double-click=@(PreventDoubleClick ? "true": null)
     @onclick="@(IsSubmit ? default : OnClick)">
@@ -26,9 +26,15 @@
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
 
-    private string ButtonCssClass => $"{CssClass} {AdditionalCssClasses}";
+    private string? _class;
 
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder(CssClass)
+            .Add(AdditionalCssClasses)
+            .Build();
+    }
 }

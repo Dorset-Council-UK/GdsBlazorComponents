@@ -19,8 +19,9 @@
 
     protected override void OnParametersSet()
     {
-        _class = AutoSpacing
-            ? $"govuk-main-wrapper govuk-main-wrapper--auto-spacing {AdditionalCssClasses}".TrimEnd()
-            : $"govuk-main-wrapper {AdditionalCssClasses}".TrimEnd();
+        _class = new CssClassBuilder("govuk-main-wrapper")
+            .AddIf(AutoSpacing, "govuk-main-wrapper--auto-spacing")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 }

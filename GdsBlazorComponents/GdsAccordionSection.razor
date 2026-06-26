@@ -1,4 +1,4 @@
-<div class="govuk-accordion__section" @attributes="@AdditionalAttributes">
+<div class="@_class" @attributes="@AdditionalAttributes">
     @if (Header is not null)
     {
         <div class="govuk-accordion__section-header">
@@ -27,9 +27,13 @@
     [Parameter]
     public RenderFragment? Content { get; set; }
 
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
+    private string? _class;
     private int? _index;
     private string? _headingId;
     private string? _contentId;
@@ -46,5 +50,12 @@
             _headingId = $"{Accordion.AccordionId}-heading-{_index}";
             _contentId = $"{Accordion.AccordionId}-content-{_index}";
         }
+    }
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-accordion__section")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 }

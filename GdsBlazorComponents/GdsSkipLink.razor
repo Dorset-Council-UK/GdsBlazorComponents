@@ -1,4 +1,4 @@
-﻿<a href="@Href" class="govuk-skip-link" data-module="govuk-skip-link">@Text</a>
+﻿<a href="@Href" class="@_class" data-module="govuk-skip-link" @attributes="AdditionalAttributes">@Text</a>
 
 @code {
     [Parameter, EditorRequired]
@@ -6,4 +6,19 @@
 
     [Parameter]
     public string Text { get; set; } = "Skip to main content";
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _class;
+    
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-skip-link")
+            .Add(AdditionalCssClasses)
+            .Build();
+    }
 }

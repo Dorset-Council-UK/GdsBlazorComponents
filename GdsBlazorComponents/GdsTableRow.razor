@@ -1,5 +1,5 @@
 ﻿<CascadingValue Value="context" IsFixed="true">
-	<tr class="govuk-table__row">
+	<tr class="@_class" @attributes="AdditionalAttributes">
 		@ChildContent
 	</tr>
 </CascadingValue>
@@ -11,9 +11,22 @@
 	[Parameter]
 	public RenderFragment? ChildContent { get; set; }
 
+	[Parameter]
+	public string? AdditionalCssClasses { get; set; }
+
+	[Parameter(CaptureUnmatchedValues = true)]
+	public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+	private string? _class;
 	private readonly RowContext context = new();
 
-	protected override void OnParametersSet() => context.Reset(FirstCellIsHeader);
+	protected override void OnParametersSet()
+	{
+		context.Reset(FirstCellIsHeader);
+		_class = new CssClassBuilder("govuk-table__row")
+			.Add(AdditionalCssClasses)
+			.Build();
+	}
 
 	public class RowContext
 	{

@@ -1,10 +1,10 @@
 @if (IsSkippedPages)
 {
-    <li class="govuk-pagination__item govuk-pagination__item--ellipsis" @attributes="@AdditionalAttributes">&ctdot;</li>
+    <li class="@_classSkipped" @attributes="@AdditionalAttributes">&ctdot;</li>
 }
 else
 {
-    <li class="@_classes" @attributes="@AdditionalAttributes">
+    <li class="@_class" @attributes="@AdditionalAttributes">
         <a class="govuk-link govuk-pagination__link"
            href="@Href"
            aria-label="@_ariaLabel"
@@ -31,18 +31,29 @@ else
     [Parameter]
     public EventCallback<int> OnPageChanged { get; set; }
 
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
     private bool IsSkippedPages => string.IsNullOrWhiteSpace(Href) && PageNumber is null;
-    private string? _classes;
+    private string? _class;
+    private string? _classSkipped;
     private string? _ariaLabel;
     private string? _ariaCurrent;
 
     protected override void OnParametersSet()
     {
         bool isCurrentPage = CurrentPage is not null && CurrentPage == PageNumber;
-        _classes = isCurrentPage ? "govuk-pagination__item govuk-pagination__item--current" : "govuk-pagination__item";
+        _class = new CssClassBuilder("govuk-pagination__item")
+            .AddIf(isCurrentPage, "govuk-pagination__item--current")
+            .Add(AdditionalCssClasses)
+            .Build();
+        _classSkipped = new CssClassBuilder("govuk-pagination__item")
+            .Add("govuk-pagination__item--ellipsis")
+            .Add(AdditionalCssClasses)
+            .Build();
         _ariaLabel = $"Page {PageNumber}";
         _ariaCurrent = isCurrentPage ? "page" : null;
     }

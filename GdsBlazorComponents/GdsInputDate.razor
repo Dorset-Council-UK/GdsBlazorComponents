@@ -1,6 +1,6 @@
 ﻿@if (Show)
 {
-    <div class="@_formGroupCssClass">
+    <div class="@_formGroupCssClass" @attributes="AdditionalAttributes">
         <fieldset class="govuk-fieldset" role="group" aria-describedby="@_describedBy">
             @if (Heading != null)
             {

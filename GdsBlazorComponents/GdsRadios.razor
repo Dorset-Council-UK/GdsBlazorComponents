@@ -2,7 +2,7 @@
 
 @if (Options.Count > 0)
 {
-    <div class="@_cssClass" data-module="govuk-radios">
+    <div class="@_class" data-module="govuk-radios" @attributes="AdditionalAttributes">
         @foreach (var option in Options)
         {
             <GdsRadio Option="option" />
@@ -20,5 +20,20 @@
     [Parameter]
     public bool Inline { get; set; }
 
-    private string _cssClass => string.Format("govuk-radios{0}{1}", Inline ? " govuk-radios--inline" : "", Smaller ? " govuk-radios--small" : "");
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _class;
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-radios")
+            .AddIf(Inline, "govuk-radios--inline")
+            .AddIf(Smaller, "govuk-radios--small")
+            .Add(AdditionalCssClasses)
+            .Build();
+    }
 }

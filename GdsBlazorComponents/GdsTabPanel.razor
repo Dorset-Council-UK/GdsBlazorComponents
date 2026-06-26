@@ -1,6 +1,6 @@
 ﻿@implements IDisposable
 
-<div class="@($"govuk-tabs__panel {( Parent is not null && !Parent.IsFirst(this) ? "govuk-tabs__panel--hidden" : string.Empty )} {AdditionalCssClasses}")" id="@Id" @attributes="AdditionalAttributes">
+<div class="@_class" id="@Id" @attributes="AdditionalAttributes">
     <GdsHeading Level="2" class="@HeadingClass">@Heading</GdsHeading>
     @ChildContent
 </div>
@@ -64,6 +64,8 @@
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
+    private string? _class;
+
     /// <summary>
     /// Initialises the component and registers it with the parent <see cref="GdsTabs"/>.
     /// </summary>
@@ -76,6 +78,15 @@
             throw new InvalidOperationException($"The {nameof(GdsTabPanel)} component must be used within a {nameof(GdsTabs)} component.");
 
         Parent.RegisterPanel(this);
+    }
+
+    protected override void OnParametersSet()
+    {
+        bool isHidden = Parent is not null && !Parent.IsFirst(this);
+        _class = new CssClassBuilder("govuk-tabs__panel")
+            .AddIf(isHidden, "govuk-tabs__panel--hidden")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 
     /// <summary>

@@ -1,12 +1,19 @@
-<div class="govuk-inset-text">@_renderFragment</div>
+<div class="@_class" @attributes="AdditionalAttributes">@_renderFragment</div>
 
 @code {
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
     [Parameter]
     public string? Text { get; set; }
 
     [Parameter]
-	public RenderFragment? ChildContent { get; set; }
+    public RenderFragment? ChildContent { get; set; }
 
+    private string? _class;
     private RenderFragment? _renderFragment;
 
     protected override void OnParametersSet()
@@ -21,6 +28,9 @@
             throw new InvalidOperationException("Either Text or ChildContent parameter must be provided.");
         }
 
+        _class = new CssClassBuilder("govuk-inset-text")
+            .Add(AdditionalCssClasses)
+            .Build();
         _renderFragment = ChildContent ?? (builder => builder.AddContent(0, Text!));
     }
 }

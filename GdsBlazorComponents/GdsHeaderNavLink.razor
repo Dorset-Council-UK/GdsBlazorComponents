@@ -3,13 +3,19 @@
 @inject NavigationManager Navigation
 @implements IDisposable
 
-<li class="govuk-header__navigation-item @(_isActive ? "govuk-header__navigation-item--active" : null)">
+<li class="@_class" @attributes="AdditionalAttributes">
     <a href="@Href" class="@LinkClass" aria-current="@(_isActive ? "page" : null)">
         @ChildContent
     </a>
 </li>
 
 @code {
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+   
     [Parameter, EditorRequired]
     public string Href { get; set; } = string.Empty;
 
@@ -22,6 +28,7 @@
     [Parameter]
     public NavLinkMatch Match { get; set; } = NavLinkMatch.Prefix;
 
+    private string? _class;
     private bool _isActive;
 
     protected override void OnInitialized()
@@ -33,6 +40,10 @@
     protected override void OnParametersSet()
     {
         UpdateActiveState();
+        _class = new CssClassBuilder("govuk-header__navigation-item")
+            .AddIf(_isActive, "govuk-header__navigation-item--active")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)

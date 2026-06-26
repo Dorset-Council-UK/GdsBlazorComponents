@@ -1,4 +1,4 @@
-﻿<div class="@($"govuk-panel govuk-panel--confirmation {AdditionalCssClasses}")" @attributes="@AdditionalAttributes">
+﻿<div class="@_class" @attributes="@AdditionalAttributes">
 	@if (!string.IsNullOrEmpty(Title))
 	{
         <GdsHeading Level="1" class="govuk-panel__title">
@@ -26,4 +26,14 @@
 
 	[Parameter(CaptureUnmatchedValues = true)]
 	public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _class;
+
+	protected override void OnParametersSet()
+	{
+		_class = new CssClassBuilder("govuk-panel")
+			.Add("govuk-panel--confirmation")
+			.Add(AdditionalCssClasses)
+			.Build();
+	}
 }

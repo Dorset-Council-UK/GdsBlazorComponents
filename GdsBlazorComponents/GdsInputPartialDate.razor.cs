@@ -10,6 +10,12 @@ namespace GdsBlazorComponents;
 /// </summary>
 public partial class GdsInputPartialDate : IDisposable
 {
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
     [CascadingParameter]
     private EditContext EditContext { get; set; } = default!;
 
@@ -45,7 +51,7 @@ public partial class GdsInputPartialDate : IDisposable
     private string? _errorMessage;
     private readonly EventHandler<ValidationStateChangedEventArgs>? _validationStateChangedHandler;
 
-    private string _formGroupCssClass = InputDateCssClasses.Group;
+    private string? _formGroupCssClass;
     private string? _describedBy;
     private string? _hintId;
     private string? _errorId;
@@ -100,6 +106,9 @@ public partial class GdsInputPartialDate : IDisposable
 
     protected override void OnParametersSet()
     {
+        _formGroupCssClass = new CssClassBuilder(InputDateCssClasses.Group)
+            .Add(AdditionalCssClasses)
+            .Build();
         _dayAutocomplete = IsDateOfBirth ? "bday-day" : null;
         _monthAutocomplete = IsDateOfBirth ? "bday-month" : null;
         _yearAutocomplete = IsDateOfBirth ? "bday-year" : null;
@@ -130,7 +139,10 @@ public partial class GdsInputPartialDate : IDisposable
         _errorMessage = PriorityErrorMessage(isFieldValid, isDayValid, isMonthValid, isYearValid);
         var hasError = _errorMessage != null;
 
-        _formGroupCssClass = hasError ? $"{InputDateCssClasses.Group} {InputDateCssClasses.GroupError}" : InputDateCssClasses.Group;
+        _formGroupCssClass = new CssClassBuilder(InputDateCssClasses.Group)
+            .AddIf(hasError, InputDateCssClasses.GroupError)
+            .Add(AdditionalCssClasses)
+            .Build();
         _describedBy = DescribedBy(hasError);
         _dayCssClass = CssClass(isDayValid, isFieldValid, InputDateCssClasses.Day);
         _monthCssClass = CssClass(isMonthValid, isFieldValid, InputDateCssClasses.Month);

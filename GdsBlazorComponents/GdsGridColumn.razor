@@ -22,37 +22,31 @@
 
     protected override void OnParametersSet()
     {
-        _class = $"{GetWidthCssClasses()} {AdditionalCssClasses}".TrimEnd();
+        var builder = new CssClassBuilder();
+        AddWidthCssClasses(builder);
+        _class = builder.Add(AdditionalCssClasses).Build();
     }
 
-    private string GetWidthCssClasses()
+    private void AddWidthCssClasses(CssClassBuilder builder)
     {
         if (Width is not null)
         {
             // Width specified, use it
-            var columnClass = Width.Value.GetDescription();
-            if (columnClass is not null)
-            {
-                return columnClass;
-            }
+            builder.Add(Width.Value.GetDescription());
+            return;
         }
 
-        List<string> classes = [];
-        foreach (GdsGridColumnWidth columnWidth in Widths)
-        {
-            var columnClass = columnWidth.GetDescription();
-            if (columnClass is not null)
-            {
-                classes.Add(columnClass);
-            }
-        }
-        if (classes.Count > 0)
+        if (Widths.Length > 0)
         {
             // Widths specified, use all of them
-            return string.Join(' ', classes);
+            foreach (GdsGridColumnWidth columnWidth in Widths)
+            {
+                builder.Add(columnWidth.GetDescription());
+            }
+            return;
         }
 
         // No widths specified, use default full width
-        return GdsGridColumnWidth.Full.GetDescription() ?? "";
+        builder.Add(GdsGridColumnWidth.Full.GetDescription());
     }
 }

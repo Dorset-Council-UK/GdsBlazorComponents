@@ -58,14 +58,13 @@ ICollection<GdsOptionItem<int>> contactTypes = [
 <GdsFormGroup For="() => Model.ContactType">
     <InputRadioGroup @bind-Value="Model.ContactType">
         <GdsFieldsetGroup>
-            <Heading>
-                <GdsHeading Level="2" class="govuk-fieldset__heading">How can we contact you?</GdsHeading>
-            </Heading>
-            <Content>
-                <GdsHint>Select all that apply.</GdsHint>
-                <GdsErrorMessage />
-                <GdsRadios Options="@contactTypes" />
-            </Content>
+            <GdsFieldsetLegend Size="@GdsSize.Medium">
+                <GdsFieldsetHeading Level="2">How can we contact you?</GdsFieldsetHeading>
+            </GdsFieldsetLegend>
+
+            <GdsHint>Select all that apply.</GdsHint>
+            <GdsErrorMessage />
+            <GdsRadios Options="@contactTypes" />
         </GdsFieldsetGroup>
     </InputRadioGroup>
 </GdsFormGroup>
