@@ -1,11 +1,17 @@
 ﻿@if (Show)
 {
-    <div id="@Id" class="@CssClass">
+    <div id="@Id" class="@_class" @attributes="AdditionalAttributes">
         @ChildContent
     </div>
 }
 
 @code {
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
     [CascadingParameter]
     private string? CascadedId { get; set; }
 
@@ -21,11 +27,20 @@
     [Parameter]
     public string CssClass { get; set; } = "govuk-hint";
 
+    private string? _class;
+
     protected override void OnInitialized()
     {
         if (Id == null)
         {
             Id = $"{CascadedId}-hint";
         }
+    }
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder(CssClass)
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 }

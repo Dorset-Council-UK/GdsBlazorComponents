@@ -1,11 +1,17 @@
 ﻿@if (!EditContext.IsValid(FieldIdentifier))
 {
-    <p id="@Id" class="govuk-error-message">
+    <p id="@Id" class="@_class" @attributes="AdditionalAttributes">
         <span class="govuk-visually-hidden">Error:</span> <span>@EditContext.GetValidationMessages(FieldIdentifier).First()</span>
     </p>
 }
 
 @code {
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
     [CascadingParameter]
     private EditContext EditContext { get; set; } = default!;
 
@@ -18,11 +24,20 @@
     [Parameter]
     public string? Id { get; set; }
 
+    private string? _class;
+
     protected override void OnInitialized()
     {
         if (Id == null)
         {
             Id = $"{CascadedId}-error";
         }
+    }
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-error-message")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 }

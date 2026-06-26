@@ -6,7 +6,13 @@
 }
 
 <div @key="_id" class="govuk-radios__item">
-    <InputRadio id="@_id" Value="@Option.Value" class="govuk-radios__input" data-behaviour="@_exclusiveBehaviour" aria-describedby="@_hintId" data-aria-controls="@ConditionalId" />
+    <InputRadio id="@_id"
+                Value="@Option.Value"
+                class="@_class"
+                data-behaviour="@_exclusiveBehaviour"
+                aria-describedby="@_hintId"
+                data-aria-controls="@ConditionalId"
+                @attributes="AdditionalAttributes" />
     <GdsLabel For="@_id" AdditionalCssClasses="govuk-radios__label" Text="@Option.Label" />
     @if (_hasHint)
     {
@@ -21,6 +27,13 @@
     [Parameter]
     public string? ConditionalId { get; set; }
 
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _class;
     private string? _exclusiveBehaviour;
     private string _id = "";
     private bool _hasHint;
@@ -37,5 +50,12 @@
         _id = Option.Id;
         _hasHint = Option.Hint != null;
         _hintId = Option.Hint == null ? null : $"{_id}-hint";
+    }
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-radios__input")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 }

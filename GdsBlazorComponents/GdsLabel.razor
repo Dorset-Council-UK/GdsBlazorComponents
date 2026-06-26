@@ -1,4 +1,4 @@
-﻿<label for="@For" class="@LabelCssClass">@Text</label>
+﻿<label for="@For" class="@_class" @attributes="AdditionalAttributes">@Text</label>
 
 @code {
     [CascadingParameter]
@@ -16,7 +16,10 @@
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
 
-    private string LabelCssClass => $"{CssClass} {AdditionalCssClasses}";
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _class;
 
     protected override void OnInitialized()
     {
@@ -24,5 +27,12 @@
         {
             For = CascadedId;
         }
+    }
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder(CssClass)
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 }

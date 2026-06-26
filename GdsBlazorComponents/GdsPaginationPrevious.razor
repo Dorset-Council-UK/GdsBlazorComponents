@@ -1,4 +1,4 @@
-<div class="govuk-pagination__prev" @attributes="@AdditionalAttributes">
+<div class="@_class" @attributes="@AdditionalAttributes">
     <a class="govuk-link govuk-pagination__link"
        href="@Href"
        rel="prev"
@@ -36,8 +36,13 @@
     [Parameter]
     public EventCallback<MouseEventArgs> OnPrevious { get; set; }
 
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _class;
 
     private async Task HandlePrevious(MouseEventArgs args)
     {
@@ -45,5 +50,12 @@
         {
             await OnPrevious.InvokeAsync(args);
         }
+    }
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-pagination__prev")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 }

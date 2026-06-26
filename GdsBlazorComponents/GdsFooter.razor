@@ -1,4 +1,4 @@
-﻿<footer class="@CssClass">
+﻿<footer class="@_class" @attributes="AdditionalAttributes">
     <GdsContainer>
         @if (Navigation is not null)
         {
@@ -21,6 +21,12 @@
 
 @code {
     [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    [Parameter]
     public string? CssClass { get; set; } = "govuk-footer";
 
     [Parameter]
@@ -28,4 +34,13 @@
 
     [Parameter]
     public RenderFragment? Meta { get; set; }
+
+    private string? _class;
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder(CssClass)
+            .Add(AdditionalCssClasses)
+            .Build();
+    }
 }

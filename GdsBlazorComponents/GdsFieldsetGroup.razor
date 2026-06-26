@@ -59,6 +59,10 @@
 
     protected override void OnParametersSet()
     {
+        _class = new CssClassBuilder("govuk-fieldset")
+            .Add(AdditionalCssClasses)
+            .Build();
+
         // convert deprecated LegendSize to LegendTextSize if it has a value
         _legendSize = LegendSize.HasValue
             ? LegendSize.Value switch
@@ -71,7 +75,6 @@
             }
             : LegendTextSize;
 
-        _class = $"govuk-fieldset {AdditionalCssClasses}".TrimEnd();
         _describedBy = CalculateDescribedBy();
     }
 

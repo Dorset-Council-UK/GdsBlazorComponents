@@ -1,4 +1,4 @@
-<nav class="@_classes" aria-label="Pagination" @attributes="@AdditionalAttributes">
+<nav class="@_class" aria-label="Pagination" @attributes="@AdditionalAttributes">
     <CascadingValue Name="GdsPagination.BlockStyle" Value="@BlockStyle">
         <CascadingValue Name="GdsPagination.CurrentPage" Value="@CurrentPage">
             @if (CurrentPage > 1)
@@ -56,10 +56,13 @@
     [Parameter]
     public Func<int, string>? HrefGenerator { get; set; }
 
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
-    private string? _classes;
+    private string? _class;
     private string? _previousHref;
     private string? _nextHref;
     private List<int?> _pageNumbers = [];
@@ -70,7 +73,10 @@
 
     protected override void OnParametersSet()
     {
-        _classes = BlockStyle ? "govuk-pagination govuk-pagination--block" : "govuk-pagination";
+        _class = new CssClassBuilder("govuk-pagination")
+            .AddIf(BlockStyle, "govuk-pagination--block")
+            .Add(AdditionalCssClasses)
+            .Build();
         _pageNumbers = CalculatePageNumbers();
         _previousHref = HrefGenerator?.Invoke(PreviousPageNumber);
         _nextHref = HrefGenerator?.Invoke(NextPageNumber);

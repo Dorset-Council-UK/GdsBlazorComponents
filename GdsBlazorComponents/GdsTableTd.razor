@@ -8,7 +8,7 @@
 }
 else
 {
-	<td class="@($"govuk-table__cell {(Numeric ? "govuk-table__cell--numeric" : string.Empty)} {AdditionalCssClasses}")"
+	<td class="@_class"
 		colspan="@Span(Colspan)"
 		rowspan="@Span(Rowspan)"
 		@attributes="@AdditionalAttributes">
@@ -56,7 +56,16 @@ else
 		}
 	}
 
+	private string? _class;
 	private static string? Span(int? span) => span > 1 ? span.Value.ToString() : null;
+
+	protected override void OnParametersSet()
+	{
+		_class = new CssClassBuilder("govuk-table__cell")
+			.AddIf(Numeric, "govuk-table__cell--numeric")
+			.Add(AdditionalCssClasses)
+			.Build();
+	}
 
 	private RenderFragment Render(object? value, string? format, IFormatProvider? formatProvider, RenderFragment? childContent) => builder =>
 	{

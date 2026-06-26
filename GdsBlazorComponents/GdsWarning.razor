@@ -1,4 +1,4 @@
-﻿<div class="govuk-warning-text">
+﻿<div class="@_class" @attributes="AdditionalAttributes">
     <span class="govuk-warning-text__icon" aria-hidden="true">@Icon</span>
     <strong class="govuk-warning-text__text">
         <span class="govuk-visually-hidden">Warning</span> @Text
@@ -11,4 +11,19 @@
 
     [Parameter]
     public string Icon { get; set; } = "!";
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _class;
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-warning-text")
+            .Add(AdditionalCssClasses)
+            .Build();
+    }
 }

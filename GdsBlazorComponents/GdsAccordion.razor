@@ -1,4 +1,4 @@
-<div class="govuk-accordion" data-module="govuk-accordion" id="@Id" @attributes="@AdditionalAttributes">
+<div class="@_class" data-module="govuk-accordion" id="@Id" @attributes="@AdditionalAttributes">
     <CascadingValue Value="@context" IsFixed="true">
         @ChildContent
     </CascadingValue>
@@ -11,14 +11,25 @@
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
     private readonly AccordionContext context = new();
+    private string? _class;
 
     protected override void OnInitialized()
     {
         context.Reset(Id);
+    }
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-accordion")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 
     public class AccordionContext

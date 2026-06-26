@@ -1,6 +1,6 @@
 ﻿@typeparam T
 
-<table class="@($"govuk-table {Density.GetDescription()} {AdditionalTableCssClasses}")" @attributes="@AdditionalAttributes">
+<table class="@_class" @attributes="@AdditionalAttributes">
 	@if (!string.IsNullOrEmpty(Caption))
 	{
 		<caption class="@_captionClass">@Caption</caption>
@@ -61,6 +61,7 @@
 	[Parameter]
 	public RenderFragment<T>? RowTemplate { get; set; }
 
+	private string? _class;
 	private string? _captionClass;
 
 	protected override void OnParametersSet()
@@ -85,6 +86,14 @@
 			GdsSize.ExtraLarge => "govuk-table__caption--xl",
 			_ => "govuk-table__caption--l",
 		};
-		_captionClass = $"govuk-table__caption {sizeClass} {AdditionalCaptionCssClasses}".TrimEnd();
+
+		_class = new CssClassBuilder("govuk-table")
+			.Add(AdditionalTableCssClasses)
+			.Add(Density.GetDescription())
+			.Build();
+		_captionClass = new CssClassBuilder("govuk-table__caption")
+			.Add(sizeClass)
+			.Add(AdditionalCaptionCssClasses)
+			.Build();
 	}
 }
