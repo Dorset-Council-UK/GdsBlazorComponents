@@ -5,16 +5,16 @@
 else
 {
     <li class="@_class" @attributes="@AdditionalAttributes">
-        <a class="govuk-link govuk-pagination__link"
-           href="@Href"
-           aria-label="@_ariaLabel"
-           aria-current="@_ariaCurrent"
-           @onclick="HandlePageChanged"
-           @onclick:preventDefault="OnPageChanged.HasDelegate"
-           data-enhance-nav="@(OnPageChanged.HasDelegate ? "false" : null)"
-           data-prevent-double-click="true">
+        <GdsLink Href="@Href"
+                 AdditionalCssClasses="govuk-pagination__link"
+                 OnClick="HandlePageChanged"
+                 PreventDefault="OnPageChanged.HasDelegate"
+                 aria-label="@_ariaLabel"
+                 aria-current="@_ariaCurrent"
+                 data-enhance-nav="@(OnPageChanged.HasDelegate ? "false" : null)"
+                 data-prevent-double-click="true">
             @PageNumber
-        </a>
+        </GdsLink>
     </li>
 }
 

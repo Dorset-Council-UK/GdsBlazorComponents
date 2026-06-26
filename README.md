@@ -87,6 +87,7 @@ Actual code samples can be found in this repo alongside each component.
 - [GdsInputText](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/InputText.md)
 - [GdsInsetText](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/InsetText.md)
 - [GdsLabel](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Label.md)
+- [GdsLink](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Link.md)
 - [GdsMainWrapper](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/MainWrapper.md)
 - [GdsNotificationBanner](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/NotificationBanner.md)
 - [GdsPhaseBanner](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/PhaseBanner.md)

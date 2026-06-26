@@ -1,11 +1,11 @@
 <div class="@_class" @attributes="@AdditionalAttributes">
-    <a class="govuk-link govuk-pagination__link"
-       href="@Href"
-       rel="next"
-       @onclick="HandleNext"
-       @onclick:preventDefault="OnNext.HasDelegate"
-       data-enhance-nav="@(OnNext.HasDelegate ? "false" : null)"
-       data-prevent-double-click="true">
+    <GdsLink Href="@Href"
+             AdditionalCssClasses="govuk-pagination__link"
+             OnClick="HandleNext"
+             PreventDefault="OnNext.HasDelegate"
+             rel="next"
+             data-enhance-nav="@(OnNext.HasDelegate ? "false" : null)"
+             data-prevent-double-click="true">
         @if (BlockStyle)
         {
             @NextArrow();
@@ -22,7 +22,7 @@
         {
             @NextArrow();
         }
-    </a>
+    </GdsLink>
 </div>
 
 @code {

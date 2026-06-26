@@ -1,10 +1,10 @@
 ﻿<header class="@_class" role="banner" data-module="govuk-header" @attributes="AdditionalAttributes">
     <GdsContainer AdditionalCssClasses="govuk-header__container">
         <div class="govuk-header__logo">
-            <a href="@ServiceUrl" class="govuk-header__link govuk-header__link--homepage">
+            <GdsLink Href="@ServiceUrl" class="govuk-header__link govuk-header__link--homepage">
                 <img src="@LogoUrl" alt="@ServiceName" height="40" class="govuk-header__logotype" />
                 <span class="govuk-header__product-name">@ServiceName</span>
-            </a>
+            </GdsLink>
         </div>
         @if (NavLinks != null)
         {
