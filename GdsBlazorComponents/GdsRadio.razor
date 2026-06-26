@@ -5,8 +5,14 @@
     <div class="govuk-radios__divider">or</div>
 }
 
-<div @key="_id" class="@_class" @attributes="AdditionalAttributes">
-    <InputRadio id="@_id" Value="@Option.Value" class="govuk-radios__input" data-behaviour="@_exclusiveBehaviour" aria-describedby="@_hintId" data-aria-controls="@ConditionalId" />
+<div @key="_id" class="govuk-radios__item">
+    <InputRadio id="@_id"
+                Value="@Option.Value"
+                class="@_class"
+                data-behaviour="@_exclusiveBehaviour"
+                aria-describedby="@_hintId"
+                data-aria-controls="@ConditionalId"
+                @attributes="AdditionalAttributes" />
     <GdsLabel For="@_id" AdditionalCssClasses="govuk-radios__label" Text="@Option.Label" />
     @if (_hasHint)
     {
@@ -48,7 +54,7 @@
 
     protected override void OnParametersSet()
     {
-        _class = new CssClassBuilder("govuk-radios__item")
+        _class = new CssClassBuilder("govuk-radios__input")
             .Add(AdditionalCssClasses)
             .Build();
     }
