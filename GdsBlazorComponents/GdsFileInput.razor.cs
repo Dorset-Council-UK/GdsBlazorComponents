@@ -5,6 +5,11 @@ namespace GdsBlazorComponents
 {
     public partial class GdsFileInput
     {
+        [Parameter]
+        public string? AdditionalCssClasses { get; set; }
+
+        [Parameter(CaptureUnmatchedValues = true)]
+        public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
         /// <summary>
         /// Event callback that is triggered when files are submitted.
@@ -23,6 +28,7 @@ namespace GdsBlazorComponents
         public bool? IsBusy { get; set; } = false;
 
         IReadOnlyList<IBrowserFile>? SelectedFiles;
+        private string? _class;
 
         private async Task OnInputFileChange(InputFileChangeEventArgs e)
         {
@@ -32,6 +38,13 @@ namespace GdsBlazorComponents
             {
                 await OnFilesSubmitted.InvokeAsync(SelectedFiles);
             }
+        }
+
+        protected override void OnParametersSet()
+        {
+            _class = new CssClassBuilder("govuk-drop-zone")
+                .Add(AdditionalCssClasses)
+                .Build();
         }
     }
 }

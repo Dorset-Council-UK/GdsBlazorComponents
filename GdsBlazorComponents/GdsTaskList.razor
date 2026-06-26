@@ -26,6 +26,8 @@
 
     protected override void OnParametersSet()
     {
-        _class = $"govuk-task-list {AdditionalCssClasses}".TrimEnd();
+        _class = new CssClassBuilder("govuk-task-list")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 }

@@ -65,8 +65,9 @@
 
     protected override void OnParametersSet()
     {
-        _class = WithLink
-            ? $"govuk-task-list__item govuk-task-list__item--with-link {AdditionalCssClasses}".TrimEnd()
-            : $"govuk-task-list__item {AdditionalCssClasses}".TrimEnd();
+        _class = new CssClassBuilder("govuk-task-list__item")
+            .AddIf(WithLink, "govuk-task-list__item--with-link")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 }

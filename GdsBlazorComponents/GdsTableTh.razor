@@ -1,5 +1,5 @@
 ﻿<th scope="@Scope.GetDescription()"
-	class="@($"govuk-table__header {(Numeric ? "govuk-table__header--numeric" : string.Empty)} {AdditionalCssClasses}")"
+	class="@_class"
 	colspan="@Span(Colspan)"
 	rowspan="@Span(Rowspan)"
 	@attributes="@AdditionalAttributes">
@@ -28,5 +28,14 @@
 	[Parameter]
 	public string? AdditionalCssClasses { get; set; }
 
+	private string? _class;
 	private static string? Span(int? span) => span > 1 ? span.Value.ToString() : null;
+
+	protected override void OnParametersSet()
+	{
+		_class = new CssClassBuilder("govuk-table__header")
+			.AddIf(Numeric, "govuk-table__header--numeric")
+			.Add(AdditionalCssClasses)
+			.Build();
+	}
 }

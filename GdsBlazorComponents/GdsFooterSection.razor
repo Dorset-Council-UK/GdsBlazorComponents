@@ -22,6 +22,8 @@
 
     protected override void OnParametersSet()
     {
-        _class = $"govuk-footer__section {AdditionalCssClasses}".TrimEnd();
+        _class = new CssClassBuilder("govuk-footer__section")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 }

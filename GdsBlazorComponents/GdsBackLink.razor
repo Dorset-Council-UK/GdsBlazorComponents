@@ -1,11 +1,24 @@
-﻿<a href="@Href" class="govuk-back-link">@Text</a>
+﻿<a href="@Href" class="@_class" @attributes="AdditionalAttributes">@Text</a>
 
 @code {
-
     [Parameter, EditorRequired]
     public required string Href { get; set; }
 
     [Parameter]
     public string Text { get; set; } = "Back";
 
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _class;
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-back-link")
+            .Add(AdditionalCssClasses)
+            .Build();
+    }
 }

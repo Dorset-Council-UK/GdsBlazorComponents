@@ -8,12 +8,13 @@
 <div @key="_id" class="govuk-checkboxes__item">
     <InputCheckbox id="@_id"
                    name="@Name"
-                   class="govuk-checkboxes__input"
+                   class="@_class"
                    data-behaviour="@_exclusiveBehaviour"
                    aria-describedby="@_hintId"
                    data-aria-controls="@ConditionalId"
                    @bind-Value="Option.Selected"
-                   @bind-Value:after="HandleOnChange" />
+                   @bind-Value:after="HandleOnChange"
+                   @attributes="AdditionalAttributes" />
     <GdsLabel For="@_id" AdditionalCssClasses="govuk-checkboxes__label" Text="@Option.Label" />
     @if (_hasHint)
     {
@@ -22,6 +23,12 @@
 </div>
 
 @code {
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
     [Parameter, EditorRequired]
     public required GdsOptionItem<T> Option { get; set; }
 
@@ -34,6 +41,7 @@
     [Parameter]
     public EventCallback<GdsOptionItem<T>> OnChanged { get; set; }
 
+    private string? _class;
     private string? _exclusiveBehaviour;
     private string _id = "";
     private bool _hasHint;
@@ -53,4 +61,11 @@
     }
 
     private Task HandleOnChange() => OnChanged.HasDelegate ? OnChanged.InvokeAsync(Option) : Task.CompletedTask;
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-checkboxes__input")
+            .Add(AdditionalCssClasses)
+            .Build();
+    }
 }

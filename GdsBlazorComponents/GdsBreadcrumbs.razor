@@ -3,7 +3,7 @@
 <SectionContent SectionName="Layout.GdsBreadcrumbs">
     @if (Items.Any())
     {
-        <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+        <nav class="@_class" aria-label="Breadcrumb" @attributes="AdditionalAttributes">
             <ol class="govuk-breadcrumbs__list">
                 @foreach (var item in Items)
                 {
@@ -19,4 +19,19 @@
 @code {
     [Parameter]
     public IReadOnlyCollection<GdsBreadcrumb> Items { get; set; } = [];
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _class;
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-breadcrumbs")
+            .Add(AdditionalCssClasses)
+            .Build();
+    }
 }

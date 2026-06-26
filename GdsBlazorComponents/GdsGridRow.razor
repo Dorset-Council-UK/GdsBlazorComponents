@@ -16,6 +16,8 @@
 
     protected override void OnParametersSet()
     {
-        _class = $"govuk-grid-row {AdditionalCssClasses}".TrimEnd();
+        _class = new CssClassBuilder("govuk-grid-row")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 }

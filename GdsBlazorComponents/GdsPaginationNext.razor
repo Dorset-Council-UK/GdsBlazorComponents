@@ -1,4 +1,4 @@
-<div class="govuk-pagination__next" @attributes="@AdditionalAttributes">
+<div class="@_class" @attributes="@AdditionalAttributes">
     <a class="govuk-link govuk-pagination__link"
        href="@Href"
        rel="next"
@@ -41,8 +41,13 @@
     [Parameter]
     public EventCallback<MouseEventArgs> OnNext { get; set; }
 
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _class;
 
     private async Task HandleNext(MouseEventArgs args)
     {
@@ -57,5 +62,12 @@
         return @<svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
             <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
         </svg>;
+    }
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-pagination__next")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 }
