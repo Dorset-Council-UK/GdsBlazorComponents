@@ -1,4 +1,4 @@
-<div class="govuk-notification-banner @_class" role="@_role" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+<div class="@_class" role="@_role" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner" @attributes="AdditionalAttributes">
     <div class="govuk-notification-banner__header">
         <GdsHeading Level="@(BannerTitleSize == BannerSizeOption.small ? 3 : 2)" class="govuk-notification-banner__title" id="govuk-notification-banner-title">
             @BannerTitle
@@ -12,6 +12,12 @@
 </div>
 
 @code {
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
     [Parameter]
     public NotificationTypeOption NotificationType { get; set; } = NotificationTypeOption.info;
 
@@ -37,7 +43,7 @@
     }
 
     private string _role = "";
-    private string _class = "";
+    private string? _class;
 
     protected override void OnInitialized()
     {
@@ -48,7 +54,10 @@
             NotificationTypeOption.success => "alert",
             _ => "region"
         };
-        _class = "govuk-notification-banner--" + NotificationType.ToString();
+        _class = new CssClassBuilder("govuk-notification-banner")
+            .Add($"govuk-notification-banner--{NotificationType.ToString()}")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 
 }

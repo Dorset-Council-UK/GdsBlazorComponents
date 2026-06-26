@@ -1,4 +1,4 @@
-﻿<strong class="@($"govuk-tag {Colour?.GetDescription()} {AdditionalCssClasses}")">
+﻿<strong class="@_class" @attributes="AdditionalAttributes">
 	@Text
 </strong>
 
@@ -11,4 +11,17 @@
 
 	[Parameter]
 	public string? AdditionalCssClasses { get; set; }
+
+	[Parameter(CaptureUnmatchedValues = true)]
+	public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+	private string? _class;
+
+	protected override void OnParametersSet()
+	{
+		_class = new CssClassBuilder("govuk-tag")
+            .Add(Colour?.GetDescription())
+			.Add(AdditionalCssClasses)
+			.Build();
+	}
 }

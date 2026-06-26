@@ -22,6 +22,13 @@ public partial class GdsInputNumber<TNumberValue>
     [Parameter]
     public bool Show { get; set; } = true;
 
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _class;
     private string? _inputmode;
     private string? _describedBy;
 
@@ -35,6 +42,14 @@ public partial class GdsInputNumber<TNumberValue>
             _describedBy = $"{Id}-hint {Id}-error";
         }
         _inputmode = GetInputModeValue();
+    }
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder("govuk-input")
+            .Add(CssClass)
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 
     private static string? GetInputModeValue()

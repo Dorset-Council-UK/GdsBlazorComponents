@@ -2,7 +2,7 @@
 
 @if (Show)
 {
-    <div class="@FormGroupCssClass" data-module="@DataModule" data-maxlength="@DataMaxLength">
+    <div class="@_class" data-module="@DataModule" data-maxlength="@DataMaxLength" @attributes="AdditionalAttributes">
         <CascadingValue Value="Id" IsFixed="true">
             <CascadingValue Value="FieldIdentifier" IsFixed="false">
                 @ChildContent
@@ -27,6 +27,9 @@
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
 
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
     [Parameter]
     public string? DataModule { get; set; } = null;
 
@@ -40,9 +43,7 @@
     private const string GroupErrorCssClass = "govuk-form-group--error";
 
     private FieldIdentifier FieldIdentifier => FieldIdentifier.Create(For);
-    private string FormGroupCssClass => EditContext.IsValid(FieldIdentifier)
-        ? $"{GroupCssClass} {AdditionalCssClasses}"
-        : $"{GroupCssClass} {AdditionalCssClasses} {GroupErrorCssClass}";
+    private string? _class;
 
     protected override void OnInitialized()
     {
@@ -50,5 +51,13 @@
         {
             Id = FieldIdentifier.FieldName;
         }
+    }
+
+    protected override void OnParametersSet()
+    {
+        _class = new CssClassBuilder(GroupCssClass)
+            .AddIf(!EditContext.IsValid(FieldIdentifier), GroupErrorCssClass)
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 }

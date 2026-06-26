@@ -16,6 +16,8 @@
 
     protected override void OnParametersSet()
     {
-        _class = $"govuk-width-container {AdditionalCssClasses}".TrimEnd();
+        _class = new CssClassBuilder("govuk-width-container")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 }

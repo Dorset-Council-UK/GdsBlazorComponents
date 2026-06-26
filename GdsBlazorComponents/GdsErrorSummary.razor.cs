@@ -12,6 +12,13 @@ public partial class GdsErrorSummary : IDisposable
     [CascadingParameter]
     EditContext CurrentEditContext { get; set; } = default!;
 
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _class;
     private readonly EventHandler<ValidationStateChangedEventArgs> _validationStateChangedHandler;
 
     public GdsErrorSummary()
@@ -45,6 +52,10 @@ public partial class GdsErrorSummary : IDisposable
         {
             throw new InvalidOperationException($"{nameof(GdsErrorSummary)} requires a cascading parameter of type {nameof(EditContext)}. For example, you can use {nameof(GdsErrorSummary)} inside an {nameof(EditForm)}.");
         }
+
+        _class = new CssClassBuilder("govuk-error-summary")
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 
     private void OnValidationStateChanged()

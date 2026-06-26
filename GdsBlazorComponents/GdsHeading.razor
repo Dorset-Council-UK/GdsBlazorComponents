@@ -56,7 +56,9 @@
             GdsSize.ExtraLarge => "govuk-heading-xl",
             _ => "govuk-heading-xl",
         };
-        _class = $"{sizeClass} {AdditionalCssClasses}".Trim();
+        _class = new CssClassBuilder(sizeClass)
+            .Add(AdditionalCssClasses)
+            .Build();
     }
 
     protected GdsSize AutomaticSize()

@@ -1,6 +1,6 @@
 ﻿@if (CurrentEditContext.GetValidationMessages().Any())
 {
-    <div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div class="@_class" data-module="govuk-error-summary" @attributes="AdditionalAttributes">
         <div role="alert">
             <GdsHeading Level="2" class="govuk-error-summary__title">There is a problem</GdsHeading>
             <div class="govuk-error-summary__body">

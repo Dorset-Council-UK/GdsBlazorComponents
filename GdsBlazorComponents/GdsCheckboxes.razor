@@ -2,7 +2,7 @@
 
 @if (Options.Count > 0)
 {
-    <div class="@_cssClass" data-module="govuk-checkboxes">
+    <div class="@_class" data-module="govuk-checkboxes" @attributes="AdditionalAttributes">
         @foreach (GdsOptionItem<T> option in Options)
         {
             <GdsCheckbox T="T" Option="option" Name="@Name" OnChanged="@_onChanged" />
@@ -11,6 +11,12 @@
 }
 
 @code {
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
     [Parameter, EditorRequired]
     public required IReadOnlyCollection<GdsOptionItem<T>> Options { get; set; }
 
@@ -23,11 +29,16 @@
     [Parameter]
     public EventCallback<GdsOptionItem<T>> OnChanged { get; set; }
 
-    private string _cssClass => Smaller ? "govuk-checkboxes govuk-checkboxes--small" : "govuk-checkboxes";
+    private string? _class;
     private EventCallback<GdsOptionItem<T>> _onChanged;
 
     protected override void OnParametersSet()
     {
+        _class = new CssClassBuilder("govuk-checkboxes")
+            .AddIf(Smaller, "govuk-checkboxes--small")
+            .Add(AdditionalCssClasses)
+            .Build();
+
         _onChanged = OnChanged.HasDelegate
             ? EventCallback.Factory.Create<GdsOptionItem<T>>(this, HandleOnChanged)
             : default;
