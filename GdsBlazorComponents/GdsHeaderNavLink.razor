@@ -4,9 +4,9 @@
 @implements IDisposable
 
 <li class="@_class" @attributes="AdditionalAttributes">
-    <a href="@Href" class="@LinkClass" aria-current="@(_isActive ? "page" : null)">
+    <GdsLink Href="@Href" class="@LinkClass" aria-current="@(_isActive ? "page" : null)">
         @ChildContent
-    </a>
+    </GdsLink>
 </li>
 
 @code {

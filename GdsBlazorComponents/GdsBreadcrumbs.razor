@@ -8,7 +8,7 @@
                 @foreach (var item in Items)
                 {
                     <li @key="item.Uri" class="govuk-breadcrumbs__list-item">
-                        <a href="@item.Uri" class="govuk-breadcrumbs__link">@item.Label</a>
+                        <GdsLink Href="@item.Uri.ToString()" class="govuk-breadcrumbs__link">@item.Label</GdsLink>
                     </li>
                 }
             </ol>

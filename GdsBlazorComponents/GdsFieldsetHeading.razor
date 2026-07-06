@@ -10,7 +10,7 @@
     public string? AdditionalCssClasses { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
-    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
     /// <summary>
     /// Heading level (1-6). This determines the HTML tag used (h1, h2, etc.) and the default size of the heading
