@@ -7,7 +7,7 @@
         @if (FeedbackLink != null)
         {
             <span class="govuk-phase-banner__text">
-                This is a new service – your <a class="govuk-link" href="@FeedbackLink">@FeedbackText</a> will help us to improve it.
+                This is a new service – your <GdsLink Href="@FeedbackLink?.ToString()">@FeedbackText</GdsLink> will help us to improve it.
             </span>
         }
         else

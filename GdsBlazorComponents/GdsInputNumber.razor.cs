@@ -25,9 +25,6 @@ public partial class GdsInputNumber<TNumberValue>
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
 
-    [Parameter(CaptureUnmatchedValues = true)]
-    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
-
     private string? _class;
     private string? _inputmode;
     private string? _describedBy;

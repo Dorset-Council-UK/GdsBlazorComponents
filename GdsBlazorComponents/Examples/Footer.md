@@ -27,9 +27,9 @@ Full examples from the GOV.UK Design System can be at [Footer with links and sec
 <GdsFooter>
     <Meta>
         <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
-            <a class="govuk-footer__link govuk-link-image" href="https://www.google.co.uk" title="Go to your site">
+            <GdsLink class="govuk-footer__link govuk-link-image" Href="https://www.google.co.uk" title="Go to your site">
                 <img src="your-image-x2.webp" alt="Your logo" width="188" height="80">
-            </a>
+            </GdsLink>
         </div>
         <div class="govuk-footer__meta-item">
             <div>Copyright &copy; @(DateTimeOffset.UtcNow.Year) Your company</div>
@@ -47,22 +47,22 @@ Full examples from the GOV.UK Design System can be at [Footer with links and sec
             <GdsHeading Level="2" Size="GdsSize.Medium" AdditionalCssClasses="govuk-footer__heading">Two column list</GdsHeading>
             <ul class="govuk-footer__list govuk-footer__list--columns-2">
                 <li class="govuk-footer__list-item">
-                    <a class="govuk-footer__link" href="#">Navigation item 1</a>
+                    <GdsLink class="govuk-footer__link" Href="#">Navigation item 1</GdsLink>
                 </li>
                 <li class="govuk-footer__list-item">
-                    <a class="govuk-footer__link" href="#">Navigation item 2</a>
+                    <GdsLink class="govuk-footer__link" Href="#">Navigation item 2</GdsLink>
                 </li>
                 <li class="govuk-footer__list-item">
-                    <a class="govuk-footer__link" href="#">Navigation item 3</a>
+                    <GdsLink class="govuk-footer__link" Href="#">Navigation item 3</GdsLink>
                 </li>
                 <li class="govuk-footer__list-item">
-                    <a class="govuk-footer__link" href="#">Navigation item 4</a>
+                    <GdsLink class="govuk-footer__link" Href="#">Navigation item 4</GdsLink>
                 </li>
                 <li class="govuk-footer__list-item">
-                    <a class="govuk-footer__link" href="#">Navigation item 5</a>
+                    <GdsLink class="govuk-footer__link" Href="#">Navigation item 5</GdsLink>
                 </li>
                 <li class="govuk-footer__list-item">
-                    <a class="govuk-footer__link" href="#">Navigation item 6</a>
+                    <GdsLink class="govuk-footer__link" Href="#">Navigation item 6</GdsLink>
                 </li>
             </ul>
         </GdsFooterSection>
@@ -70,13 +70,13 @@ Full examples from the GOV.UK Design System can be at [Footer with links and sec
             <GdsHeading Level="2" Size="GdsSize.Medium" AdditionalCssClasses="govuk-footer__heading">Single column list</GdsHeading>
             <ul class="govuk-footer__list">
                 <li class="govuk-footer__list-item">
-                    <a class="govuk-footer__link" href="#">Navigation item 1</a>
+                    <GdsLink class="govuk-footer__link" Href="#">Navigation item 1</GdsLink>
                 </li>
                 <li class="govuk-footer__list-item">
-                    <a class="govuk-footer__link" href="#">Navigation item 2</a>
+                    <GdsLink class="govuk-footer__link" Href="#">Navigation item 2</GdsLink>
                 </li>
                 <li class="govuk-footer__list-item">
-                    <a class="govuk-footer__link" href="#">Navigation item 3</a>
+                    <GdsLink class="govuk-footer__link" Href="#">Navigation item 3</GdsLink>
                 </li>
             </ul>
         </GdsFooterSection>

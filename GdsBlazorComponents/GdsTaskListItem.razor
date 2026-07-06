@@ -2,7 +2,7 @@
     <div class="govuk-task-list__name-and-hint">
         @if (Text is not null)
         {
-            <a class="govuk-link govuk-task-list__link" href="@Href" aria-describedby="@_describedBy">@Text</a>
+            <GdsLink Href="@Href" AdditionalCssClasses="govuk-task-list__link" aria-describedby="@_describedBy">@Text</GdsLink>
         }
         @if (Hint is not null)
         {
