@@ -1,9 +1,13 @@
-﻿<label for="@For" class="@_class" @attributes="AdditionalAttributes">@Text</label>
+﻿<label for="@_resolvedForId" class="@_class" @attributes="AdditionalAttributes">@Text</label>
 
 @code {
     [CascadingParameter]
-    private string? CascadedId { get; set; }
+    private GdsFormGroupContext? FormGroupContext { get; set; }
 
+    /// <summary>
+    ///     <para>Optionally override the 'for' attribute of the label.</para>
+    ///     <para>If not set, <see cref="GdsFormGroupContext" /> 'Id' will be used, if available.</para>
+    /// </summary>
     [Parameter]
     public string? For { get; set; }
 
@@ -20,19 +24,23 @@
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
     private string? _class;
-
-    protected override void OnInitialized()
-    {
-        if (For == null)
-        {
-            For = CascadedId;
-        }
-    }
+    private string? _resolvedForId;
 
     protected override void OnParametersSet()
     {
         _class = new CssClassBuilder(CssClass)
             .Add(AdditionalCssClasses)
             .Build();
+
+        // Calculate the For id
+        if (!string.IsNullOrWhiteSpace(For))
+        {
+            // if For is set, use it
+            _resolvedForId = For.Trim();
+        }
+        else
+        {
+            _resolvedForId = FormGroupContext?.Id ?? null;
+        }
     }
 }
