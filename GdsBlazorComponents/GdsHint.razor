@@ -1,23 +1,27 @@
 ﻿@if (Show)
 {
-    <div id="@Id" class="@_class" @attributes="AdditionalAttributes">
+    <div id="@_resolvedHintId" class="@_class" @attributes="AdditionalAttributes">
         @ChildContent
     </div>
 }
 
 @code {
+    [CascadingParameter]
+    private GdsFormGroupContext? FormGroupContext { get; set; }
+
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
-    [CascadingParameter]
-    private string? CascadedId { get; set; }
-
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    ///     <para>Optionally override the 'id' attribute of the hint.</para>
+    ///     <para>If not set, a default hint id will be generated and stored in <see cref="GdsFormGroupContext" /> 'HintId', if available.</para>
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
@@ -28,19 +32,34 @@
     public string CssClass { get; set; } = "govuk-hint";
 
     private string? _class;
-
-    protected override void OnInitialized()
-    {
-        if (Id == null)
-        {
-            Id = $"{CascadedId}-hint";
-        }
-    }
+    private string? _resolvedHintId;
 
     protected override void OnParametersSet()
     {
         _class = new CssClassBuilder(CssClass)
             .Add(AdditionalCssClasses)
             .Build();
+
+        // Calculate the hint id
+        if (!string.IsNullOrWhiteSpace(Id))
+        {
+            // if id is set, use it
+            _resolvedHintId = Id.Trim();
+        }
+        else if (!string.IsNullOrWhiteSpace(FormGroupContext?.Id))
+        {
+            // generate a default hint id based on the form group context id
+            _resolvedHintId = $"{FormGroupContext.Id}-hint";
+        }
+        else
+        {
+            _resolvedHintId = null;
+        }
+
+        if (FormGroupContext is not null)
+        {
+            // update the form group context
+            FormGroupContext.HintId = Show ? _resolvedHintId : null;
+        }
     }
 }
