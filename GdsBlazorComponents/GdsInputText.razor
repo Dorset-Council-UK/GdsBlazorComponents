@@ -1,8 +1,15 @@
 ﻿@inherits InputText
 
-<input id="@Id" name="@NameAttributeValue" @attributes="AdditionalAttributes" class="@CssClass" @bind-Value="CurrentValueAsString" @bind-Value:event="onchange" />
+<input id="@FormGroupContext?.Id"
+       name="@NameAttributeValue"
+       @attributes="AdditionalAttributes"
+       class="@CssClass"
+       @bind-Value="CurrentValueAsString"
+       @bind-Value:event="onchange"
+       aria-describedby="@FormGroupContext?.DescribedBy"
+       />
 
 @code {
     [CascadingParameter]
-    private string Id { get; set; } = default!;
+    private GdsFormGroupContext? FormGroupContext { get; set; }
 }
