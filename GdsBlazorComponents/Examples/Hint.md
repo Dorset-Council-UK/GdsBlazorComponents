@@ -1,22 +1,23 @@
 # Hint
 
-Render a GOV.UK Design System styled hint that associates with a form control. Works standalone (explicit `id`) or by consuming a cascaded control id provided by `GdsFormGroup`.
+Render a GOV.UK Design System styled hint that associates with a form control.
 
 You can use plain text, HTML markup, or other Blazor components as the content of the hint.
 
 ## How it works
 
 - Renders `<div class="govuk-hint">` with any child content you provide.
-- The `id` attribute is set from the `Id` component property. If omitted, it falls back to a cascaded id provided by `GdsFormGroup`.
+- The `id` attribute is optional, letting you choose your own hint id.
+- If `id` is not set, a default hint id is generated and stored in the `GdsFormGroup`.
 
 ## Simple example with explicit `id`
 
 ```csharp
-<GdsHint Id="eventName">The name you'll use on promotional material</GdsHint>
-<InputText id="eventName" class="govuk-input" @bind-Value="eventName" />
+<GdsHint Id="event-name-hint">The name you'll use on promotional material</GdsHint>
+<InputText id="event-name" class="govuk-input" @bind-Value="Model.EventName" />
 ```
 
-## Example using a cascaded id
+## Normal use example
 
 ```csharp
 <GdsFormGroup For="() => Model.EventName">
@@ -30,6 +31,7 @@ You can use plain text, HTML markup, or other Blazor components as the content o
 ## Example with any content
 
 You can include multiple elements, formatting, or even other components inside the hint:
+
 ```csharp
 <GdsHint>
     <div>The name you'll use on promotional material</div>

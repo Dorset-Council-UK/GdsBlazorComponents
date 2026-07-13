@@ -1,20 +1,21 @@
 # Label
 
-Render a GOV.UK Design System styled `<label>` that associates with a form control. Works standalone (explicit `for`) or by consuming a cascaded control id provided by `GdsFormGroup`.
+Render a GOV.UK Design System styled `<label>` that associates with a form control.
 
 ## How it works
 
 - Renders `<label class="govuk-label">` with optional extra classes.
-- The label `for` attribute is set from `For`. If omitted, it falls back to a cascaded id provided by `GdsFormGroup`.
+- The `for` attribute is optional, letting you choose the form control id the label is assosiated with.
+- If `for` is not set, the form control id stored in the `GdsFormGroup` is used.
 
 ## Simple example with explicit `for`
 
 ```csharp
-<GdsLabel For="first-name" Text="First name" />
-<InputText id="first-name" class="govuk-input" @bind-Value="firstName" />
+<GdsLabel For="event-name" Text="Event name" />
+<GdsInputText id="event-name" @bind-Value="Model.EventName" class="govuk-input govuk-input--width-50" />
 ```
 
-## Example using a cascaded id
+## Full example
 
 ```csharp
 <GdsFormGroup For="() => Model.EventName">

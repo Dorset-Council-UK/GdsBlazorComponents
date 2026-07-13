@@ -1,6 +1,6 @@
 # Error Message
 
-Render a GOV.UK Design System styled error message that associates with a form control. Works standalone (explicit `id`) or by consuming a cascaded control id provided by `GdsFormGroup`.
+Render a GOV.UK Design System styled error message that associates with a form control.
 
 ## Example image
 
@@ -9,7 +9,8 @@ Render a GOV.UK Design System styled error message that associates with a form c
 ## How it works
 
 - Renders `<p class="govuk-error-message">`.
-- The `id` attribute is set from the `Id` component property. If omitted, it falls back to a cascaded id provided by `GdsFormGroup`.
+- The `id` attribute is optional, letting you choose the error message id.
+- If `id` is not set, a default error message id is generated and stored in the `GdsFormGroup`.
 
 ## Notes
 
@@ -18,11 +19,11 @@ You never manually set the error message text. It is automatically populated fro
 ## Simple example with explicit `id`
 
 ```csharp
-<GdsErrorMessage Id="eventName" />
-<InputText id="eventName" class="govuk-input" @bind-Value="eventName" />
+<GdsErrorMessage Id="event-name-error" />
+<InputText id="event-name" class="govuk-input" @bind-Value="Model.EventName" />
 ```
 
-## Example using a cascaded id
+## Simple example
 
 ```csharp
 <GdsFormGroup For="() => Model.EventName">
