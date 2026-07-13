@@ -12,6 +12,10 @@ public partial class GdsFormGroup : IDisposable
     [Parameter, EditorRequired]
     public required Expression<Func<object>> For { get; set; }
 
+    /// <summary>
+    ///     <para>Optionally override the 'id' attribute of the form control.</para>
+    ///     <para>If not set, a default form control id will be generated and stored in <see cref="GdsFormGroupContext" /> 'Id'.</para>
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
