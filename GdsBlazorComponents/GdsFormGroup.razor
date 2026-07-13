@@ -1,63 +1,8 @@
-﻿@using System.Linq.Expressions
-
-@if (Show)
+﻿@if (Show)
 {
     <div class="@_class" data-module="@DataModule" data-maxlength="@DataMaxLength" @attributes="AdditionalAttributes">
-        <CascadingValue Value="Id" IsFixed="true">
-            <CascadingValue Value="FieldIdentifier" IsFixed="false">
-                @ChildContent
-            </CascadingValue>
+        <CascadingValue Value="@FormGroupContext">
+            @ChildContent
         </CascadingValue>
     </div>
-}
-
-@code {
-    [CascadingParameter]
-    private EditContext EditContext { get; set; } = default!;
-
-    [Parameter, EditorRequired]
-    public Expression<Func<object>> For { get; set; } = default!;
-
-    [Parameter]
-    public string? Id { get; set; }
-
-    [Parameter]
-    public bool Show { get; set; } = true;
-
-    [Parameter]
-    public string? AdditionalCssClasses { get; set; }
-
-    [Parameter(CaptureUnmatchedValues = true)]
-    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
-
-    [Parameter]
-    public string? DataModule { get; set; } = null;
-
-    [Parameter]
-    public string? DataMaxLength { get; set; } = null;
-
-    [Parameter]
-    public RenderFragment? ChildContent { get; set; }
-
-    private const string GroupCssClass = "govuk-form-group";
-    private const string GroupErrorCssClass = "govuk-form-group--error";
-
-    private FieldIdentifier FieldIdentifier => FieldIdentifier.Create(For);
-    private string? _class;
-
-    protected override void OnInitialized()
-    {
-        if (Id == null)
-        {
-            Id = FieldIdentifier.FieldName;
-        }
-    }
-
-    protected override void OnParametersSet()
-    {
-        _class = new CssClassBuilder(GroupCssClass)
-            .AddIf(!EditContext.IsValid(FieldIdentifier), GroupErrorCssClass)
-            .Add(AdditionalCssClasses)
-            .Build();
-    }
 }
