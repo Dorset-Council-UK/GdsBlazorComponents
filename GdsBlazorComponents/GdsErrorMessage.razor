@@ -1,37 +1,45 @@
-﻿@if (!EditContext.IsValid(FieldIdentifier))
+﻿@implements IDisposable
+
+@if (_showError)
 {
-    <p id="@Id" class="@_class" @attributes="AdditionalAttributes">
-        <span class="govuk-visually-hidden">Error:</span> <span>@EditContext.GetValidationMessages(FieldIdentifier).First()</span>
+    <p id="@_resolvedErrorId" class="@_class" @attributes="AdditionalAttributes">
+        <span class="govuk-visually-hidden">Error:</span> <span>@_errorMessage</span>
     </p>
 }
 
 @code {
+    [CascadingParameter]
+    public EditContext? EditContext { get; set; }
+
+    [CascadingParameter]
+    private GdsFormGroupContext? FormGroupContext { get; set; }
+
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
-    [CascadingParameter]
-    private EditContext EditContext { get; set; } = default!;
-
-    [CascadingParameter]
-    private string? CascadedId { get; set; }
-
-    [CascadingParameter]
-    private FieldIdentifier FieldIdentifier { get; set; } = default!;
-
+    /// <summary>
+    ///     <para>Optionally override the 'id' attribute of the error message.</para>
+    ///     <para>If not set, a default error message id will be generated and stored in <see cref="GdsFormGroupContext" /> 'ErrorId', if available.</para>
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
     private string? _class;
+    private string? _resolvedErrorId;
+    private bool _showError;
+    private string? _errorMessage;
 
     protected override void OnInitialized()
     {
-        if (Id == null)
+        if (EditContext is null)
         {
-            Id = $"{CascadedId}-error";
+            throw new InvalidOperationException($"{nameof(EditContext)} is required for {nameof(GdsErrorMessage)}. Use {nameof(GdsErrorMessage)} inside an {nameof(EditForm)}.");
         }
+
+        EditContext.OnValidationStateChanged += HandleValidationStateChanged;
     }
 
     protected override void OnParametersSet()
@@ -39,5 +47,57 @@
         _class = new CssClassBuilder("govuk-error-message")
             .Add(AdditionalCssClasses)
             .Build();
+
+        // Calculate the error message id
+        if (!string.IsNullOrWhiteSpace(Id))
+        {
+            // if id is set, use it
+            _resolvedErrorId = Id.Trim();
+        }
+        else if (!string.IsNullOrWhiteSpace(FormGroupContext?.Id))
+        {
+            // generate a default error message id based on the form group context id
+            _resolvedErrorId = $"{FormGroupContext.Id}-error";
+        }
+        else
+        {
+            _resolvedErrorId = null;
+        }
+
+        if (FormGroupContext is not null)
+        {
+            // update the form group context
+            FormGroupContext.ErrorId = _showError ? _resolvedErrorId : null;
+        }
+    }
+
+    private void HandleValidationStateChanged(object? sender, ValidationStateChangedEventArgs e)
+    {
+        if (EditContext is null)
+        {
+            return;
+        }
+
+        FieldIdentifier? fieldIdentifier = FormGroupContext?.FieldIdentifier;
+        if (fieldIdentifier.HasValue)
+        {
+            var messages = EditContext.GetValidationMessages(fieldIdentifier.Value);
+            _showError = messages.Any();
+            _errorMessage = messages.FirstOrDefault();
+        }
+        else
+        {
+            _showError = false;
+            _errorMessage = null;
+        }
+
+        OnParametersSet();
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        EditContext?.OnValidationStateChanged -= HandleValidationStateChanged;
+        GC.SuppressFinalize(this);
     }
 }
