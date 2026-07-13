@@ -13,36 +13,40 @@ Render GOV.UK Design System styled select lists. Option definition is controlled
 
 - Renders a ```<select class="govuk-select">```.
 - Bind this component to a property using `@bind-Value` to track and set the selected value.
+- The `id` attribute is optional, letting you choose your own form control id.
+- If `id` is not set, the form control id stored in the `GdsFormGroup` is used.
 - The default class is `govuk-select`, but you can use `CssClass` to style the select.
-- The `id` attribute is set from the `Id` component property. If omitted, it falls back to a cascaded id provided by `GdsFormGroup`.
 
 ## Simple examples
 
 ```csharp
-<p>
-    <GdsSelect @bind-Value="SelectedContactType" T="int">
+<GdsFormGroup For="() => model.SelectedContactType">
+    <GdsLabel Text="Contact type" />
+    <GdsHint>Select the contact type</GdsHint>
+    <GdsErrorMessage />
+    <GdsSelect @bind-Value="model.SelectedContactType" T="int">
         @foreach(var value in ContactTypes)
         {
             <option value="@value.Key">@value.Value</option>
         }
     </GdsSelect>
+    <p>Selected Value: @model.SelectedContactType</p>
+</GdsFormGroup>
 
-    <span>Selected Value: @SelectedContactType</span>
-</p>
-
-<p>
-    <GdsSelect @bind-Value="SelectedContactTypeEnum" T="ContactTypeEnum">
+<GdsFormGroup For="() => model.SelectedContactTypeEnum">
+    <GdsLabel Text="Contact type" />
+    <GdsHint>Select the contact type</GdsHint>
+    <GdsErrorMessage />
+    <GdsSelect @bind-Value="model.SelectedContactTypeEnum" T="ContactTypeEnum">
         @foreach (var value in Enum.GetValues(typeof(ContactTypeEnum)))
         {
             <option value="@value">@value</option>
         }
     </GdsSelect>
-
-    <span>Selected Value: @SelectedContactTypeEnum</span>
-</p>
+    <p>Selected Value: @model.SelectedContactTypeEnum</p>
+</GdsFormGroup>
 
 @code {
-    private int SelectedContactType = 1;
     private Dictionary<int, string> ContactTypes = new Dictionary<int, string>
     {
         { 0, "None" },
@@ -52,8 +56,7 @@ Render GOV.UK Design System styled select lists. Option definition is controlled
         { 4, "Post" }
     };
 
-    private ContactTypeEnum SelectedContactTypeEnum = ContactTypeEnum.Text;
-    private enum ContactTypeEnum    
+    public enum ContactTypeEnum    
     {
         None,
         Phone,
@@ -61,5 +64,14 @@ Render GOV.UK Design System styled select lists. Option definition is controlled
         Text,
         Post
     };
+
+    public class SelectModel
+    {
+        [GdsFieldErrorClass(GdsFieldTypes.Select)]
+        public int SelectedContactType { get; set; } = 1;
+        
+        [GdsFieldErrorClass(GdsFieldTypes.Select)]
+        public ContactTypeEnum SelectedContactTypeEnum { get; set; } = ContactTypeEnum.Text;
+    }
 }
 ```
