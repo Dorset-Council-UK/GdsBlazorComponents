@@ -31,6 +31,9 @@
     "webpack-cli": "7.2.1",
     "webpack-merge": "6.0.1"
   },
+  "engines": {
+    "node": ">=22.11.0"
+  },
   "-vs-binding": {
     "ProjectOpened": [
       "watch",
