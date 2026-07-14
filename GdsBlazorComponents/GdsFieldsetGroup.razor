@@ -1,4 +1,4 @@
-﻿<fieldset class="@_class" role="group" aria-describedby="@_describedBy" @attributes="AdditionalAttributes">
+﻿<fieldset class="@_class" role="group" aria-describedby="@CascadedFieldContext?.DescribedBy" @attributes="AdditionalAttributes">
     @if (Heading != null)
     {
         <GdsFieldsetLegend Size="@_legendSize">
@@ -14,10 +14,7 @@
     private EditContext? EditContext { get; set; }
 
     [CascadingParameter]
-    private string? CascadedId { get; set; }
-
-    [CascadingParameter]
-    private FieldIdentifier? FieldIdentifier { get; set; }
+    private FieldContext? CascadedFieldContext { get; set; }
 
     [Parameter]
     [Obsolete("Deprecated in v3.3.0, use LegendTextSize instead.")]
@@ -41,21 +38,7 @@
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
     private string? _class;
-    private string? _describedBy;
     private GdsSize _legendSize;
-
-    protected override void OnInitialized()
-    {
-        if (EditContext is not null)
-        {
-            // Subscribe to validation state changes
-            EditContext.OnValidationStateChanged += (sender, args) =>
-            {
-                _describedBy = CalculateDescribedBy();
-                StateHasChanged();
-            };
-        }
-    }
 
     protected override void OnParametersSet()
     {
@@ -74,25 +57,5 @@
                 _ => GdsSize.Large,
             }
             : LegendTextSize;
-
-        _describedBy = CalculateDescribedBy();
-    }
-
-    private string? CalculateDescribedBy()
-    {
-        if (string.IsNullOrWhiteSpace(CascadedId) || EditContext is null)
-        {
-            return null;
-        }
-
-        string hintId = $"{CascadedId}-hint";
-        string errorId = $"{CascadedId}-error";
-
-        if (FieldIdentifier is null)
-        {
-            return $"{hintId} {errorId}";
-        }
-
-        return EditContext.IsValid(FieldIdentifier.Value) ? hintId : $"{hintId} {errorId}";
     }
 }

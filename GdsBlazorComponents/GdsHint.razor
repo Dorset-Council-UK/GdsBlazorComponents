@@ -7,7 +7,7 @@
 
 @code {
     [CascadingParameter]
-    private GdsFormGroupContext? FormGroupContext { get; set; }
+    private FieldContext? CascadedFieldContext { get; set; }
 
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
@@ -20,7 +20,7 @@
 
     /// <summary>
     ///     <para>Optionally override the 'id' attribute of the hint.</para>
-    ///     <para>If not set, a default hint id will be generated and stored in <see cref="GdsFormGroupContext" /> 'HintId', if available.</para>
+    ///     <para>If not set, a default hint id will be generated and stored in <see cref="FieldContext" /> 'HintId', if available.</para>
     /// </summary>
     [Parameter]
     public string? Id { get; set; }
@@ -46,20 +46,22 @@
             // if id is set, use it
             _resolvedHintId = Id.Trim();
         }
-        else if (!string.IsNullOrWhiteSpace(FormGroupContext?.Id))
+        else if (!string.IsNullOrWhiteSpace(CascadedFieldContext?.InputId))
         {
-            // generate a default hint id based on the form group context id
-            _resolvedHintId = $"{FormGroupContext.Id}-hint";
+            // generate a default hint id
+            _resolvedHintId = $"{CascadedFieldContext.InputId}-hint";
         }
         else
         {
-            _resolvedHintId = null;
+            // use the existing hint id
+            _resolvedHintId = CascadedFieldContext?.HintId;
         }
 
-        if (FormGroupContext is not null)
+        // update the field context
+        if (CascadedFieldContext is not null)
         {
-            // update the form group context
-            FormGroupContext.HintId = Show ? _resolvedHintId : null;
+            CascadedFieldContext.HintId = Show ? _resolvedHintId : null;
+            CascadedFieldContext.NotifyIfChanged();
         }
     }
 }

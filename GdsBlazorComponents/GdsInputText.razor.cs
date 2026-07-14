@@ -1,44 +1,27 @@
-@typeparam T
-@inherits InputSelect<T>
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 
-<select
-    id="@_resolvedId"
-    name="@NameAttributeValue"
-    class="@_class"
-    @attributes="AdditionalAttributes"
-    @bind="CurrentValueAsString"
-    @bind:event="onchange"
-        aria-describedby="@CascadedFieldContext?.DescribedBy">
-    @ChildContent
-</select>
+namespace GdsBlazorComponents;
 
-@code {
+public partial class GdsInputText : IDisposable
+{
     [CascadingParameter]
     private FieldContext? CascadedFieldContext { get; set; }
 
     /// <summary>
-    ///     <para>Optionally override the 'id' attribute of the select control.</para>
+    ///     <para>Optionally override the 'id' attribute of the input control.</para>
     ///     <para>If not set, a default id will be generated and stored in <see cref="FieldContext" /> 'InputId', if available.</para>
     /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
-    [Parameter]
-    public string? AdditionalCssClasses { get; set; }
-
-    private string? _class;
     private string? _resolvedId;
 
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
 
-        _class = new CssClassBuilder("govuk-select")
-            .Add(CssClass)
-            .Add(AdditionalCssClasses)
-            .Build();
-
-        // Calculate the form control id
+        // Calculate the input id
         if (!string.IsNullOrWhiteSpace(Id))
         {
             // if id is set, use it

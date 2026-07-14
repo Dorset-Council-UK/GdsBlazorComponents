@@ -9,13 +9,11 @@ public partial class GdsFormGroup : IDisposable
     [CascadingParameter]
     private EditContext? EditContext { get; set; }
 
-    [Parameter, EditorRequired]
-    public required Expression<Func<object>> For { get; set; }
+    [Parameter]
+    [Obsolete("Deprecated in v3.5.0. Using a form control as a child of GdsFormGroup will be automatically detected. It will be removed in future versions.")]
+    public Expression<Func<object>>? For { get; set; }
 
-    /// <summary>
-    ///     <para>Optionally override the 'id' attribute of the form control.</para>
-    ///     <para>If not set, a default form control id will be generated and stored in <see cref="GdsFormGroupContext" /> 'Id'.</para>
-    /// </summary>
+    [Obsolete("Deprecated in v3.5.0. Using a form control as a child of GdsFormGroup will be automatically detected. It will be removed in future versions.")]
     [Parameter]
     public string? Id { get; set; }
 
@@ -37,7 +35,7 @@ public partial class GdsFormGroup : IDisposable
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
-    private GdsFormGroupContext FormGroupContext = default!;
+    private FieldContext FieldContext = default!;
     private const string GroupCssClass = "govuk-form-group";
     private const string GroupErrorCssClass = "govuk-form-group--error";
 
@@ -46,16 +44,17 @@ public partial class GdsFormGroup : IDisposable
 
     protected override void OnInitialized()
     {
-        FormGroupContext = new GdsFormGroupContext(StateHasChanged);
+        FieldContext = new FieldContext(StateHasChanged);
         EditContext?.OnValidationStateChanged += HandleValidationStateChanged;
     }
 
     protected override void OnParametersSet()
     {
-        FieldIdentifier fieldIdentifier = FieldIdentifier.Create(For);
-        FormGroupContext.FieldIdentifier = fieldIdentifier;
-        FormGroupContext.Id = string.IsNullOrWhiteSpace(Id) ? fieldIdentifier.FieldName : Id;
+        BuildCssClasses();
+    }
 
+    private void BuildCssClasses()
+    {
         _class = new CssClassBuilder(GroupCssClass)
             .AddIf(_hasError, GroupErrorCssClass)
             .Add(AdditionalCssClasses)
@@ -64,12 +63,14 @@ public partial class GdsFormGroup : IDisposable
 
     private void HandleValidationStateChanged(object? sender, ValidationStateChangedEventArgs e)
     {
-        FieldIdentifier? fieldIdentifier = FormGroupContext?.FieldIdentifier;
-        _hasError = fieldIdentifier.HasValue &&
-            EditContext is not null &&
-            EditContext.GetValidationMessages(fieldIdentifier.Value).Any();
+        if (EditContext is null)
+        {
+            return;
+        }
 
-        OnParametersSet();
+        _hasError = FieldContext.FieldIdentifiers.Any(fi => EditContext.GetValidationMessages(fi).Any());
+
+        BuildCssClasses();
         StateHasChanged();
     }
 

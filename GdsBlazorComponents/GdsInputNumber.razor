@@ -3,14 +3,13 @@
 
 @if (Show)
 {
-    <input
-        id="@Id"
+    <input id="@_resolvedId"
         name="@NameAttributeValue"
         @attributes="AdditionalAttributes"
         class="@_class"
         inputmode="@_inputmode"
         spellcheck="false"
-        aria-describedby="@_describedBy"
+        aria-describedby="@CascadedFieldContext?.DescribedBy"
         @bind-Value:get="CurrentValueAsString"
         @bind-Value:set="OnValueSet"
         @bind-Value:event="onchange"

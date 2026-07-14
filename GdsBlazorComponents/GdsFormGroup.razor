@@ -1,7 +1,7 @@
 ﻿@if (Show)
 {
     <div class="@_class" data-module="@DataModule" data-maxlength="@DataMaxLength" @attributes="AdditionalAttributes">
-        <CascadingValue Value="@FormGroupContext">
+        <CascadingValue Value="@FieldContext">
             @ChildContent
         </CascadingValue>
     </div>

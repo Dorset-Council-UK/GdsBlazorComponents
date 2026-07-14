@@ -2,11 +2,11 @@
 
 @code {
     [CascadingParameter]
-    private GdsFormGroupContext? FormGroupContext { get; set; }
+    private FieldContext? CascadedFieldContext { get; set; }
 
     /// <summary>
     ///     <para>Optionally override the 'for' attribute of the label.</para>
-    ///     <para>If not set, <see cref="GdsFormGroupContext" /> 'Id' will be used, if available.</para>
+    ///     <para>If not set, <see cref="FieldContext" /> 'InputId' will be used, if available.</para>
     /// </summary>
     [Parameter]
     public string? For { get; set; }
@@ -40,7 +40,7 @@
         }
         else
         {
-            _resolvedForId = FormGroupContext?.Id ?? null;
+            _resolvedForId = CascadedFieldContext?.InputId;
         }
     }
 }

@@ -12,7 +12,7 @@
     public EditContext? EditContext { get; set; }
 
     [CascadingParameter]
-    private GdsFormGroupContext? FormGroupContext { get; set; }
+    private FieldContext? CascadedFieldContext { get; set; }
 
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
@@ -22,7 +22,7 @@
 
     /// <summary>
     ///     <para>Optionally override the 'id' attribute of the error message.</para>
-    ///     <para>If not set, a default error message id will be generated and stored in <see cref="GdsFormGroupContext" /> 'ErrorId', if available.</para>
+    ///     <para>If not set, a default error message id will be generated and stored in <see cref="FieldContext" /> 'ErrorId', if available.</para>
     /// </summary>
     [Parameter]
     public string? Id { get; set; }
@@ -54,41 +54,44 @@
             // if id is set, use it
             _resolvedErrorId = Id.Trim();
         }
-        else if (!string.IsNullOrWhiteSpace(FormGroupContext?.Id))
+        else if (!string.IsNullOrWhiteSpace(CascadedFieldContext?.InputId))
         {
-            // generate a default error message id based on the form group context id
-            _resolvedErrorId = $"{FormGroupContext.Id}-error";
+            // generate a default error message id
+            _resolvedErrorId = $"{CascadedFieldContext.InputId}-error";
         }
         else
         {
-            _resolvedErrorId = null;
+            // use the existing error id
+            _resolvedErrorId = CascadedFieldContext?.ErrorId;
         }
 
-        if (FormGroupContext is not null)
+        // update the field context
+        if (CascadedFieldContext is not null)
         {
-            // update the form group context
-            FormGroupContext.ErrorId = _showError ? _resolvedErrorId : null;
+            CascadedFieldContext.ErrorId = _showError ? _resolvedErrorId : null;
+            CascadedFieldContext.NotifyIfChanged();
         }
     }
 
     private void HandleValidationStateChanged(object? sender, ValidationStateChangedEventArgs e)
     {
-        if (EditContext is null)
+        if (EditContext is null || CascadedFieldContext is null)
         {
             return;
         }
 
-        FieldIdentifier? fieldIdentifier = FormGroupContext?.FieldIdentifier;
-        if (fieldIdentifier.HasValue)
+        _showError = false;
+        _errorMessage = null;
+
+        foreach (var fieldIdentifier in CascadedFieldContext.FieldIdentifiers)
         {
-            var messages = EditContext.GetValidationMessages(fieldIdentifier.Value);
-            _showError = messages.Any();
-            _errorMessage = messages.FirstOrDefault();
-        }
-        else
-        {
-            _showError = false;
-            _errorMessage = null;
+            var messages = EditContext.GetValidationMessages(fieldIdentifier);
+            if (messages.Any())
+            {
+                _showError = true;
+                _errorMessage = messages.FirstOrDefault();
+                break;
+            }
         }
 
         OnParametersSet();
