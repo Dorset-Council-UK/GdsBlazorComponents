@@ -20,7 +20,7 @@ You never manually set the error message text. It is automatically populated fro
 
 ```csharp
 <GdsErrorMessage Id="event-name-error" />
-<InputText id="event-name" class="govuk-input" @bind-Value="Model.EventName" />
+<InputText id="event-name" class="govuk-input" @bind-Value="Model.EventName" aria-describedby="event-name-error" />
 ```
 
 ## Simple example
