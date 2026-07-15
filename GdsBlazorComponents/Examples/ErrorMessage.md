@@ -9,8 +9,8 @@ Render a GOV.UK Design System styled error message that associates with a form c
 ## How it works
 
 - Renders `<p class="govuk-error-message">`.
-- The `id` attribute is optional, letting you choose the error message id.
-- If `id` is not set, a default error message id is generated and stored in the `GdsFormGroup`.
+- The `Id` attribute is optional, letting you choose the error message id.
+- If `Id` is not set, and used within `GdsFormGroup`, a default error message id is generated.
 
 ## Notes
 
@@ -26,7 +26,7 @@ You never manually set the error message text. It is automatically populated fro
 ## Simple example
 
 ```csharp
-<GdsFormGroup For="() => Model.EventName">
+<GdsFormGroup>
     <GdsLabel Text="What is the name of the event?" />
     <GdsHint>The name you'll use on promotional material</GdsHint>
     <GdsErrorMessage />
