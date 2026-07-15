@@ -7,20 +7,20 @@ You can use plain text, HTML markup, or other Blazor components as the content o
 ## How it works
 
 - Renders `<div class="govuk-hint">` with any child content you provide.
-- The `id` attribute is optional, letting you choose your own hint id.
-- If `id` is not set, a default hint id is generated and stored in the `GdsFormGroup`.
+- The `Id` attribute is optional, letting you choose your own hint id.
+- If `Id` is not set, and used within `GdsFormGroup`, a default hint id is generated.
 
 ## Simple example with explicit `id`
 
 ```csharp
 <GdsHint Id="event-name-hint">The name you'll use on promotional material</GdsHint>
-<InputText id="event-name" class="govuk-input" @bind-Value="Model.EventName" />
+<InputText id="event-name" class="govuk-input" @bind-Value="Model.EventName" aria-describedby="event-name-hint" />
 ```
 
 ## Normal use example
 
 ```csharp
-<GdsFormGroup For="() => Model.EventName">
+<GdsFormGroup>
     <GdsLabel Text="What is the name of the event?" />
     <GdsHint>The name you'll use on promotional material</GdsHint>
     <GdsErrorMessage />
