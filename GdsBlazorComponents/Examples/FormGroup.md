@@ -10,26 +10,24 @@ Render a GOV.UK Design System styled form group that contains a GDS form control
 
 - Renders `<div class="govuk-form-group">` with any child content you provide.
 - Applies error styling automatically if the associated field is invalid.
-- The `id` attribute is optional, letting you choose your own form control id.
-- If `id` is not set, a default form control id is generated.
-- The `For` parameter is required and is used to associate the form group with a specific field in your model.
 - `DataModule` and `DataAttributes` parameters allow you to create `InputTextArea` to work as a GDS [Character Count](https://design-system.service.gov.uk/components/character-count/).
 - Supports additional CSS classes via the `AdditionalCssClasses` parameter.
 - It is recommended to use this component to wrap all GDS form controls, hints, error messages, and labels to ensure correct HTML structure and accessibility.
 
-### GdsFormGroupContext
+### FieldContext
 
-- The `GdsFormGroupContext` is a cascading parameter that provides the following to its children.
-- `Id` is generated and used by the GDS input form control child.
+Internally `GdsFormGroup` creates; and cascades; a `FieldContext` to it's children. This is used by any GDS child components that may need to know any of the following information:
+
+- `InputId` is generated and used by the GDS input form control as a child, for example: `GdsInputText`.
+- `FieldIdentifier` is registered and used by the GDS input form control for validation purposes.
 - `HintId` is generated if you use a `GdsHint` component as a child.
 - `ErrorId` is generated if you use a `GdsErrorMessage` component as a child and there are validation errors for the associated field.
-- `DescribedBy` is generated if you use a `GdsHint` and/or `GdsErrorMessage` child components. It is used to set the `aria-describedby` attribute on the GDS input form control.
-- `FieldIdentifier` is generated from the `For` parameter and is used to check for validation errors of the associated field.
+- `DescribedBy` is generated if you use a `GdsHint` and/or `GdsErrorMessage` child components. It is used to set the `aria-describedby` attribute on the GDS input form control or `GdsFieldsetGroup`.
 
 ## Simple example
 
 ```csharp
-<GdsFormGroup For="() => Model.PhoneNumber">
+<GdsFormGroup>
     <GdsLabel Text="What is your phone number?" />
     <GdsHint>For international numbers include the country code</GdsHint>
     <GdsErrorMessage />
@@ -40,7 +38,7 @@ Render a GOV.UK Design System styled form group that contains a GDS form control
 ## Character count example
 
 ```csharp
-<GdsFormGroup For="() => Model.OtherAction" AdditionalCssClasses="govuk-character-count govuk-!-margin-top-4" DataModule="govuk-character-count" DataMaxLength="100">
+<GdsFormGroup AdditionalCssClasses="govuk-character-count govuk-!-margin-top-4" DataModule="govuk-character-count" DataMaxLength="100">
     <GdsHeading Level="2" class="govuk-label-wrapper">
         <GdsLabel Text="Can you provide more details?" AdditionalCssClasses="govuk-label--m" />
     </GdsHeading>
