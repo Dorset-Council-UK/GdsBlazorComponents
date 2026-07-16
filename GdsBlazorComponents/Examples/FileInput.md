@@ -11,6 +11,7 @@ You can use this component to handle file uploads in your forms, with support fo
 ## How it works
 
 - Renders `<input type="file" class="govuk-file-upload">` inside a GOV.UK styled drop zone.
+- The `Id` parameter is required and should be set to the name of your model property.
 - The `IsBusy` parameter disables the input when set to `true`.
 - The `OnFilesSubmitted` event callback is triggered when files are selected.
 
@@ -23,11 +24,11 @@ You can use this component to handle file uploads in your forms, with support fo
 ## Example
 
 ```csharp
-<GdsFormGroup For="() => Model.SupportingDocuments">
+<GdsFormGroup>
     <GdsLabel Text="Upload supporting documents" />
     <GdsHint>Accepted file types: PDF, DOCX, JPG</GdsHint>
     <GdsErrorMessage />
-    <GdsFileInput OnFilesSubmitted="HandleFiles" />
+    <GdsFileInput Id="@nameof(model.SupportingDocuments)" OnFilesSubmitted="HandleFiles" />
 </GdsFormGroup>
 ```
 

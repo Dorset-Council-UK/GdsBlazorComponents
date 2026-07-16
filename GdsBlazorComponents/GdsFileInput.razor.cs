@@ -3,8 +3,14 @@ using Microsoft.AspNetCore.Components.Forms;
 
 namespace GdsBlazorComponents
 {
-    public partial class GdsFileInput
+    public partial class GdsFileInput : IDisposable
     {
+        [CascadingParameter]
+        private EditContext? CascadedEditContext { get; set; }
+
+        [CascadingParameter]
+        private FieldContext? CascadedFieldContext { get; set; }
+
         [Parameter]
         public string? AdditionalCssClasses { get; set; }
 
@@ -16,18 +22,18 @@ namespace GdsBlazorComponents
         /// </summary>
         [Parameter, EditorRequired]
         public EventCallback<IReadOnlyList<IBrowserFile>?> OnFilesSubmitted { get; set; }
-        /// <summary>
-        /// ID of the component
-        /// </summary>
-        [CascadingParameter]
-        public string? Id { get; set; }
+
+        [Parameter, EditorRequired]
+        public required string Id { get; set; }
+
         /// <summary>
         /// A boolean that can be passed to hook into the busy state of the component.
         /// </summary>
         [Parameter]
         public bool? IsBusy { get; set; } = false;
 
-        IReadOnlyList<IBrowserFile>? SelectedFiles;
+        private IReadOnlyList<IBrowserFile>? SelectedFiles;
+        private FieldIdentifier? _fieldIdentifier;
         private string? _class;
 
         private async Task OnInputFileChange(InputFileChangeEventArgs e)
@@ -36,15 +42,63 @@ namespace GdsBlazorComponents
 
             if (OnFilesSubmitted.HasDelegate)
             {
+                if (CascadedEditContext is not null && _fieldIdentifier.HasValue)
+                {
+                    CascadedEditContext.NotifyFieldChanged(_fieldIdentifier.Value);
+                }
                 await OnFilesSubmitted.InvokeAsync(SelectedFiles);
             }
         }
 
         protected override void OnParametersSet()
         {
+            base.OnParametersSet();
+
+            CreateFieldIdentifier();
+
             _class = new CssClassBuilder("govuk-drop-zone")
                 .Add(AdditionalCssClasses)
                 .Build();
+
+            // update the field context
+            if (CascadedFieldContext is not null)
+            {
+                CascadedFieldContext.InputId = Id;
+                if (_fieldIdentifier.HasValue)
+                {
+                    CascadedFieldContext.RegisterField(_fieldIdentifier.Value);
+                }
+                CascadedFieldContext.NotifyIfChanged();
+            }
+        }
+
+        /// <summary>
+        /// Create a field identifier for the component as InputFile does not have one
+        /// </summary>
+        private void CreateFieldIdentifier()
+        {
+            if (CascadedEditContext is null)
+            {
+                _fieldIdentifier = null;
+                return;
+            }
+
+            var newIdentifier = CascadedEditContext.Field(Id);
+            if (_fieldIdentifier.HasValue && _fieldIdentifier.Value.Equals(newIdentifier))
+            {
+                return;
+            }
+
+            _fieldIdentifier = newIdentifier;
+        }
+
+        public void Dispose()
+        {
+            if (CascadedFieldContext is not null && _fieldIdentifier.HasValue)
+            {
+                CascadedFieldContext.UnregisterField(_fieldIdentifier.Value);
+            }
+            GC.SuppressFinalize(this);
         }
     }
 }
