@@ -15,7 +15,14 @@ public abstract class GdsDividerBase : ComponentBase
 
     protected abstract string BaseCssClass { get; }
 
-    protected string? CssClass => new CssClassBuilder(BaseCssClass)
-        .Add(AdditionalCssClasses)
-        .Build();
+    protected string? ResolvedCssClass;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        ResolvedCssClass = new CssClassBuilder(BaseCssClass)
+            .Add(AdditionalCssClasses)
+            .Build();
+    }
 }
