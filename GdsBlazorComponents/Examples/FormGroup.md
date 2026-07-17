@@ -40,7 +40,7 @@ Internally `GdsFormGroup` creates; and cascades; a `FieldContext` to it's childr
 ```csharp
 <GdsFormGroup AdditionalCssClasses="govuk-character-count govuk-!-margin-top-4" DataModule="govuk-character-count" DataMaxLength="100">
     <GdsHeading Level="2" class="govuk-label-wrapper">
-        <GdsLabel Text="Can you provide more details?" AdditionalCssClasses="govuk-label--m" />
+        <GdsLabel Text="Can you provide more details?" Size="GdsSize.Medium" />
     </GdsHeading>
     <GdsHint>Do not include personal or financial information</GdsHint>
     <GdsErrorMessage />

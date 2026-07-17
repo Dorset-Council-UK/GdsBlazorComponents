@@ -5,10 +5,20 @@ Render a GOV.UK Design System styled `<label>` that associates with a form contr
 ## How it works
 
 - Renders `<label class="govuk-label">` with optional extra classes.
-- The `For` attribute is optional, letting you choose the form control id the label is assosiated with.
-- If `for` is not set, the form control id stored in the `GdsFormGroup` is used.
-- If `For` is not set, and used within `GdsFormGroup`, it will detect the associated GDS form control id.
-- 
+- The `For` paramater is optional, letting you choose the form control id the label is assosiated with.
+- If `For` is not set, and used within `GdsFormGroup` or `GdsRadioItem`, a default for is generated.
+- `Text` parameter allows you to set the label text.
+- `Size` parameter allows you to set the label size.
+- `CssClass` parameter allows you override the default CSS class.
+- `AdditionalCssClasses` parameter allows you to add additional CSS classes.
+
+Variants of the label component include:
+- GdsLabel
+- GdsCheckboxLabel
+- GdsRadioLabel
+
+See [Checkboxes](Checkboxes.md) and [Radios](Radios.md) for more information.
+
 ## Simple example with explicit `for`
 
 ```csharp
@@ -27,9 +37,9 @@ Render a GOV.UK Design System styled `<label>` that associates with a form contr
 </GdsFormGroup>
 ```
 
-## Example with additional classes
+## Example with Size
 
 ```csharp
-<GdsLabel For="more-detail" Text="Can you provide more detail?" AdditionalCssClasses="govuk-label--l" />
+<GdsLabel For="more-detail" Text="Can you provide more detail?" Size="GdsSize.Large" />
 <textarea class="govuk-textarea" id="more-detail" name="moreDetail" rows="5"></textarea>
 ```

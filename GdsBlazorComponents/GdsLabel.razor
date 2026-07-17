@@ -1,46 +1,7 @@
-﻿<label for="@_resolvedForId" class="@_class" @attributes="AdditionalAttributes">@Text</label>
+﻿@inherits GdsLabelBase
+
+<label for="@ResolvedFor" class="@ResolvedCssClass" @attributes="AdditionalAttributes">@Text</label>
 
 @code {
-    [CascadingParameter]
-    private FieldContext? CascadedFieldContext { get; set; }
-
-    /// <summary>
-    ///     <para>Optionally override the 'for' attribute of the label.</para>
-    ///     <para>If not set, <see cref="FieldContext" /> 'InputId' will be used, if available.</para>
-    /// </summary>
-    [Parameter]
-    public string? For { get; set; }
-
-    [Parameter]
-    public string Text { get; set; } = "";
-
-    [Parameter]
-    public string CssClass { get; set; } = "govuk-label";
-
-    [Parameter]
-    public string? AdditionalCssClasses { get; set; }
-
-    [Parameter(CaptureUnmatchedValues = true)]
-    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
-
-    private string? _class;
-    private string? _resolvedForId;
-
-    protected override void OnParametersSet()
-    {
-        _class = new CssClassBuilder(CssClass)
-            .Add(AdditionalCssClasses)
-            .Build();
-
-        // Calculate the For id
-        if (!string.IsNullOrWhiteSpace(For))
-        {
-            // if For is set, use it
-            _resolvedForId = For.Trim();
-        }
-        else
-        {
-            _resolvedForId = CascadedFieldContext?.InputId;
-        }
-    }
+    protected override string BaseCssClass => "govuk-label";
 }
