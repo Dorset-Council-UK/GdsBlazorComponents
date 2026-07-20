@@ -1,39 +1,10 @@
-﻿@typeparam T
+﻿@inherits InputRadioGroup<TValue>
+@typeparam TValue
 
-@if (Options.Count > 0)
-{
+<InputRadioGroup TValue="TValue" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression" Name="@Name" DisplayName="@DisplayName" @attributes="@AdditionalAttributes">
     <div class="@_class" data-module="govuk-radios" @attributes="AdditionalAttributes">
-        @foreach (var option in Options)
-        {
-            <GdsRadio Option="option" />
-        }
+        <CascadingValue Name="DefaultName" Value="@_defaultName">
+            @ChildContent
+        </CascadingValue>
     </div>
-}
-
-@code {
-    [Parameter, EditorRequired]
-    public required IReadOnlyCollection<GdsOptionItem<T>> Options { get; set; }
-
-    [Parameter]
-    public bool Smaller { get; set; }
-
-    [Parameter]
-    public bool Inline { get; set; }
-
-    [Parameter]
-    public string? AdditionalCssClasses { get; set; }
-
-    [Parameter(CaptureUnmatchedValues = true)]
-    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
-
-    private string? _class;
-
-    protected override void OnParametersSet()
-    {
-        _class = new CssClassBuilder("govuk-radios")
-            .AddIf(Inline, "govuk-radios--inline")
-            .AddIf(Smaller, "govuk-radios--small")
-            .Add(AdditionalCssClasses)
-            .Build();
-    }
-}
+</InputRadioGroup>
