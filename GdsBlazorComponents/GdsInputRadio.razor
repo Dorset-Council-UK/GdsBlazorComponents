@@ -1,0 +1,11 @@
+@inherits InputRadio<TValue>
+@typeparam TValue
+
+<InputRadio id="@_resolvedId"
+            Name="@Name"
+            TValue="TValue"
+            Value="@Value"
+            class="@_class"
+            data-aria-controls="@ConditionalId"
+            aria-describedby="@CascadedFieldContext?.DescribedBy"
+            @attributes="@AdditionalAttributes" />
