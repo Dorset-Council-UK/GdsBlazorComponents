@@ -1,67 +1,12 @@
-﻿@if (Show)
+﻿@inherits GdsHintBase
+
+@if (Show)
 {
-    <div id="@_resolvedHintId" class="@_class" @attributes="AdditionalAttributes">
+    <div id="@ResolvedHintId" class="@ResolvedCssClass" @attributes="AdditionalAttributes">
         @ChildContent
     </div>
 }
 
 @code {
-    [CascadingParameter]
-    private FieldContext? CascadedFieldContext { get; set; }
-
-    [Parameter]
-    public string? AdditionalCssClasses { get; set; }
-
-    [Parameter(CaptureUnmatchedValues = true)]
-    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
-
-    [Parameter]
-    public RenderFragment? ChildContent { get; set; }
-
-    /// <summary>
-    ///     <para>Optionally override the 'id' attribute of the hint.</para>
-    ///     <para>If not set, a default hint id will be generated and stored in <see cref="FieldContext" /> 'HintId', if available.</para>
-    /// </summary>
-    [Parameter]
-    public string? Id { get; set; }
-
-    [Parameter]
-    public bool Show { get; set; } = true;
-
-    [Parameter]
-    public string CssClass { get; set; } = "govuk-hint";
-
-    private string? _class;
-    private string? _resolvedHintId;
-
-    protected override void OnParametersSet()
-    {
-        _class = new CssClassBuilder(CssClass)
-            .Add(AdditionalCssClasses)
-            .Build();
-
-        // Calculate the hint id
-        if (!string.IsNullOrWhiteSpace(Id))
-        {
-            // if id is set, use it
-            _resolvedHintId = Id.Trim();
-        }
-        else if (!string.IsNullOrWhiteSpace(CascadedFieldContext?.InputId))
-        {
-            // generate a default hint id
-            _resolvedHintId = $"{CascadedFieldContext.InputId}-hint";
-        }
-        else
-        {
-            // use the existing hint id
-            _resolvedHintId = CascadedFieldContext?.HintId;
-        }
-
-        // update the field context
-        if (CascadedFieldContext is not null)
-        {
-            CascadedFieldContext.HintId = Show ? _resolvedHintId : null;
-            CascadedFieldContext.NotifyIfChanged();
-        }
-    }
+    protected override string BaseCssClass => "govuk-hint";
 }
