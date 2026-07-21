@@ -52,16 +52,49 @@ public partial class GdsInputRadio<TValue>
         if (!string.IsNullOrWhiteSpace(Name))
         {
             // generate a default id using name and value
-            return $"{Name.ToLowerInvariant()}-{Value?.ToString()?.ToLowerInvariant()}";
+            return IdFrom(Name, Value);
         }
 
         if (!string.IsNullOrWhiteSpace(DefaultName))
         {
             // generate a default id using default name and value
-            return $"{DefaultName.ToLowerInvariant()}-{Value?.ToString()?.ToLowerInvariant()}";
+            return IdFrom(DefaultName, Value);
         }
 
         // use the existing id
         return CascadedFieldContext?.InputId;
+    }
+
+    private string? IdFrom(string name, TValue? value)
+    {
+        if (value is null)
+        {
+            return null;
+        }
+
+        ReadOnlySpan<char> nameSpan = name.AsSpan().Trim();
+        ReadOnlySpan<char> valueSpan = value.ToString().AsSpan().Trim();
+
+        int size = nameSpan.IsEmpty ? valueSpan.Length : nameSpan.Length + 1 + valueSpan.Length;
+        Span<char> combined = stackalloc char[size];
+        
+        if (nameSpan.IsEmpty)
+        {
+            valueSpan.CopyTo(combined);
+        }
+        else
+        {
+            nameSpan.CopyTo(combined);
+            combined[nameSpan.Length] = '-';
+            valueSpan.CopyTo(combined[(nameSpan.Length + 1)..]);
+        }
+
+        for (int i = 0; i < size; i++)
+        {
+            char c = combined[i];
+            combined[i] = char.IsWhiteSpace(c) ? '-' : char.ToLowerInvariant(c);
+        }
+
+        return new string(combined);
     }
 }
