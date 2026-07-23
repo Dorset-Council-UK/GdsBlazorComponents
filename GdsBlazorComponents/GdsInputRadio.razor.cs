@@ -65,6 +65,11 @@ public partial class GdsInputRadio<TValue>
         return CascadedFieldContext?.InputId;
     }
 
+    /// <summary>
+    /// Generates an id from the given name and value.
+    /// Checks name and value for null or whitespace, lowercases them, and replaces whitespace with hyphens.
+    /// Example "{name}-{value}"
+    /// </summary>
     private string? IdFrom(string name, TValue? value)
     {
         if (value is null)
