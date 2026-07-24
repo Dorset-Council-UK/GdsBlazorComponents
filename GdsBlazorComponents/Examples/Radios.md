@@ -65,54 +65,6 @@ public class RadiosModel
 }
 ```
 
-## Smaller and Inline radio button example
-
-```csharp
-<GdsFormGroup>
-    <GdsFieldsetGroup>
-        <GdsFieldsetLegend Size="GdsSize.Medium">
-            <GdsFieldsetHeading Level="3">How would you prefer to be contacted?</GdsFieldsetHeading>
-        </GdsFieldsetLegend>
-
-        <GdsHint>Select one option</GdsHint>
-        <GdsErrorMessage />
-
-        <GdsRadios @bind-Value="model.ContactPreference" Smaller Inline>
-            <GdsRadioItem>
-                <GdsInputRadio Value="@ContactPreferences.Email" />
-                <GdsRadioLabel Text="Email" />
-            </GdsRadioItem>
-
-            <GdsRadioItem>
-                <GdsInputRadio Value="@ContactPreferences.Phone" />
-                <GdsRadioLabel Text="Phone" />
-            </GdsRadioItem>
-
-            <GdsRadioItem>
-                <GdsInputRadio Value="@ContactPreferences.Text" />
-                <GdsRadioLabel Text="Text" />
-            </GdsRadioItem>
-        </GdsRadios>
-    </GdsFieldsetGroup>
-</GdsFormGroup>
-
-public enum ContactPreferences
-{
-    Unknown,
-    Email,
-    Phone,
-    Text,
-}
-
-public class RadiosModel
-{
-    [Required]
-    [Range(typeof(ContactPreferences), nameof(ContactPreferences.Email), nameof(ContactPreferences.Text), ErrorMessage = "Select how you prefer to be contacted")]
-    [GdsFieldErrorClass(GdsFieldTypes.Radio)]
-    public ContactPreferences? ContactPreference { get; set; } = ContactPreferences.Unknown;
-}
-```
-
 # Using GDS conditional controls
 
 ```csharp
