@@ -1,6 +1,6 @@
-<div class="@_class" role="@_role" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner" @attributes="AdditionalAttributes">
+<div id="@_resolvedId" class="@_class" role="@_role" aria-labelledby="@_resolvedTitleId" data-module="govuk-notification-banner" @attributes="AdditionalAttributes">
     <div class="govuk-notification-banner__header">
-        <GdsHeading Level="@(BannerTitleSize == BannerSizeOption.small ? 3 : 2)" class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+        <GdsHeading BaseCssClass="govuk-notification-banner__title" Level="@_headingLevel" id="@_resolvedTitleId">
             @BannerTitle
         </GdsHeading>
     </div>
@@ -19,17 +19,24 @@
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
     [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
     public NotificationTypeOption NotificationType { get; set; } = NotificationTypeOption.info;
 
     [Parameter, EditorRequired]
     public required string BannerTitle { get; set; }
 
     [Parameter]
-    public BannerSizeOption BannerTitleSize { get; set; } = BannerSizeOption.small;
+    [Obsolete("Deprecated, use BannerHeadingSize instead.")]
+    public BannerSizeOption? BannerTitleSize { get; set; }
+    [Parameter]
+    public int BannerHeadingLevel { get; set; } = 2;
 
     [Parameter, EditorRequired]
     public required RenderFragment? ChildContent { get; set; }
 
+    [Obsolete("This enum is deprecated. Use GdsSize instead.")]
     public enum BannerSizeOption
     {
         small,
@@ -42,11 +49,24 @@
         success
     }
 
-    private string _role = "";
     private string? _class;
+    private string _role = "";
+    private int _headingLevel;
+    private string? _resolvedId;
+    private string _defaultId = Guid.NewGuid().ToString("N");
+    private string? _resolvedTitleId;
 
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
+        base.OnParametersSet();
+
+        _resolvedId = string.IsNullOrWhiteSpace(Id) ? _defaultId : Id.Trim();
+        _resolvedTitleId = $"{_resolvedId}-title";
+
+        _class = new CssClassBuilder("govuk-notification-banner")
+            .Add($"govuk-notification-banner--{NotificationType.ToString()}")
+            .Add(AdditionalCssClasses)
+            .Build();
 
         _role = NotificationType switch
         {
@@ -54,10 +74,15 @@
             NotificationTypeOption.success => "alert",
             _ => "region"
         };
-        _class = new CssClassBuilder("govuk-notification-banner")
-            .Add($"govuk-notification-banner--{NotificationType.ToString()}")
-            .Add(AdditionalCssClasses)
-            .Build();
-    }
 
+        // support the BannerTitleSize parameter for backward compatibility
+        if (BannerTitleSize is not null)
+        {
+            _headingLevel = BannerTitleSize == BannerSizeOption.small ? 3 : 2;
+        }
+        else
+        {
+            _headingLevel = BannerHeadingLevel;
+        }
+    }
 }
