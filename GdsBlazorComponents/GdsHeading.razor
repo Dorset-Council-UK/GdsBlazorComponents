@@ -31,6 +31,12 @@
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
     /// <summary>
+    /// Overrides the base GDS CSS class for this control
+    /// </summary>
+    [Parameter]
+    public string? BaseCssClass { get; set; }
+
+    /// <summary>
     /// Heading level (1-6). This determines the HTML tag used (h1, h2, etc.) and the default size of the heading
     /// </summary>
     /// <remarks>Levels outside of 1-6 will default to h1 and the largest size</remarks>
@@ -56,7 +62,8 @@
             GdsSize.ExtraLarge => "govuk-heading-xl",
             _ => "govuk-heading-xl",
         };
-        _class = new CssClassBuilder(sizeClass)
+        _class = new CssClassBuilder(BaseCssClass)
+            .Add(sizeClass)
             .Add(AdditionalCssClasses)
             .Build();
     }

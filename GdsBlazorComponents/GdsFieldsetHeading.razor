@@ -1,4 +1,4 @@
-<GdsHeading Level="@Level" class="@_class" @attributes="AdditionalAttributes">
+<GdsHeading Level="@Level" BaseCssClass="govuk-fieldset__heading" AdditionalCssClasses="@AdditionalCssClasses" @attributes="AdditionalAttributes">
     @ChildContent
 </GdsHeading>
 
@@ -24,11 +24,4 @@
     /// </summary>
     [Parameter]
     public GdsSize? Size { get; set; }
-
-    private string? _class;
-
-    protected override void OnParametersSet()
-    {
-        _class = $"govuk-fieldset__heading {AdditionalCssClasses}".TrimEnd();
-    }
 }
