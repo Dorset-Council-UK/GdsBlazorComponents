@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
+using System.Text;
 
 namespace GdsBlazorComponents;
 
@@ -87,5 +88,18 @@ public record FieldContext(Action OnChange)
             _isNotifying = false;
             IsDirty = false;
         }
+    }
+
+    protected virtual bool PrintMembers(StringBuilder builder)
+    {
+        builder.Append($"{nameof(IsDirty)} = {IsDirty}");
+        builder.Append($", {nameof(InputId)} = {InputId}");
+        builder.Append($", {nameof(HintId)} = {HintId}");
+        builder.Append($", {nameof(ErrorId)} = {ErrorId}");
+        builder.Append($", {nameof(DescribedBy)} = {DescribedBy}");
+        builder.Append($", {nameof(FieldIdentifiers)} = [ ");
+        builder.AppendJoin(", ", FieldIdentifiers.Select(f => f.FieldName));
+        builder.Append(" ]");
+        return true;
     }
 }
