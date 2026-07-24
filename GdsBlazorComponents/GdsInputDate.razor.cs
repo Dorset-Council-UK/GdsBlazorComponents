@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
 namespace GdsBlazorComponents;
@@ -15,16 +14,23 @@ public partial class GdsInputDate : IDisposable
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
-    
+
     [CascadingParameter]
-    private EditContext EditContext { get; set; } = default!;
+    private EditContext? CascadedEditContext { get; set; }
+
+    [CascadingParameter]
+    private FieldContext? CascadedFieldContext { get; set; }
 
     [Parameter, EditorRequired]
-    public Expression<Func<GdsDate>> For { get; set; } = default!;
+    public Expression<Func<GdsDate>>? For { get; set; }
 
     [Parameter]
     public bool IsDateOfBirth { get; set; } = false;
 
+    /// <summary>
+    ///     <para>Optionally override the 'id' attribute of the date input.</para>
+    ///     <para>If not set, a default id will be generated and stored in <see cref="FieldContext" /> 'InputId', if available.</para>
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
@@ -35,27 +41,25 @@ public partial class GdsInputDate : IDisposable
     public RenderFragment? Heading { get; set; }
 
     [Parameter]
+    public GdsSize LegendSize { get; set; } = GdsSize.Large;
+
+    [Parameter]
     public RenderFragment? Hint { get; set; }
 
-    private readonly ILogger<GdsInputDate> _logger;
-
-    private string? _errorMessage;
-    private readonly EventHandler<ValidationStateChangedEventArgs>? _validationStateChangedHandler;
-
-    private string? _formGroupCssClass;
-    private string? _describedBy;
-    private string? _hintId;
-    private string? _errorId;
+    private string? _resolvedId;
 
     private string _dayId = "";
+    private string? _dayName;
     private string _dayCssClass = InputDateCssClasses.Day;
     private string? _dayAutocomplete;
 
     private string _monthId = "";
+    private string? _monthName;
     private string _monthCssClass = InputDateCssClasses.Month;
     private string? _monthAutocomplete;
 
     private string _yearId = "";
+    private string? _yearName;
     private string _yearCssClass = InputDateCssClasses.Year;
     private string? _yearAutocomplete;
 
@@ -65,16 +69,24 @@ public partial class GdsInputDate : IDisposable
     private FieldIdentifier _monthFieldIdentifier;
     private FieldIdentifier _yearFieldIdentifier;
 
-    public GdsInputDate(ILogger<GdsInputDate> logger)
-    {
-        _logger = logger;
-        _validationStateChangedHandler = (sender, args) => OnValidationStateChanged();
-    }
-
     protected override void OnInitialized()
     {
+        if (CascadedFieldContext is null)
+        {
+            throw new InvalidOperationException($"{nameof(GdsInputDate)} must be used inside a {nameof(GdsFormGroup)}.");
+        }
+
+        if (For is null)
+        {
+            throw new InvalidOperationException($"{GetType()} requires a value for the {nameof(For)} parameter.");
+        }
+
+        // resolve the field for the input date
         _fieldIdentifier = FieldIdentifier.Create(For);
-        _gdsDate = For.Compile().Invoke();
+        _gdsDate = For.Compile().Invoke() ?? new();
+
+        // register the field for the parent GDS form group
+        CascadedFieldContext?.RegisterField(_fieldIdentifier);
 
         if (_gdsDate != null)
         {
@@ -83,78 +95,74 @@ public partial class GdsInputDate : IDisposable
             _yearFieldIdentifier = new FieldIdentifier(_gdsDate, nameof(_gdsDate.YearText));
         }
 
-        Id ??= _fieldIdentifier.FieldName;
-
-        _hintId = $"{Id}-hint";
-        _errorId = $"{Id}-error";
-        _dayId = $"{Id}-day";
-        _monthId = $"{Id}-month";
-        _yearId = $"{Id}-year";
-
         // Subscribe to validation state changes
-        EditContext.OnValidationStateChanged += _validationStateChangedHandler;
+        CascadedEditContext?.OnValidationStateChanged += HandleValidationStateChanged;
     }
 
     protected override void OnParametersSet()
     {
-        _formGroupCssClass = new CssClassBuilder(InputDateCssClasses.Group)
-            .Add(AdditionalCssClasses)
-            .Build();
         _dayAutocomplete = IsDateOfBirth ? "bday-day" : null;
         _monthAutocomplete = IsDateOfBirth ? "bday-month" : null;
         _yearAutocomplete = IsDateOfBirth ? "bday-year" : null;
+
+        // Calculate the input id
+        if (!string.IsNullOrWhiteSpace(Id))
+        {
+            // if id is set, use it
+            _resolvedId = Id.Trim();
+        }
+        else if (string.IsNullOrWhiteSpace(CascadedFieldContext?.InputId))
+        {
+            // generate a default input id
+            _resolvedId = _fieldIdentifier.FieldName;
+        }
+        else
+        {
+            _resolvedId = CascadedFieldContext?.InputId;
+        }
+
+        _dayId = $"{_resolvedId}-day";
+        _dayName = $"{_resolvedId}-{_dayFieldIdentifier.FieldName}";
+        _monthId = $"{_resolvedId}-month";
+        _monthName = $"{_resolvedId}-{_monthFieldIdentifier.FieldName}";
+        _yearId = $"{_resolvedId}-year";
+        _yearName = $"{_resolvedId}-{_yearFieldIdentifier.FieldName}";
+
+        if (CascadedFieldContext is not null)
+        {
+            CascadedFieldContext.InputId = Show ? _resolvedId : null;
+            CascadedFieldContext.NotifyIfChanged();
+        }
     }
 
     public void Dispose()
     {
-        try
-        {
-            // Unsubscribe from validation state changes
-            EditContext.OnValidationStateChanged -= _validationStateChangedHandler;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Failed to unsubscribe from validation state changes in GdsInputDate component.");
-        }
-
+        CascadedEditContext?.OnValidationStateChanged -= HandleValidationStateChanged;
         GC.SuppressFinalize(this);
     }
 
-    private void OnValidationStateChanged()
+    private void HandleValidationStateChanged(object? sender, ValidationStateChangedEventArgs e)
     {
-        var isFieldValid = EditContext.IsValid(_fieldIdentifier);
-        var isDayValid = EditContext.IsValid(_dayFieldIdentifier);
-        var isMonthValid = EditContext.IsValid(_monthFieldIdentifier);
-        var isYearValid = EditContext.IsValid(_yearFieldIdentifier);
+        if (CascadedEditContext is null)
+        {
+            return;
+        }
 
-        _errorMessage = PriorityErrorMessage(isFieldValid, isDayValid, isMonthValid, isYearValid);
-        var hasError = _errorMessage != null;
+        bool isFieldValid = CascadedEditContext.IsValid(_fieldIdentifier);
+        bool isDayValid = CascadedEditContext.IsValid(_dayFieldIdentifier);
+        var isMonthValid = CascadedEditContext.IsValid(_monthFieldIdentifier);
+        var isYearValid = CascadedEditContext.IsValid(_yearFieldIdentifier);
 
-        _formGroupCssClass = new CssClassBuilder(InputDateCssClasses.Group)
-            .AddIf(hasError, InputDateCssClasses.GroupError)
-            .Add(AdditionalCssClasses)
-            .Build();
-        _describedBy = DescribedBy(hasError);
+        //_errorMessage = PriorityErrorMessage(isFieldValid, isDayValid, isMonthValid, isYearValid);
+        //var hasError = _errorMessage != null;
+
         _dayCssClass = CssClass(isDayValid, isFieldValid, InputDateCssClasses.Day);
         _monthCssClass = CssClass(isMonthValid, isFieldValid, InputDateCssClasses.Month);
         _yearCssClass = CssClass(isYearValid, isFieldValid, InputDateCssClasses.Year);
-    }
 
-    private string? DescribedBy(bool hasError)
-    {
-        var hasHint = Hint != null;
-
-        if (hasHint && hasError)
-        {
-            return $"{_hintId} {_errorId}";
-        }
-
-        if (hasError)
-        {
-            return _errorId;
-        }
-
-        return hasHint ? _hintId : null;
+        string test = new CssClassBuilder(InputDateCssClasses.Day)
+            .AddIf(!isFieldValid, InputDateCssClasses.DateError)
+            .Build();
     }
 
     private static string CssClass(bool isPropertyValid, bool isFieldValid, string fieldCssClass)
@@ -179,22 +187,22 @@ public partial class GdsInputDate : IDisposable
     {
         if (!isFieldValid)
         {
-            return EditContext.GetValidationMessages(_fieldIdentifier).FirstOrDefault();
+            return CascadedEditContext?.GetValidationMessages(_fieldIdentifier).FirstOrDefault();
         }
 
         if (!isDayValid)
         {
-            return EditContext.GetValidationMessages(_dayFieldIdentifier).FirstOrDefault();
+            return CascadedEditContext?.GetValidationMessages(_dayFieldIdentifier).FirstOrDefault();
         }
 
         if (!isMonthValid)
         {
-            return EditContext.GetValidationMessages(_monthFieldIdentifier).FirstOrDefault();
+            return CascadedEditContext?.GetValidationMessages(_monthFieldIdentifier).FirstOrDefault();
         }
 
         if (!isYearValid)
         {
-            return EditContext.GetValidationMessages(_yearFieldIdentifier).FirstOrDefault();
+            return CascadedEditContext?.GetValidationMessages(_yearFieldIdentifier).FirstOrDefault();
         }
 
         // All components are valid
