@@ -13,11 +13,42 @@ Users can enter any values for the day, month, and year fields, conversion to th
 - Renders three `<input type="text">` fields for day, month, and year, styled according to GOV.UK Design System.
 - Requires binding to a property of type [GdsDate](GdsDate.md) via the `For` parameter.
 - Integrates with Blazor's validation system, allowing it to show errors for invalid or incomplete dates.
-- Shows the highest priority error message if multiple validation errors exist. 
-- The components `Id` is either calculated for the field or manually set via the `Id` parameter.
-- Supports additional parameters such as `IsDateOfBirth`, `Heading`, and `Hint` for customization and accessibility.
+- `Id` optional parameter to set the `id` attribute of the component. If no `Id` is provided, a unique `id` will be generated.
+- `IsDateOfBirth` optional parameter which will correctly set the autocomplete attribute.
+- `Heading` optional parameter to set the content used with the fieldset heading. Recommended to use `GdsFieldsetHeading`.
+- `Hint` optional parameter to set the content used for the dates hint.
+- Must be placed within `GdsFormGroup` to fully support error handling and accessibility.
 
-## Validating the date
+## Simple example
+
+```razor
+<GdsFormGroup>
+    <GdsInputDate For="() => model.StartDate" />
+</GdsFormGroup>
+```
+
+## Example with explicit Id
+
+```razor
+<GdsFormGroup>
+    <GdsInputDate For="() => Model.StartDate" Id="flood-start" />
+</GdsFormGroup>
+```
+
+## Example with optional Heading, Hint, and IsDateOfBirth
+
+```razor
+<GdsFormGroup>
+    <GdsInputDate For="() => Model.DateOfBirth" IsDateOfBirth>
+        <Heading>
+            <GdsFieldsetHeading Level="2">What is your date of birth?</GdsFieldsetHeading>
+        </Heading>
+        <Hint>For example, 27 3 1980</Hint>
+    </GdsInputDate>
+</GdsFormGroup>
+```
+
+# Validation
 
 You can validate the date any way you choose. We have built a series of FluentValidation validators to make validating the `GdsDate` model easier.
 
@@ -46,7 +77,46 @@ These are all the validators we provide:
   - YearInclusiveBetween
 - IsRealDateValidator
 
-## Example validation
+## Example manual validation
+
+```csharp
+private void OnSubmit()
+{
+    messageStore.Clear();
+
+    if (editContext.Validate())
+    {
+        // basic date of birth, day validation
+        FieldIdentifier dobDay = FieldIdentifier.Create(() => model.DateOfBirth.DayText);
+        if (model.DateOfBirth.DayText is null)
+        {
+            messageStore.Add(dobDay, "Enter the day");
+            editContext.NotifyValidationStateChanged();
+            return;
+        }
+        if (model.DateOfBirth.Day is null)
+        {
+            messageStore.Add(dobDay, "Day must be number");
+            editContext.NotifyValidationStateChanged();
+            return;
+        }
+        if (model.DateOfBirth.Day < 1 || model.DateOfBirth.Day > 31)
+        {
+            messageStore.Add(dobDay, "Day must be between 1 and 31");
+            editContext.NotifyValidationStateChanged();
+            return;
+        }
+
+        ... 
+
+        // month validation
+        // year validation
+        // full date validation
+    }
+}
+```
+
+## Example Fluent validation
 
 ```csharp
 RuleFor(o => o.StartDate)
@@ -61,38 +131,4 @@ RuleFor(o => o.StartDate)
     .CorrectDaysInMonth()
     .IsRealDate()
     .WithName("Flooding start date");
-```
-
-## Simple example
-
-```csharp
-<GdsInputDate For="() => Model.StartDate" />
-```
-
-## Example with explicit Id
-
-```csharp
-<GdsInputDate For="() => Model.StartDate" Id="flood-start" />
-```
-
-## Example using optional Heading and hint
-
-```csharp
-<GdsInputDate For="() => Model.StartDate" Id="flood-start">
-    <Heading>
-        <GdsHeading Level="1" class="govuk-fieldset__heading">When did the flooding start?</GdsHeading>
-    </Heading>
-    <Hint>For example, 27 3 2025</Hint>
-</GdsInputDate>
-```
-
-# Example using date of birth
-
-```csharp
-<GdsInputDate For="() => Model.DateOfBirth" Id="dob" IsDateOfBirth="true">
-    <Heading>
-        <GdsHeading Level="1" class="govuk-fieldset__heading">What is your date of birth?</GdsHeading>
-    </Heading>
-    <Hint>For example, 27 3 1980</Hint>
-</GdsInputDate>
 ```
