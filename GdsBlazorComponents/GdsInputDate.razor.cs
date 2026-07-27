@@ -16,9 +16,6 @@ public partial class GdsInputDate : IDisposable
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
     [CascadingParameter]
-    private EditContext? CascadedEditContext { get; set; }
-
-    [CascadingParameter]
     private FieldContext? CascadedFieldContext { get; set; }
 
     [Parameter, EditorRequired]
