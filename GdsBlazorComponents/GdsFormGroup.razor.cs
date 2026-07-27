@@ -9,6 +9,9 @@ public partial class GdsFormGroup : IDisposable
     [CascadingParameter]
     private EditContext? EditContext { get; set; }
 
+    [CascadingParameter]
+    private FieldContext? CascadedParentFieldContext { get; set; }
+
     [Parameter]
     [Obsolete("Deprecated in v3.5.0. Using a form control as a child of GdsFormGroup will be automatically detected. It will be removed in future versions.")]
     public Expression<Func<object>>? For { get; set; }
@@ -35,6 +38,12 @@ public partial class GdsFormGroup : IDisposable
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
+    /// <summary>
+    /// Register this form group with the parent field context, if available. This allows for nested form groups to be aware of validation state changes in their parent form group.
+    /// </summary>
+    [Parameter]
+    public bool RegisterWithParent { get; set; }
+
     private FieldContext FieldContext = default!;
     private const string GroupCssClass = "govuk-form-group";
     private const string GroupErrorCssClass = "govuk-form-group--error";
@@ -44,7 +53,10 @@ public partial class GdsFormGroup : IDisposable
 
     protected override void OnInitialized()
     {
-        FieldContext = new FieldContext(StateHasChanged);
+        FieldContext = new FieldContext(StateHasChanged)
+        {
+            Parent = RegisterWithParent ? CascadedParentFieldContext : null
+        };
         EditContext?.OnValidationStateChanged += HandleValidationStateChanged;
     }
 
