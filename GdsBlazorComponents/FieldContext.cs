@@ -56,18 +56,33 @@ public record FieldContext(Action OnChange)
         }
     }
 
+    /// <summary>
+    ///     <para>Optional parent field context.</para>
+    ///     <para>If set, the parent will be notified when fields are registered or unregistered, allowing child components to notify the parent of changes in the field context.</para>
+    ///     <para>This is useful for propagating changes in nested components.</para>
+    /// </summary>
+    public FieldContext? Parent { get; init; }
+
     public HashSet<FieldIdentifier> FieldIdentifiers { get; } = [];
 
     public void RegisterField(FieldIdentifier fieldIdentifier)
     {
-        var added = FieldIdentifiers.Add(fieldIdentifier);
-        if (added) IsDirty = true;
+        if (FieldIdentifiers.Add(fieldIdentifier))
+        {
+            IsDirty = true;
+        }
+
+        Parent?.RegisterField(fieldIdentifier);
     }
 
     public void UnregisterField(FieldIdentifier fieldIdentifier)
     {
-        var removed = FieldIdentifiers.Remove(fieldIdentifier);
-        if (removed) IsDirty = true;
+        if (FieldIdentifiers.Remove(fieldIdentifier))
+        {
+            IsDirty = true;
+        }
+
+        Parent?.UnregisterField(fieldIdentifier);
     }
 
     /// <summary>
@@ -100,6 +115,7 @@ public record FieldContext(Action OnChange)
         builder.Append($", {nameof(FieldIdentifiers)} = [ ");
         builder.AppendJoin(", ", FieldIdentifiers.Select(f => f.FieldName));
         builder.Append(" ]");
+        builder.Append($", Parent = {Parent is not null}");
         return true;
     }
 }
