@@ -19,21 +19,21 @@
         {
             <div class="govuk-date-input" id="@_resolvedId">
                 <div class="govuk-date-input__item">
-                    <GdsFormGroup>
+                    <GdsFormGroup RegisterWithParent>
                         <GdsDateLabel Text="Day" />
-                        <GdsInputText Id="@_dayId" name="@_dayName" @bind-Value="_gdsDate.DayText" autocomplete="@_dayAutocomplete" inputmode="numeric" class="@_dayCssClass" />
+                        <GdsInputText Id="@_dayId" name="@_dayName" @bind-Value="_gdsDate.DayText" autocomplete="@_dayAutocomplete" inputmode="numeric" class="@InputDateCssClasses.Day" />
                     </GdsFormGroup>
                 </div>
                 <div class="govuk-date-input__item">
-                    <GdsFormGroup>
+                    <GdsFormGroup RegisterWithParent>
                         <GdsDateLabel Text="Month" />
-                        <GdsInputText Id="@_monthId" name="@_monthName" @bind-Value="_gdsDate.MonthText" autocomplete="@_monthAutocomplete" inputmode="numeric" class="@_monthCssClass" />
+                        <GdsInputText Id="@_monthId" name="@_monthName" @bind-Value="_gdsDate.MonthText" autocomplete="@_monthAutocomplete" inputmode="numeric" class="@InputDateCssClasses.Month" />
                     </GdsFormGroup>
                 </div>
                 <div class="govuk-date-input__item">
-                    <GdsFormGroup>
+                    <GdsFormGroup RegisterWithParent>
                         <GdsDateLabel Text="Year" />
-                        <GdsInputText id="@_yearId" name="@_yearName" @bind-Value="_gdsDate.YearText" autocomplete="@_yearAutocomplete" inputmode="numeric" class="@_yearCssClass" />
+                        <GdsInputText Id="@_yearId" name="@_yearName" @bind-Value="_gdsDate.YearText" autocomplete="@_yearAutocomplete" inputmode="numeric" class="@InputDateCssClasses.Year" />
                     </GdsFormGroup>
                 </div>
             </div>
