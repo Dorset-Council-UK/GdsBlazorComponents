@@ -1,6 +1,8 @@
-# Checkbox
+# Checkbox with option
 
 Render a single GOV.UK Design System styled checkbox using the option from [GdsOptionItem<T>](GdsOptionItem.md).
+
+`GdsCheckbox` is deprecated in v3.5.0! It will be removed in future versions. Use [GdsInputCheckbox](InputCheckbox.md) instead.
 
 ## Example image
 
@@ -8,7 +10,7 @@ Render a single GOV.UK Design System styled checkbox using the option from [GdsO
 
 ## How it works
 
-- Renders a ```<div class="govuk-checkboxes__item">``` with associated label, check box and optional hint.
+- Renders a `<div class="govuk-checkboxes__item">` with associated label, check box and optional hint.
 - Supports binding to any value type (e.g., string, int, enum, bool, custom types).
 - Can be used standalone or as part of a group for multiple selections.
 - If the [GdsOptionItem](GdsOptionItem.md) includes a hint, it is displayed below the label as defined by the GOV.UK Design System style.
@@ -26,6 +28,6 @@ var option = new GdsOptionItem<bool>("subscribe", "Subscribe to newsletter", hin
 
 ## Recommended use example
 
-In most cases you will want something more than a single check box, so we recomend you using [GdsCheckboxes component](Checkboxes.md). Doing this also guarantees good HTML and accessibility.
+In most cases you will want something more than a single check box, so we recomend you using the [GdsCheckboxes](Checkboxes.md) component. Doing this also guarantees good HTML and accessibility.
 
 Please refer to that component for full examples.
