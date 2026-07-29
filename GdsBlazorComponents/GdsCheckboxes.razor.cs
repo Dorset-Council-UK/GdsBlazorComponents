@@ -1,13 +1,19 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 
 namespace GdsBlazorComponents;
 
-public partial class GdsCheckboxes<TValue>
+public partial class GdsCheckboxes : IDisposable
 {
     [CascadingParameter]
     private FieldContext? CascadedFieldContext { get; set; }
+
+    /// <summary>
+    /// Optional model field for group-level validation mapping (example: () => model.Waste).
+    /// </summary>
+    [Parameter]
+    public Expression<Func<object>>? For { get; set; }
 
     [Parameter]
     public string? Name { get; set; }
@@ -26,6 +32,7 @@ public partial class GdsCheckboxes<TValue>
 
     private string? _class;
     private string? _defaultName;
+    private FieldIdentifier? _fieldIdentifier;
 
     protected override void OnParametersSet()
     {
@@ -36,26 +43,29 @@ public partial class GdsCheckboxes<TValue>
             .Add(AdditionalCssClasses)
             .Build();
 
-        //_defaultName = Name
-        //    ?? NameAttributeValue
-        //    ?? FieldIdentifier.FieldName
-        //    ?? Guid.NewGuid().ToString("N");
+        if (For is not null)
+        {
+            _fieldIdentifier = FieldIdentifier.Create(For);
+        }
+
+        // if there is no Name parameter, or For expression provided, then the child InputCheckbox will auto handle the name attribute
+        _defaultName = Name?.Trim() ?? _fieldIdentifier?.FieldName;
 
         // update the field context
-        if (CascadedFieldContext is not null)
+        if (CascadedFieldContext is not null && _fieldIdentifier.HasValue)
         {
-            //CascadedFieldContext.InputId = FieldIdentifier.FieldName;
-            //CascadedFieldContext.RegisterField(FieldIdentifier);
-            //CascadedFieldContext.NotifyIfChanged();
+            CascadedFieldContext.InputId = _fieldIdentifier.Value.FieldName;
+            CascadedFieldContext.RegisterField(_fieldIdentifier.Value);
+            CascadedFieldContext.NotifyIfChanged();
         }
     }
 
-    protected override bool TryParseValueFromString(string? value, [MaybeNullWhen(false)] out TValue result, [NotNullWhen(false)] out string? validationErrorMessage)
-        => throw new NotSupportedException($"This component does not parse string inputs. Bind to the '{nameof(CurrentValue)}' property, not '{nameof(CurrentValueAsString)}'.");
-
-    //public void Dispose()
-    //{
-    //    CascadedFieldContext?.UnregisterField(FieldIdentifier);
-    //    GC.SuppressFinalize(this);
-    //}
+    public void Dispose()
+    {
+        if (CascadedFieldContext is not null && _fieldIdentifier.HasValue)
+        {
+            CascadedFieldContext.UnregisterField(_fieldIdentifier.Value);
+        }
+        GC.SuppressFinalize(this);
+    }
 }
