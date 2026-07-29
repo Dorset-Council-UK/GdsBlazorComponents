@@ -1,5 +1,6 @@
 ﻿namespace GdsBlazorComponents;
 
+[Obsolete("Deprecated in v3.5.0. No longer required for checkboxes and radio buttons. It will be removed in future versions.")]
 public class GdsOptionItem<T>
 {
     public string Id { get; init; }
