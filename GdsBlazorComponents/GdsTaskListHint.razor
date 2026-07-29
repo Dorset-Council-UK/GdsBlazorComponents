@@ -1,0 +1,12 @@
+﻿@inherits GdsHintBase
+
+@if (Show)
+{
+    <div id="@ResolvedHintId" class="@ResolvedCssClass" @attributes="AdditionalAttributes">
+        @ChildContent
+    </div>
+}
+
+@code {
+    protected override string BaseCssClass => "govuk-task-list__hint";
+}
