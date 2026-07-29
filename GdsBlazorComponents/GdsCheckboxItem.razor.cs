@@ -4,6 +4,9 @@ namespace GdsBlazorComponents;
 
 public partial class GdsCheckboxItem
 {
+    [CascadingParameter]
+    private FieldContext? CascadedParentFieldContext { get; set; }
+    
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
@@ -18,7 +21,10 @@ public partial class GdsCheckboxItem
 
     protected override void OnInitialized()
     {
-        FieldContext = new FieldContext(StateHasChanged);
+        FieldContext = new FieldContext(StateHasChanged)
+        {
+            Parent = CascadedParentFieldContext ?? null,
+        };
     }
 
     protected override void OnParametersSet()
