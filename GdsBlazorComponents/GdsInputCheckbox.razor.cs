@@ -29,14 +29,21 @@ public partial class GdsInputCheckbox : IDisposable
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
 
+    /// <summary>
+    /// Optional event when the checkbox value changes. The new value is passed as a parameter to the callback.
+    /// </summary>
+    [Parameter]
+    public EventCallback<bool> OnChanged { get; set; }
+    private bool _previousValue;
+
     private string? _class;
     private string? _resolvedId;
     private string? _resolvedName;
     private string? _behaviour;
 
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
-        base.OnParametersSet();
+        await base.OnParametersSetAsync();
 
         _class = new CssClassBuilder("govuk-checkboxes__input")
             .Add(AdditionalCssClasses)
@@ -53,6 +60,13 @@ public partial class GdsInputCheckbox : IDisposable
             CascadedFieldContext.RegisterField(FieldIdentifier);
             CascadedFieldContext.NotifyIfChanged();
         }
+
+        if (Value != _previousValue && OnChanged.HasDelegate)
+        {
+            await OnChanged.InvokeAsync(Value);
+        }
+
+        _previousValue = Value;
     }
 
     private string? CalculateId()
@@ -72,5 +86,11 @@ public partial class GdsInputCheckbox : IDisposable
 
         // use the existing id
         return CascadedFieldContext?.InputId;
+    }
+
+    public void Dispose()
+    {
+        CascadedFieldContext?.UnregisterField(FieldIdentifier);
+        GC.SuppressFinalize(this);
     }
 }
