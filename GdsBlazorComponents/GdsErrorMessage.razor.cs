@@ -45,6 +45,11 @@ public partial class GdsErrorMessage : IDisposable
             .Add(AdditionalCssClasses)
             .Build();
 
+        CalculateErrorId();
+    }
+
+    private void CalculateErrorId()
+    {
         // Calculate the error message id
         if (!string.IsNullOrWhiteSpace(Id))
         {
@@ -91,7 +96,7 @@ public partial class GdsErrorMessage : IDisposable
             }
         }
 
-        OnParametersSet();
+        CalculateErrorId();
         StateHasChanged();
     }
 
