@@ -6,7 +6,7 @@
 }
 
 <GdsRadioItem>
-    <GdsInputRadio Id="@Option.Id" Value="@Option.Value" TValue="T" ConditionalId="@ConditionalId" AdditionalCssClasses="@AdditionalCssClasses" @attributes="AdditionalAttributes" />
+    <GdsInputRadio Id="@Option.Id" @bind-Value="@Option.Value" TValue="T" ConditionalId="@ConditionalId" AdditionalCssClasses="@AdditionalCssClasses" @attributes="AdditionalAttributes" />
     <GdsRadioLabel Text="@Option.Label" />
     @if (Option.Hint is not null)
     {
