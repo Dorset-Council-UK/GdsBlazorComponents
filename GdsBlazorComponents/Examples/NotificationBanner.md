@@ -16,7 +16,7 @@ Render a single GOV.UK Design System styled notification banner component.
 
 ## Example
 
-```html
+```razor
 <GdsNotificationBanner NotificationType="GdsNotificationBanner.NotificationTypeOption.info"
                        BannerHeadingLevel="2"
                        BannerTitle="Title goes here">

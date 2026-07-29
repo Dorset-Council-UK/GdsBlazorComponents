@@ -20,21 +20,27 @@ The spinner is useful during the Blazor component lifecycle, especially while lo
 
 ## Simple example
 
-```csharp
-var isLoading = true;
+```razor
 <GdsSpinner Show="@isLoading" />
+
+@code {
+    var isLoading = true;
+}
 ```
 
 ## Example with a custom message
 
-```csharp
-var isSearching = true;
+```razor
 <GdsSpinner Show="@isSearching" ShowMessage="true" Message="Searching, lets see what I can find..." />
+
+@code {
+    var isSearching = true;
+}
 ```
 
 ## Comprehensive example
 
-```csharp
+```razor
 <GdsSpinner Show="_isLoading" ShowMessage="true" />
 
 @code {

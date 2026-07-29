@@ -13,7 +13,7 @@ Render GOV.UK Design System styled task list component
 
 ## Example
 
-```csharp
+```razor
 <GdsTaskList>
     <GdsTaskListItem Text="Company Directors" Href="task/directors">
         <Status>Completed</Status>

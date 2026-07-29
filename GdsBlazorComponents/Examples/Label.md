@@ -21,14 +21,14 @@ See [Checkboxes](Checkboxes.md) and [Radios](Radios.md) for more information.
 
 ## Simple example with explicit `for`
 
-```csharp
+```razor
 <GdsLabel For="event-name" Text="Event name" />
 <GdsInputText id="event-name" @bind-Value="Model.EventName" class="govuk-input govuk-input--width-50" />
 ```
 
 ## Full example
 
-```csharp
+```razor
 <GdsFormGroup>
     <GdsLabel Text="What is the name of the event?" />
     <GdsHint>The name you'll use on promotional material</GdsHint>
@@ -39,7 +39,7 @@ See [Checkboxes](Checkboxes.md) and [Radios](Radios.md) for more information.
 
 ## Example with Size
 
-```csharp
+```razor
 <GdsLabel For="more-detail" Text="Can you provide more detail?" Size="GdsSize.Large" />
 <textarea class="govuk-textarea" id="more-detail" name="moreDetail" rows="5"></textarea>
 ```

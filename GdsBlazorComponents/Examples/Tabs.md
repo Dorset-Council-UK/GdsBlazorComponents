@@ -17,7 +17,7 @@ Render a GOV.UK Design System styled tabs component.
 
 ## Simple example
 
-```csharp
+```razor
 <GdsTabs Title="Contents">
     <GdsTabPanel Id="past-day" Heading="Past day">
         <GdsTable Items="PastDay">
@@ -88,11 +88,11 @@ Render a GOV.UK Design System styled tabs component.
     private sealed record CaseManagerStats(string CaseManager, int CasesOpened, int CasesClosed);
 
     private static readonly IReadOnlyList<CaseManagerStats> PastDay =
-   [
-       new("David Francis", 3, 0),
+    [
+        new("David Francis", 3, 0),
         new("Paul Farmer", 1, 0),
         new("Rita Patel", 2, 0)
-   ];
+    ];
 
     private static readonly IReadOnlyList<CaseManagerStats> PastWeek =
     [

@@ -33,7 +33,7 @@ public class ExampleModel
 
 ## Whole number example
 
-```csharp
+```razor
 <GdsFormGroup For="() => Model.AccountNumberText" Id="account-number">
     <GdsLabel Text="What is your account number?" />
     <GdsHint>Must be between 6 and 8 digits long</GdsHint>
@@ -44,7 +44,7 @@ public class ExampleModel
 
 ## Decimal number example
 
-```csharp
+```razor
 <GdsFormGroup For="() => Model.WeightText" Id="weight">
     <GdsLabel Text="How much does it weigh?" />
     <GdsHint>Weight, in kilograms</GdsHint>

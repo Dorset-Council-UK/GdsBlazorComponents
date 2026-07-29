@@ -15,7 +15,7 @@ Render GOV.UK Design System styled breadcrumbs that are defined per page and ren
 
 ## Example for your layout file (e.g., `MainLayout.razor`)
 
-```csharp
+```razor
 @using Microsoft.AspNetCore.Components.Sections
 
 <GdsContainer>
@@ -31,7 +31,7 @@ Render GOV.UK Design System styled breadcrumbs that are defined per page and ren
 ## Example for your page
 
 On any page that needs breadcrumbs, render the component and provide your breacrumbs collection:
-```csharp
+```razor
 <GdsBreadcrumbs Items="@Breadcrumbs" />
 ```
 This example shows how to define the `Breadcrumbs` collection in your page's code:

@@ -18,14 +18,14 @@ You never manually set the error message text. It is automatically populated fro
 
 ## Simple example with explicit `id`
 
-```csharp
+```razor
 <GdsErrorMessage Id="event-name-error" />
 <InputText id="event-name" class="govuk-input" @bind-Value="Model.EventName" aria-describedby="event-name-error" />
 ```
 
 ## Simple example
 
-```csharp
+```razor
 <GdsFormGroup>
     <GdsLabel Text="What is the name of the event?" />
     <GdsHint>The name you'll use on promotional material</GdsHint>

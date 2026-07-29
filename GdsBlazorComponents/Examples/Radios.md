@@ -16,7 +16,7 @@ Render GOV.UK Design System styled radio buttons using the options from a list o
 
 ## Example
 
-```csharp
+```razor
 <GdsFormGroup>
     <GdsFieldsetGroup>
         <GdsFieldsetLegend Size="GdsSize.Medium">
@@ -46,28 +46,30 @@ Render GOV.UK Design System styled radio buttons using the options from a list o
     </GdsFieldsetGroup>
 </GdsFormGroup>
 
-private KeyValuePair<string, string>[] countries = [
-    new("GB-ENG", "England"),
-    new("GB-SCT", "Scotland"),
-    new("GB-WLS", "Wales"),
-    new("GB-NIR", "Northern Ireland"),
-];
+@code {
+    private KeyValuePair<string, string>[] countries = [
+        new("GB-ENG", "England"),
+        new("GB-SCT", "Scotland"),
+        new("GB-WLS", "Wales"),
+        new("GB-NIR", "Northern Ireland"),
+    ];
 
-public class RadiosModel
-{
-    [Required(ErrorMessage = "Select where you live")]
-    [GdsFieldErrorClass(GdsFieldTypes.Radio)]
-    public string? Country { get; set; }
+    public class RadiosModel
+    {
+        [Required(ErrorMessage = "Select where you live")]
+        [GdsFieldErrorClass(GdsFieldTypes.Radio)]
+        public string? Country { get; set; }
 
-    [Required(ErrorMessage = "Select where you live")]
-    [GdsFieldErrorClass(GdsFieldTypes.Radio)]
-    public string? Country { get; set; }
+        [Required(ErrorMessage = "Select where you live")]
+        [GdsFieldErrorClass(GdsFieldTypes.Radio)]
+        public string? Country { get; set; }
+    }
 }
 ```
 
 # Using GDS conditional controls
 
-```csharp
+```razor
 <GdsFormGroup>
     <GdsFieldsetGroup>
         <GdsFieldsetLegend Size="GdsSize.Medium">
@@ -117,34 +119,36 @@ public class RadiosModel
     </GdsFieldsetGroup>
 </GdsFormGroup>
 
-public enum ContactPreferences
-{
-    Unknown,
-    Email,
-    Phone,
-    Text,
-}
+@code {
+    public enum ContactPreferences
+    {
+        Unknown,
+        Email,
+        Phone,
+        Text,
+    }
 
-public class RadiosModel
-{
-    [Required]
-    [Range(typeof(ContactPreferences), nameof(ContactPreferences.Email), nameof(ContactPreferences.Text), ErrorMessage = "Select how you prefer to be contacted")]
-    [GdsFieldErrorClass(GdsFieldTypes.Radio)]
-    public ContactPreferences? ContactPreference { get; set; } = ContactPreferences.Unknown;
+    public class RadiosModel
+    {
+        [Required]
+        [Range(typeof(ContactPreferences), nameof(ContactPreferences.Email), nameof(ContactPreferences.Text), ErrorMessage = "Select how you prefer to be contacted")]
+        [GdsFieldErrorClass(GdsFieldTypes.Radio)]
+        public ContactPreferences? ContactPreference { get; set; } = ContactPreferences.Unknown;
 
-    [Required(ErrorMessage = "Enter your email address")]
-    [EmailAddress(ErrorMessage = "Enter a valid email address")]
-    [GdsFieldErrorClass(GdsFieldTypes.Input)]
-    public string? EmailAddress { get; set; }
+        [Required(ErrorMessage = "Enter your email address")]
+        [EmailAddress(ErrorMessage = "Enter a valid email address")]
+        [GdsFieldErrorClass(GdsFieldTypes.Input)]
+        public string? EmailAddress { get; set; }
 
-    [Required(ErrorMessage = "Enter your email address")]
-    [EmailAddress(ErrorMessage = "Enter a valid email address")]
-    [GdsFieldErrorClass(GdsFieldTypes.Input)]
-    public string? PhoneNumber { get; set; }
+        [Required(ErrorMessage = "Enter your email address")]
+        [EmailAddress(ErrorMessage = "Enter a valid email address")]
+        [GdsFieldErrorClass(GdsFieldTypes.Input)]
+        public string? PhoneNumber { get; set; }
 
-    [Required(ErrorMessage = "Enter your email address")]
-    [EmailAddress(ErrorMessage = "Enter a valid email address")]
-    [GdsFieldErrorClass(GdsFieldTypes.Input)]
-    public string? MobileNumber { get; set; }
+        [Required(ErrorMessage = "Enter your email address")]
+        [EmailAddress(ErrorMessage = "Enter a valid email address")]
+        [GdsFieldErrorClass(GdsFieldTypes.Input)]
+        public string? MobileNumber { get; set; }
+    }
 }
 ```

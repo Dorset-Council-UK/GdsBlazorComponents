@@ -26,7 +26,7 @@ Internally `GdsFormGroup` creates; and cascades; a `FieldContext` to it's childr
 
 ## Simple example
 
-```csharp
+```razor
 <GdsFormGroup>
     <GdsLabel Text="What is your phone number?" />
     <GdsHint>For international numbers include the country code</GdsHint>
@@ -37,7 +37,7 @@ Internally `GdsFormGroup` creates; and cascades; a `FieldContext` to it's childr
 
 ## Character count example
 
-```csharp
+```razor
 <GdsFormGroup AdditionalCssClasses="govuk-character-count govuk-!-margin-top-4" DataModule="govuk-character-count" DataMaxLength="100">
     <GdsHeading Level="2" BaseCssClass="govuk-label-wrapper">
         <GdsLabel Text="Can you provide more details?" Size="GdsSize.Medium" />

@@ -14,13 +14,12 @@ Render a GOV.UK Design System styled tag component.
 
 ## Simple example
 
-```csharp
+```razor
 <GdsTag Text="Completed" />
 ```
 
 ## Example using Colour
 
-```csharp
+```razor
 <GdsTag Colour="GdsTagColour.Turquoise" Text="Active" />
-
 ```

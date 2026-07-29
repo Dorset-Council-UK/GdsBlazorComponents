@@ -16,7 +16,7 @@ Render a GOV.UK Design System styled text form control.
 
 ## Example
 
-```csharp
+```razor
 <GdsFormGroup>
     <GdsLabel Text="What is the name of the event?" />
     <GdsHint>Do not include personal or financial information</GdsHint>
@@ -27,7 +27,7 @@ Render a GOV.UK Design System styled text form control.
 
 ## Example without hint or error message
 
-```csharp
+```razor
 <GdsFormGroup>
     <GdsLabel Text="What is the name of the event?" />
     <GdsInputText @bind-Value=Model.EventName class="govuk-input govuk-input--width-50" />

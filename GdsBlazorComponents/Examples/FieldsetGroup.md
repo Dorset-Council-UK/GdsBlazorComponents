@@ -18,7 +18,7 @@ Use `GdsFieldsetLegend` with the `Size` parameter instead.
 
 ## Simple example
 
-```csharp
+```razor
 <GdsFieldsetGroup>
     <GdsFieldsetLegend>
         How can we contact you?
@@ -29,7 +29,7 @@ Use `GdsFieldsetLegend` with the `Size` parameter instead.
 
 ## Example with heading
 
-```csharp
+```razor
 <GdsFieldsetGroup>
     <GdsFieldsetLegend Size="@GdsSize.Medium">
         <GdsFieldsetHeading Level="2">How can we contact you?</GdsFieldsetHeading>

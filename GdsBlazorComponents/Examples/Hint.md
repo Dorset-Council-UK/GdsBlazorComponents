@@ -12,14 +12,14 @@ You can use plain text, HTML markup, or other Blazor components as the content o
 
 ## Simple example with explicit `id`
 
-```csharp
+```razor
 <GdsHint Id="event-name-hint">The name you'll use on promotional material</GdsHint>
 <InputText id="event-name" class="govuk-input" @bind-Value="Model.EventName" aria-describedby="event-name-hint" />
 ```
 
 ## Normal use example
 
-```csharp
+```razor
 <GdsFormGroup>
     <GdsLabel Text="What is the name of the event?" />
     <GdsHint>The name you'll use on promotional material</GdsHint>
@@ -32,7 +32,7 @@ You can use plain text, HTML markup, or other Blazor components as the content o
 
 You can include multiple elements, formatting, or even other components inside the hint:
 
-```csharp
+```razor
 <GdsHint>
     <div>The name you'll use on promotional material</div>
     <div>It can be up to 50 characters long</div>

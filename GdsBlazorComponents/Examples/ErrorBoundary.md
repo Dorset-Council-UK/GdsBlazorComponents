@@ -17,7 +17,7 @@ Render a GOV.UK Design System styled Blazor error boundary.
 
 # Example
 
-```csharp
+```razor
 <GdsContainer>
     <GdsMainWrapper id="main-content" AdditionalCssClasses="govuk-body">
         @if (Env.IsProduction())

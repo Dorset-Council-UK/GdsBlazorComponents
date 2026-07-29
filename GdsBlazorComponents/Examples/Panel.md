@@ -14,7 +14,7 @@ Render a single GOV.UK Design System styled panel component.
 
 ## Example
 
-```html
+```razor
 <GdsPanel Title="Application complete">
 	Your reference number<br><strong>HDJ2123F</strong>
 </GdsPanel>

@@ -20,7 +20,7 @@ Render GOV.UK Design System styled accordion.
 
 ## Example
 
-```csharp
+```razor
 <GdsAccordion Id="accordion-test">
     <GdsAccordionSection>
         <Header>Writing well for the web</Header>
@@ -35,5 +35,4 @@ Render GOV.UK Design System styled accordion.
         </Content>
     </GdsAccordionSection>
 </GdsAccordion>
-
 ```

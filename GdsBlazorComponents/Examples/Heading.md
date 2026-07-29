@@ -23,14 +23,14 @@ Render GOV.UK Design System styled heading.
 
 ## Examples
 
-```csharp
+```razor
 <GdsHeading Level="1">Heading 1</GdsHeading>
 ```
 
-```csharp
+```razor
 <GdsHeading Level="2">Heading 2</GdsHeading>
 ```
 
-```csharp
+```razor
 <GdsHeading Level="3" Size="GdsSize.Small">Heading 3 - Overridden size</GdsHeading>
 ```

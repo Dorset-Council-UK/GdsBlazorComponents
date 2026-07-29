@@ -19,7 +19,7 @@ Render GOV.UK Design System styled select lists. Option definition is controlled
 
 ## Simple examples
 
-```csharp
+```razor
 <GdsFormGroup>
     <GdsLabel Text="Contact type" />
     <GdsHint>The primary way to contact you</GdsHint>

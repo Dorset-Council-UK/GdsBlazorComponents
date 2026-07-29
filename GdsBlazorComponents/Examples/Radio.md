@@ -17,10 +17,13 @@ Render a single GOV.UK Design System styled radio button using the option from [
 
 ## Simple example
 
-```csharp
-// id, label, T value, selected = false, isExclusive = false, hint = default
-var option = new GdsOptionItem<bool>("subscribe", "Subscribe to newsletter", hint: "Receive updates and offers via email");
+```razor
 <GdsRadio Option="@option" />
+
+@code {
+	// id, label, T value, selected = false, isExclusive = false, hint = default
+	var option = new GdsOptionItem<bool>("subscribe", "Subscribe to newsletter", hint: "Receive updates and offers via email");
+}
 ```
 
 ## Recommended use example

@@ -16,28 +16,28 @@ Render GOV.UK Design System styled link component
 ## Examples
 
 ### Basic
-```csharp
+```razor
 <GdsLink Href="user/something">Something</GdsLink>
 ```
 
 ### No visited state
-```csharp
+```razor
 <GdsLink Href="user/something" NoVisitedState>Something</GdsLink>
 ```
 
 ### Additional CSS classes
-```csharp
+```razor
 <GdsLink Href="user/something" AdditionalCssClasses="govuk-!-font-size-27">Something</GdsLink>
 ```
 
 ### Attributes
-```csharp
+```razor
 <GdsLink Href="user/something" rel="noreferrer noopener" target="_blank">
 	Something (opens in new tab)
 </GdsLink>
 ```
 
 ### Using Blazor features
-```csharp
+```razor
 <GdsLink Href="user/something" OnClick="DoSomething" PreventDefault>Something</GdsLink>
 ```
