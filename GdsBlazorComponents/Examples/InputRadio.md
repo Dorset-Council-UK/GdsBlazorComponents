@@ -21,7 +21,7 @@ Other radio components:
 - GdsRadios
 - GdsRadioConditional
 - GdsRadioDivider
-- GdsRadioHint
+- [GdsRadioHint](Hint.md)
 - GdsRadioItem
 - GdsRadioLabel
 
