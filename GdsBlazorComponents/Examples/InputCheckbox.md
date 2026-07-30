@@ -32,7 +32,7 @@ If you still use the `GdsCheckbox` component see [GdsCheckbox](Checkbox.md).
 
 For more examples of how to use the `GdsInputCheckbox` component, see the [GdsCheckboxes](Checkboxes.md).
 
-## Checkboxes from Enum, and conditional email
+## Simple checkboxes
 
 ```razor
 <GdsFormGroup>
