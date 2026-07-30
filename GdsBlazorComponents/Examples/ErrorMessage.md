@@ -9,8 +9,10 @@ Render a GOV.UK Design System styled error message that associates with a form c
 ## How it works
 
 - Renders `<p class="govuk-error-message">`.
-- The `Id` attribute is optional, letting you choose the error message id.
-- If `Id` is not set, and used within `GdsFormGroup`, a default error message id is generated.
+- `Id` optional parameter to set the `id` attribute of the component. If no `Id` is provided and used within `GdsFormGroup`, a default error id is generated.
+
+The error id is important for accessiblity and the `aria-describedby` attributes on input controls and fieldsets.
+Just by using the error message component it will automatically apply the error id to any GDS form controls which need it.
 
 ## Notes
 
