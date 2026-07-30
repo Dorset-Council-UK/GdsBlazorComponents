@@ -6,16 +6,22 @@ You can use plain text, HTML markup, or other Blazor components as the content o
 
 ## How it works
 
-- Renders `<div class="govuk-hint">` with any child content you provide.
-- The `Id` attribute is optional, letting you choose your own hint id.
-- If `Id` is not set, and used within `GdsFormGroup`, a default hint id is generated.
+- Renders a `<div class="govuk-hint">` element with any child content you provide.
+- `Id` optional parameter to set the `id` attribute of the component. If no `Id` is provided and used within `GdsFormGroup`, a default hint id is generated.
+- `Show` optional parameter to control whether the hint is rendered. If `Show` is false, the hint is not rendered.
 
-## Simple example with explicit `id`
+The hint id is important for accessiblity and the `aria-describedby` attributes on input controls and fieldsets.
+Just by using a hint component it will automatically apply the hint id to any GDS form controls which need it.
 
-```razor
-<GdsHint Id="event-name-hint">The name you'll use on promotional material</GdsHint>
-<InputText id="event-name" class="govuk-input" @bind-Value="Model.EventName" aria-describedby="event-name-hint" />
-```
+# Variants
+
+All hint components work the same way, but are used in different contexts, with different CSS classes applied.
+
+The following components are available:
+- GdsHint - see [GdsInputText](InputText.md)
+- GdsCheckboxHint - see [GdsInputCheckbox](InputCheckbox.md)
+- GdsRadioHint - see [GdsInputRadio](InputRadio.md)
+- GdsTaskListHint - see [GdsTaskList](TaskList.md)
 
 ## Normal use example
 
