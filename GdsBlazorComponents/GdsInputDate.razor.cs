@@ -19,7 +19,7 @@ public partial class GdsInputDate : IDisposable
     private FieldContext? CascadedFieldContext { get; set; }
 
     [Parameter, EditorRequired]
-    public Expression<Func<GdsDate>>? For { get; set; }
+    public required Expression<Func<GdsDate>> For { get; set; }
 
     [Parameter]
     public bool IsDateOfBirth { get; set; } = false;
@@ -64,7 +64,7 @@ public partial class GdsInputDate : IDisposable
     {
         if (CascadedFieldContext is null)
         {
-            throw new InvalidOperationException($"{nameof(GdsInputDate)} must be used inside a {nameof(GdsFormGroup)}.");
+            throw new InvalidOperationException($"{GetType()} must be used inside a {nameof(GdsFormGroup)}.");
         }
 
         if (For is null)
@@ -74,10 +74,8 @@ public partial class GdsInputDate : IDisposable
 
         // resolve the field for the input date
         _fieldIdentifier = FieldIdentifier.Create(For);
-        _gdsDate = For.Compile().Invoke() ?? new();
-
-        // register the field for the parent GDS form group
-        CascadedFieldContext?.RegisterField(_fieldIdentifier);
+        _gdsDate = For.Compile().Invoke()
+            ?? throw new InvalidOperationException($"{GetType()} requires a non-null value for the {nameof(For)} parameter.");
     }
 
     protected override void OnParametersSet()
