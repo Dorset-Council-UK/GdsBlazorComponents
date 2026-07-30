@@ -37,6 +37,9 @@ public partial class GdsErrorMessage : IDisposable
         }
 
         CascadedEditContext.OnValidationStateChanged += HandleValidationStateChanged;
+
+        // Reflect any validation errors that already exist at the time this component is created
+        RefreshErrorState();
     }
 
     protected override void OnParametersSet()
@@ -77,6 +80,12 @@ public partial class GdsErrorMessage : IDisposable
 
     private void HandleValidationStateChanged(object? sender, ValidationStateChangedEventArgs e)
     {
+        RefreshErrorState();
+        StateHasChanged();
+    }
+
+    private void RefreshErrorState()
+    {
         if (CascadedEditContext is null || CascadedFieldContext is null)
         {
             return;
@@ -97,7 +106,6 @@ public partial class GdsErrorMessage : IDisposable
         }
 
         CalculateErrorId();
-        StateHasChanged();
     }
 
     public void Dispose()
