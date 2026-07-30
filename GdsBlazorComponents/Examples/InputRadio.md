@@ -8,7 +8,7 @@ Render a GOV.UK Design System styled radio form control.
 
 ## How it works
 
-- Renders `<input type="checkbox">` styled according to GOV.UK Design System.
+- Renders `<input type="radio">` styled according to GOV.UK Design System.
 - Wraps Blazor's `InputRadio` component.
 - `Id` optional parameter to set the `id` attribute of the component. If no `Id` is provided, Blazor's `InputRadio` bound field name will be used, otherwise `GdsRadios` `Name` parameter will be used.
 - `ConditionalId` optional parameter to set the `data-aria-controls` attribute of the component. Also use the `GdsRadioConditional` component.
