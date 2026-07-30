@@ -24,7 +24,7 @@ Other checkbox components:
 - GdsCheckboxes
 - GdsCheckboxConditional
 - GdsCheckboxDivider
-- GdsCheckboxHint
+- [GdsCheckboxHint](Hint.md)
 - GdsCheckboxItem
 - GdsCheckboxLabel
 
