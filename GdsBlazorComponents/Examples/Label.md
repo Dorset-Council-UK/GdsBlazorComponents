@@ -1,23 +1,26 @@
 # Label
 
-Render a GOV.UK Design System styled `<label>` that associates with a form control.
+Render a GOV.UK Design System styled label associated with a form control.
 
 ## How it works
 
-- Renders `<label class="govuk-label">` with optional extra classes.
-- The `For` paramater is optional, letting you choose the form control id the label is assosiated with.
-- If `For` is not set, and used within `GdsFormGroup` or `GdsRadioItem`, a default for is generated.
-- `Text` parameter allows you to set the label text.
-- `Size` parameter allows you to set the label size.
-- `CssClass` parameter allows you override the default CSS class.
-- `AdditionalCssClasses` parameter allows you to add additional CSS classes.
+- Renders a `<label class="govuk-label">` element.
+- `For` optional paramater to set the `for` attribute of the label.
+  The id of the associated input control. If no `For` is provided and used within `GdsFormGroup`, the associated GDS input control id will be used automatically.
+- `Text` optional parameter to set the label text.
+- `Size` optional parameter to change the size of the label.
+- `CssClass` optional parameter allows you override the base CSS class.
+- `AdditionalCssClasses` optional parameter allows you to add additional CSS classes.
 
-Variants of the label component include:
-- GdsLabel
-- GdsCheckboxLabel
-- GdsRadioLabel
+## Variants
 
-See [Checkboxes](Checkboxes.md) and [Radios](Radios.md) for more information.
+All label components work the same way, but with different CSS classes applied.
+
+The following components are available:
+- GdsLabel - see [GdsInputText](InputText.md)
+- GdsCheckboxLabel - see [GdsInputCheckbox](InputCheckbox.md)
+- GdsDateLabel
+- GdsRadioLabel - see [GdsInputRadio](InputRadio.md)
 
 ## Simple example with explicit `for`
 
@@ -41,5 +44,5 @@ See [Checkboxes](Checkboxes.md) and [Radios](Radios.md) for more information.
 
 ```razor
 <GdsLabel For="more-detail" Text="Can you provide more detail?" Size="GdsSize.Large" />
-<textarea class="govuk-textarea" id="more-detail" name="moreDetail" rows="5"></textarea>
+<textarea id="more-detail" class="govuk-textarea" name="moreDetail" rows="5"></textarea>
 ```
