@@ -1,6 +1,6 @@
 # Checkboxes
 
-Render GOV.UK Design System styled checkboxes using the options from a list of [GdsOptionItem<T>](GdsOptionItem.md). This component supports any type of value and can be used for single or multiple selections.
+Render GOV.UK Design System styled checkboxes.
 
 ## Example image
 
@@ -8,91 +8,248 @@ Render GOV.UK Design System styled checkboxes using the options from a list of [
 
 ## How it works
 
-- Renders a list of [GdsOptionItem](GdsOptionItem.md) under a ```<div class="govuk-checkboxes" data-module="govuk-checkboxes">```.
-- Supports binding to any value type (e.g., string, int, enum, bool, custom types).
-- It is recommended to use this component within a [GdsFormGroup](FormGroup.md), and [GdsFieldsetGroup](FieldsetGroup.md) to fully support correct HTML and accessibility.
-- It is recommended to include the `Name` parameter to ensure the check boxes are grouped correctly and exclusive behaviour works as intended. If ommitted, a unique name will be generated.
+- Renders a `<div class="govuk-checkboxes" data-module="govuk-checkboxes">` element.
+- `For` optional expression parameter to associate the checkboxes with a model property.
+  Helps with default checkbox names, keeping all `GdsInputCheckbox` errors related to the `GdsCheckboxes` and with accessibility.
+- `Smaller` optional parameter to render smaller checkboxes.
 
-## Simple example
+Refer to [GdsInputCheckbox](InputCheckbox.md) for more details on how to use the `GdsInputCheckbox` component.
 
-```csharp
-ICollection<GdsOptionItem<int>> contactTypes = [
-    new ("contactTypePhone", "Phone", 1),
-    new ("contactTypeEmail", "Email", 2),
-    new ("contactTypeText", "Text message", 3),
-    new ("contactTypePost", "Post", 4),
-];
-<GdsCheckboxes Options="@contactTypes" Name="ContactTypes" />
-```
+## Notes
 
-## Smaller checkboxes example
+Binding to Blazor's `InputCheckbox` value means binding to a bool.
+This works well for simple or manual checkboxes, but in more real examples this makes binding more difficult where your real data is likely to be from an Enum or list of items from your database.
+Meaning your real data is unlikely to use bools, but would use int's and Guid's.
 
-```csharp
-ICollection<GdsOptionItem<int>> contactTypes = [
-    new ("contactTypePhone", "Phone", 1),
-    new ("contactTypeEmail", "Email", 2),
-    new ("contactTypeText", "Text message", 3),
-    new ("contactTypePost", "Post", 4),
-];
-<GdsCheckboxes Options="@contactTypes" Smaller="true" Name="ContactTypes" />
-```
+This is long standing Blazor challenge with checkboxes, but some of the examples below try to demonstrate ways you can bind to bools and also keep your model up to date.
+Binding to a dictionary and using the `GdsInputCheckbox` components' OnChanged parameter.
 
-## Recommended use example
+## Examples
 
-```csharp
-ICollection<GdsOptionItem<int>> contactTypes = [
-    new ("contactTypePhone", "Phone", 1),
-    new ("contactTypeEmail", "Email", 2),
-    new ("contactTypeText", "Text message", 3),
-    new ("contactTypePost", "Post", 4),
-];
-<GdsFormGroup For="() => Model.ContactType">
+### Manual checkboxes example
+
+```razor
+<GdsFormGroup>
     <GdsFieldsetGroup>
         <GdsFieldsetLegend>
-            <GdsFieldsetHeading Level="2">How can we contact you?</GdsFieldsetHeading>
+            <GdsFieldsetHeading Level="2">What is your nationality?</GdsFieldsetHeading>
         </GdsFieldsetLegend>
 
-        <GdsHint>Select all that apply.</GdsHint>
+        <GdsHint>If you have dual nationality, select all options that are relevant to you</GdsHint>
         <GdsErrorMessage />
-        <GdsCheckboxes Options="@contactTypes" Name="ContactTypes" />
+
+        <GdsCheckboxes>
+            <GdsCheckboxItem>
+                <GdsInputCheckbox @bind-Value="model.IsBritish" />
+                <GdsCheckboxLabel Text="British" />
+                <GdsCheckboxHint>including English, Scottish, Welsh and Northern Irish</GdsCheckboxHint>
+            </GdsCheckboxItem>
+            <GdsCheckboxItem>
+                <GdsInputCheckbox @bind-Value="model.IsIrish" />
+                <GdsCheckboxLabel Text="Irish" />
+            </GdsCheckboxItem>
+            <GdsCheckboxItem>
+                <GdsInputCheckbox @bind-Value="model.IsOther" />
+                <GdsCheckboxLabel Text="Citizen of another country" />
+            </GdsCheckboxItem>
+        </GdsCheckboxes>
     </GdsFieldsetGroup>
 </GdsFormGroup>
+
+@code {
+    public class CheckboxesModel
+    {
+        [GdsFieldErrorClass(GdsFieldTypes.Checkbox)]
+        public bool IsBritish { get; set; }
+
+        [GdsFieldErrorClass(GdsFieldTypes.Checkbox)]
+        public bool IsIrish { get; set; }
+
+        [GdsFieldErrorClass(GdsFieldTypes.Checkbox)]
+        public bool IsOther { get; set; }
+    }
+}
 ```
 
-# Custom example using GDS conditional controls
+### Checkboxes from list example
 
-```csharp
-ICollection<GdsOptionItem<int>> contactTypes = [
-    new ("contactTypePhone", "Phone", 1),
-    new ("contactTypeEmail", "Email", 2),
-    new ("contactTypeText", "Text message", 3),
-    new ("contactTypePost", "Post", 4),
-];
-<GdsFormGroup For="() => Model.ContactType">
+```razor
+<GdsFormGroup>
     <GdsFieldsetGroup>
         <GdsFieldsetLegend>
-            <GdsFieldsetHeading Level="2">How can we contact you?</GdsFieldsetHeading>
+            <GdsFieldsetHeading Level="2">Which types of waste do you transport?</GdsFieldsetHeading>
         </GdsFieldsetLegend>
 
-        <GdsHint>Select all that apply.</GdsHint>
+        <GdsHint>Select all that apply</GdsHint>
         <GdsErrorMessage />
-        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-            @foreach (var option in contactTypes)
+
+        <GdsCheckboxes For="() => model.Waste">
+            @foreach ((Guid wasteId, string wasteLabel) in wasteTypesFromDatabase)
             {
-                var conditionalId = option.Value == 1 ? $"{option.Id}-conditional" : null;
-                <GdsCheckbox Option="@option" ConditionalId="@conditionalId" Name="ContactTypes" />
-                if (option.Value == 1)
+                bool isOther = wasteId == OtherWasteTypeId;
+                string key = wasteId.ToString("N");
+
+                if (isOther)
                 {
-                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="@conditionalId">
-                        <GdsFormGroup For="() => Model.PhoneNumber">
-                            <GdsLabel Text="What is your phone number?" />
-                            <GdsErrorMessage />
-                            <GdsInputText @bind-Value=Model.PhoneNumber class="govuk-input govuk-input--width-50" />
-                        </GdsFormGroup>
-                    </div>
+                    <GdsCheckboxDivider />
+
+                    <GdsCheckboxItem>
+                        <GdsInputCheckbox @bind-Value="@SelectedWasteTypes[key]" OnChanged="isChecked => OnWasteTypeChanged(isChecked, wasteId)" Exclusive />
+                        <GdsCheckboxLabel Text="@wasteLabel" />
+                        <GdsCheckboxHint>other type of waste which is not listed</GdsCheckboxHint>
+                    </GdsCheckboxItem>
+                }
+                else
+                {
+                    <GdsCheckboxItem>
+                        <GdsInputCheckbox @bind-Value="@SelectedWasteTypes[key]" OnChanged="isChecked => OnWasteTypeChanged(isChecked, wasteId)" />
+                        <GdsCheckboxLabel Text="@wasteLabel" />
+                    </GdsCheckboxItem>
                 }
             }
-        </div>
+        </GdsCheckboxes>
     </GdsFieldsetGroup>
 </GdsFormGroup>
+
+@code {
+    private CheckboxesModel model = new();
+    private EditContext? editContext;
+
+    // pretend database table of waste types, with Id and Label
+    private readonly static Guid OtherWasteTypeId = Guid.NewGuid();
+    private record WasteType(Guid Id, string Label);
+    private List<WasteType> wasteTypesFromDatabase = [
+        new(Guid.NewGuid(), "Waste from animal carcasses"),
+        new(Guid.NewGuid(), "Waste from mines or quarries"),
+        new(Guid.NewGuid(), "Farm or agricultural waste"),
+        new(OtherWasteTypeId, "Other"),
+    ];
+
+    // can't use <Enum, bool> or <Guid, bool> if it binds to InputCheckbox Value. Blazor throws errors.
+    private Dictionary<string, bool> SelectedWasteTypes = [];
+
+    protected override void OnInitialized()
+    {
+        if (editContext is null)
+        {
+            editContext = new(model);
+            editContext.SetFieldCssClassProvider(new GdsFieldCssClassProvider());
+        }
+
+        // set up the selected waste types (string, bool dictionary)
+        SelectedWasteTypes = wasteTypesFromDatabase.ToDictionary(o => o.Id.ToString("N"), _ => false);
+    }
+
+    private void OnWasteTypeChanged(bool isChecked, Guid wasteId)
+    {
+        // update the model using the selected waste
+        if (isChecked)
+        {
+            if (!model.Waste.Contains(wasteId))
+            {
+                model.Waste.Add(wasteId);
+            }
+        }
+        else
+        {
+            model.Waste.Remove(wasteId);
+        }
+    }
+
+    public class CheckboxesModel
+    {
+        [Required]
+        [MinLength(1, ErrorMessage = "Select types of waste transported, or select 'Other'")]
+        [GdsFieldErrorClass(GdsFieldTypes.Checkbox)]
+        public List<Guid> Waste { get; set; } = [];
+    }
+}
+```
+
+### Checkboxes from Enum, and conditional email example
+
+```razor
+<GdsFormGroup>
+    <GdsFieldsetGroup>
+        <GdsFieldsetLegend>
+            <GdsFieldsetHeading Level="2">How would you like to be contacted?</GdsFieldsetHeading>
+        </GdsFieldsetLegend>
+
+        <GdsHint>Select all options that are relevant to you</GdsHint>
+        <GdsErrorMessage />
+
+        <GdsCheckboxes For="() => model.ContactPreferences">
+            @foreach (ContactPreferencesEnum contactPreference in Enum.GetValues<ContactPreferencesEnum>())
+            {
+                int key = (int)contactPreference;
+                    
+                if (contactPreference == ContactPreferencesEnum.Email)
+                {
+                    <GdsCheckboxItem>
+                        <GdsInputCheckbox @bind-Value="@SelectedContactPreferences[key]" OnChanged="isChecked => OnContactPreferencesChanged(isChecked, contactPreference)" ConditionalId="conditional-email" />
+                        <GdsCheckboxLabel Text="@contactPreference.ToString()" />
+                    </GdsCheckboxItem>
+                    <GdsCheckboxConditional Id="conditional-email">
+                        <GdsFormGroup>
+                            <GdsLabel Text="Email address" />
+                            <GdsErrorMessage />
+                            <GdsInputText @bind-Value="@model.EmailAddress" type="email" spellcheck="false" autocomplete="email" class="govuk-input govuk-!-width-one-third" />
+                        </GdsFormGroup>
+                    </GdsCheckboxConditional>
+                }
+                else
+                {
+                    <GdsCheckboxItem>
+                        <GdsInputCheckbox @bind-Value="@SelectedContactPreferences[key]" OnChanged="isChecked => OnContactPreferencesChanged(isChecked, contactPreference)" />
+                        <GdsCheckboxLabel Text="@contactPreference.ToString()" />
+                    </GdsCheckboxItem>
+                }
+            }
+        </GdsCheckboxes>
+    </GdsFieldsetGroup>
+</GdsFormGroup>
+
+@code {
+    private CheckboxesModel model = new();
+    private EditContext? editContext;
+
+    // can't use <Enum, bool> or <Guid, bool> if it binds to InputCheckbox Value. Blazor throws errors.
+    private Dictionary<int, bool> SelectedContactPreferences { get; set; } = [];
+
+    public enum ContactPreferencesEnum
+    {
+        Email,
+        Phone,
+        Text,
+    }
+
+    private void OnContactPreferencesChanged(bool isChecked, ContactPreferencesEnum contactPreference)
+    {
+        // update the model using the selected contact preference
+        if (isChecked)
+        {
+            if (!model.ContactPreferences.Contains(contactPreference))
+            {
+                model.ContactPreferences.Add(contactPreference);
+            }
+        }
+        else
+        {
+            model.ContactPreferences.Remove(contactPreference);
+        }
+    }
+
+    public class CheckboxesModel
+    {
+        [Required]
+        [MinLength(1, ErrorMessage = "Select how you would like to be contacted")]
+        [GdsFieldErrorClass(GdsFieldTypes.Checkbox)]
+        public List<ContactPreferencesEnum> ContactPreferences { get; set; } = [];
+
+        [Required(ErrorMessage = "Enter your email address")]
+        [EmailAddress(ErrorMessage = "Enter a valid email address")]
+        [GdsFieldErrorClass(GdsFieldTypes.Input)]
+        public string? EmailAddress { get; set; }
+    }
+}
 ```
