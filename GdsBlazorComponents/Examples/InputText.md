@@ -8,11 +8,11 @@ Render a GOV.UK Design System styled text form control.
 
 ## How it works
 
-- Renders a ```<input class="govuk-input" type="text">``` form control.
+- Renders a `<input class="govuk-input" type="text">` form control.
 - It behaves just like Blazor's built-in `InputText` component.
 - It is recommended to use this component within a [GdsFormGroup](FormGroup.md).
-- The `Id` attribute is optional, letting you choose your own hint id.
-- If `Id` is not set, and used within `GdsFormGroup`, a default hint id is generated.
+- `Id` optional parameter to set the `id` attribute of the component.
+  If no `Id` is provided, Blazor's `InputText` bound field name will be used.
 
 ## Example
 
