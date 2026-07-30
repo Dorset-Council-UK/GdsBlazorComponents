@@ -20,6 +20,14 @@ Must be placed within `GdsCheckboxItem` otherwise it won't render correctly.
 
 To fully support error handling and accessibility place the `GdsInputCheckbox` component within a `GdsFormGroup`, `GdsFieldsetGroup`, `GdsCheckboxes` and `GdsCheckboxItem`.
 
+Other checkbox components:
+- GdsCheckboxes
+- GdsCheckboxConditional
+- GdsCheckboxDivider
+- GdsCheckboxHint
+- GdsCheckboxItem
+- GdsCheckboxLabel
+
 ## Notes
 
 This page explains the current version of the component, which is `GdsInputCheckbox`.
