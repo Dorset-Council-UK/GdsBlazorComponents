@@ -59,10 +59,6 @@ Render GOV.UK Design System styled radio buttons using the options from a list o
         [Required(ErrorMessage = "Select where you live")]
         [GdsFieldErrorClass(GdsFieldTypes.Radio)]
         public string? Country { get; set; }
-
-        [Required(ErrorMessage = "Select where you live")]
-        [GdsFieldErrorClass(GdsFieldTypes.Radio)]
-        public string? Country { get; set; }
     }
 }
 ```
