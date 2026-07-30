@@ -5,7 +5,7 @@ Render a GOV.UK Design System styled label associated with a form control.
 ## How it works
 
 - Renders a `<label class="govuk-label">` element.
-- `For` optional paramater to set the `for` attribute of the label.
+- `For` optional parameter to set the `for` attribute of the label.
   The id of the associated input control. If no `For` is provided and used within `GdsFormGroup`, the associated GDS input control id will be used automatically.
 - `Text` optional parameter to set the label text.
 - `Size` optional parameter to change the size of the label.
