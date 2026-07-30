@@ -63,6 +63,6 @@ Please see [InputDate.md](InputDate.md#Validation) for more information on valid
             <GdsFieldsetHeading Level="2">What month and year were you born?</GdsFieldsetHeading>
         </Heading>
         <Hint>For example, 3 1980</Hint>
-    </GdsInputDate>
+    </GdsInputPartialDate>
 </GdsFormGroup>
 ```
