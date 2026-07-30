@@ -67,6 +67,7 @@ Actual code samples can be found in this repo alongside each component.
 - [GdsBreadcrumbs](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Breadcrumbs.md)
 - [GdsButton](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Button.md)
 - [GdsCheckboxes](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Checkboxes.md)
+- [GdsCheckboxHint](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Hint.md)
 - [GdsContainer](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Container.md)
 - [GdsErrorBoundary](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/ErrorBoundary.md)
 - [GdsErrorMessage](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/ErrorMessage.md)
@@ -94,6 +95,7 @@ Actual code samples can be found in this repo alongside each component.
 - [GdsNotificationBanner](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/NotificationBanner.md)
 - [GdsPhaseBanner](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/PhaseBanner.md)
 - [GdsRadios](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Radios.md)
+- [GdsRadioHint](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Hint.md)
 - [GdsSelect](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Select.md)
 - [GdsSkipLink](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/SkipLink.md)
 - [GdsSpinner](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Spinner.md)
@@ -104,6 +106,7 @@ Actual code samples can be found in this repo alongside each component.
 - [GdsPanel](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Panel.md)
 - [GdsTabs](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Tabs.md)
 - [GdsTaskList](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/TaskList.md)
+- [GdsTaskListHint](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Hint.md)
 
 ### Other examples and patterns:
 
