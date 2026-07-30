@@ -1,7 +1,7 @@
 ﻿@inherits InputRadioGroup<TValue>
 @typeparam TValue
 
-<InputRadioGroup TValue="TValue" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression" Name="@Name" DisplayName="@DisplayName" @attributes="@AdditionalAttributes">
+<InputRadioGroup TValue="TValue" Value="@Value" ValueChanged="@ValueChanged" ValueExpression="@ValueExpression" Name="@Name" DisplayName="@DisplayName">
     <div class="@_class" data-module="govuk-radios" @attributes="AdditionalAttributes">
         <CascadingValue Name="DefaultName" Value="@_defaultName">
             @ChildContent
