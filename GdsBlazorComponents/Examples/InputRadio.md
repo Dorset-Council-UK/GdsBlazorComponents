@@ -17,6 +17,14 @@ Must be placed within `GdsRadioItem` otherwise it won't render correctly.
 
 To fully support error handling and accessibility place the `GdsInputRadio` component within a `GdsFormGroup`, `GdsFieldsetGroup`, `GdsRadios` and `GdsRadioItem`.
 
+Other radio components:
+- GdsRadios
+- GdsRadioConditional
+- GdsRadioDivider
+- GdsRadioHint
+- GdsRadioItem
+- GdsRadioLabel
+
 ## Notes
 
 This page explains the current version of the component, which is `GdsInputRadio`.
