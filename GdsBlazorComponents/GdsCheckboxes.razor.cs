@@ -33,6 +33,18 @@ public partial class GdsCheckboxes : IDisposable
     private string? _class;
     private string? _defaultName;
     private FieldIdentifier? _fieldIdentifier;
+    private string? _defaultId;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        if (For is null && string.IsNullOrWhiteSpace(Name))
+        {
+            // generate a default id for the checkboxes group if no For expression or Name is provided
+            _defaultId = $"checkboxes-{Guid.NewGuid():N}";
+        }
+    }
 
     protected override void OnParametersSet()
     {
@@ -52,10 +64,14 @@ public partial class GdsCheckboxes : IDisposable
         _defaultName = Name?.Trim() ?? _fieldIdentifier?.FieldName;
 
         // update the field context
-        if (CascadedFieldContext is not null && _fieldIdentifier.HasValue)
+        if (CascadedFieldContext is not null)
         {
-            CascadedFieldContext.InputId = _fieldIdentifier.Value.FieldName;
-            CascadedFieldContext.RegisterField(_fieldIdentifier.Value);
+            // Always have an InputId so GdsHint/GdsErrorMessage can compute ids, even when there's no bound field (manual checkboxes).
+            CascadedFieldContext.InputId = _fieldIdentifier?.FieldName ?? _defaultName ?? _defaultId;
+            if (_fieldIdentifier.HasValue)
+            {
+                CascadedFieldContext.RegisterField(_fieldIdentifier.Value);
+            }
             CascadedFieldContext.NotifyIfChanged();
         }
     }
