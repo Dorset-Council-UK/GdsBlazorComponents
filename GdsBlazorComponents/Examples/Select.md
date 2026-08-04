@@ -13,36 +13,44 @@ Render GOV.UK Design System styled select lists. Option definition is controlled
 
 - Renders a ```<select class="govuk-select">```.
 - Bind this component to a property using `@bind-Value` to track and set the selected value.
-- The default class is `govuk-select`, but you can use `CssClass` to style the select.
-- The `id` attribute is set from the `Id` component property. If omitted, it falls back to a cascaded id provided by `GdsFormGroup`.
+- This wraps Blazor's built-in `InputSelect` component.
+- The `Id` attribute is optional, letting you choose your own form control id.
+- If `Id` is not set, and used within `GdsFormGroup`, a default id is generated.
 
 ## Simple examples
 
-```csharp
-<p>
-    <GdsSelect @bind-Value="SelectedContactType" T="int">
-        @foreach(var value in ContactTypes)
+```razor
+<GdsFormGroup>
+    <GdsLabel Text="Contact type" />
+    <GdsHint>The primary way to contact you</GdsHint>
+    <GdsErrorMessage />
+    <GdsSelect @bind-Value="model.SelectedContactType" T="int?">
+        <option value="">Please select</option>
+        @foreach(var contactType in ContactTypes)
         {
-            <option value="@value.Key">@value.Value</option>
+            bool selected = contactType.Key == model.SelectedContactType;
+            <option value="@contactType.Key" selected="@selected">@contactType.Value</option>
         }
     </GdsSelect>
+    <p>Selected Value: @model.SelectedContactType</p>
+</GdsFormGroup>
 
-    <span>Selected Value: @SelectedContactType</span>
-</p>
-
-<p>
-    <GdsSelect @bind-Value="SelectedContactTypeEnum" T="ContactTypeEnum">
-        @foreach (var value in Enum.GetValues(typeof(ContactTypeEnum)))
+<GdsFormGroup>
+    <GdsLabel Text="Contact type" />
+    <GdsHint>The primary way to contact you</GdsHint>
+    <GdsErrorMessage />
+    <GdsSelect @bind-Value="model.SelectedContactTypeEnum" T="ContactTypeEnum?">
+        <option value="">Please select</option>
+        @foreach (var contactType in Enum.GetValues<ContactTypeEnum>())
         {
-            <option value="@value">@value</option>
+            bool selected = contactType == model.SelectedContactTypeEnum;
+            <option value="@contactType" selected="@selected">@contactType</option>
         }
     </GdsSelect>
-
-    <span>Selected Value: @SelectedContactTypeEnum</span>
-</p>
+    <p>Selected Value: @model.SelectedContactTypeEnum</p>
+</GdsFormGroup>
 
 @code {
-    private int SelectedContactType = 1;
     private Dictionary<int, string> ContactTypes = new Dictionary<int, string>
     {
         { 0, "None" },
@@ -52,8 +60,7 @@ Render GOV.UK Design System styled select lists. Option definition is controlled
         { 4, "Post" }
     };
 
-    private ContactTypeEnum SelectedContactTypeEnum = ContactTypeEnum.Text;
-    private enum ContactTypeEnum    
+    public enum ContactTypeEnum    
     {
         None,
         Phone,
@@ -61,5 +68,16 @@ Render GOV.UK Design System styled select lists. Option definition is controlled
         Text,
         Post
     };
+
+    public class SelectModel
+    {
+        [Required(ErrorMessage = "Select the contact type")]
+        [GdsFieldErrorClass(GdsFieldTypes.Select)]
+        public int? SelectedContactType { get; set; }
+
+        [Required(ErrorMessage = "Select the contact type")]
+        [GdsFieldErrorClass(GdsFieldTypes.Select)]
+        public ContactTypeEnum? SelectedContactTypeEnum { get; set; }
+    }
 }
 ```

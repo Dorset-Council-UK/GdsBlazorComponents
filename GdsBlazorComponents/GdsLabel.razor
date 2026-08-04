@@ -1,38 +1,7 @@
-﻿<label for="@For" class="@_class" @attributes="AdditionalAttributes">@Text</label>
+﻿@inherits GdsLabelBase
+
+<label for="@ResolvedFor" class="@ResolvedCssClass" @attributes="AdditionalAttributes">@Text</label>
 
 @code {
-    [CascadingParameter]
-    private string? CascadedId { get; set; }
-
-    [Parameter]
-    public string? For { get; set; }
-
-    [Parameter]
-    public string Text { get; set; } = "";
-
-    [Parameter]
-    public string CssClass { get; set; } = "govuk-label";
-
-    [Parameter]
-    public string? AdditionalCssClasses { get; set; }
-
-    [Parameter(CaptureUnmatchedValues = true)]
-    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
-
-    private string? _class;
-
-    protected override void OnInitialized()
-    {
-        if (For == null)
-        {
-            For = CascadedId;
-        }
-    }
-
-    protected override void OnParametersSet()
-    {
-        _class = new CssClassBuilder(CssClass)
-            .Add(AdditionalCssClasses)
-            .Build();
-    }
+    protected override string BaseCssClass => "govuk-label";
 }

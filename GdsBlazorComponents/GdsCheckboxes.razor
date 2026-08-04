@@ -1,48 +1,5 @@
-﻿@typeparam T
-
-@if (Options.Count > 0)
-{
-    <div class="@_class" data-module="govuk-checkboxes" @attributes="AdditionalAttributes">
-        @foreach (GdsOptionItem<T> option in Options)
-        {
-            <GdsCheckbox T="T" Option="option" Name="@Name" OnChanged="@_onChanged" />
-        }
-    </div>
-}
-
-@code {
-    [Parameter]
-    public string? AdditionalCssClasses { get; set; }
-
-    [Parameter(CaptureUnmatchedValues = true)]
-    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
-
-    [Parameter, EditorRequired]
-    public required IReadOnlyCollection<GdsOptionItem<T>> Options { get; set; }
-
-    [Parameter]
-    public bool Smaller { get; set; }
-
-    [Parameter]
-    public string Name { get; set; } = Guid.NewGuid().ToString();
-
-    [Parameter]
-    public EventCallback<GdsOptionItem<T>> OnChanged { get; set; }
-
-    private string? _class;
-    private EventCallback<GdsOptionItem<T>> _onChanged;
-
-    protected override void OnParametersSet()
-    {
-        _class = new CssClassBuilder("govuk-checkboxes")
-            .AddIf(Smaller, "govuk-checkboxes--small")
-            .Add(AdditionalCssClasses)
-            .Build();
-
-        _onChanged = OnChanged.HasDelegate
-            ? EventCallback.Factory.Create<GdsOptionItem<T>>(this, HandleOnChanged)
-            : default;
-    }
-
-    private Task HandleOnChanged(GdsOptionItem<T> option) => OnChanged.HasDelegate ? OnChanged.InvokeAsync(option) : Task.CompletedTask;
-}
+﻿<div class="@_class" data-module="govuk-checkboxes" @attributes="AdditionalAttributes">
+    <CascadingValue Name="DefaultName" Value="@_defaultName">
+        @ChildContent
+    </CascadingValue>
+</div>

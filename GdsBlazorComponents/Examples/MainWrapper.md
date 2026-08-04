@@ -11,7 +11,7 @@ Render GOV.UK Design System styled main wrapper element.
 
 ## Examples
 
-```csharp
+```razor
 <GdsContainer>
     <GdsMainWrapper>
         @Body
@@ -19,7 +19,7 @@ Render GOV.UK Design System styled main wrapper element.
 </GdsContainer>
 ```
 
-```csharp
+```razor
 <GdsContainer>
     <GdsMainWrapper AutoSpacing id="main-content" AdditionalCssClasses="govuk-body">
         @Body

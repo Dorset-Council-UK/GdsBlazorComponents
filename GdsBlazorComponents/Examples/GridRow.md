@@ -10,7 +10,7 @@ Render GOV.UK Design System styled grid row.
 
 ## Examples
 
-```csharp
+```razor
 <GdsGridRow>
     <GdsGridColumn Width="GdsGridColumnWidth.TwoThirds">
         <GdsHeading Level="1">Two-thirds column</GdsHeading>
@@ -23,7 +23,7 @@ Render GOV.UK Design System styled grid row.
 </GdsGridRow>
 ```
 
-```csharp
+```razor
 <GdsGridRow AdditionalCssClasses="govuk-!-padding-bottom-6">
     <GdsGridColumn Width="GdsGridColumnWidth.TwoThirds">
         <GdsHeading Level="1">Two-thirds column</GdsHeading>
@@ -36,7 +36,7 @@ Render GOV.UK Design System styled grid row.
 </GdsGridRow>
 ```
 
-```csharp
+```razor
 <GdsGridRow id="my-row" data-something="testing">
     <GdsGridColumn Widths="[GdsGridColumnWidth.TwoThirds, GdsGridColumnWidth.OneHalfFromDesktop]">
         <GdsHeading Level="1">Two-thirds column</GdsHeading>

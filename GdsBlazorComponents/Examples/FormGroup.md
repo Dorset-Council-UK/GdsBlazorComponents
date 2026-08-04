@@ -10,16 +10,24 @@ Render a GOV.UK Design System styled form group that contains a GDS form control
 
 - Renders `<div class="govuk-form-group">` with any child content you provide.
 - Applies error styling automatically if the associated field is invalid.
-- The field's `Id` is either calculated for the field or manually set via the `Id` parameter and cascaded down to any child components.
-- The `FieldIdentifier` is automatically determined from the `For` parameter and cascaded down to child components.`
 - `DataModule` and `DataAttributes` parameters allow you to create `InputTextArea` to work as a GDS [Character Count](https://design-system.service.gov.uk/components/character-count/).
 - Supports additional CSS classes via the `AdditionalCssClasses` parameter.
 - It is recommended to use this component to wrap all GDS form controls, hints, error messages, and labels to ensure correct HTML structure and accessibility.
 
+### FieldContext
+
+Internally `GdsFormGroup` creates; and cascades; a `FieldContext` to it's children. This is used by any GDS child components that may need to know any of the following information:
+
+- `InputId` is generated and used by the GDS input form control as a child, for example: `GdsInputText`.
+- `FieldIdentifier` is registered and used by the GDS input form control for validation purposes.
+- `HintId` is generated if you use a `GdsHint` component as a child.
+- `ErrorId` is generated if you use a `GdsErrorMessage` component as a child and there are validation errors for the associated field.
+- `DescribedBy` is generated if you use a `GdsHint` and/or `GdsErrorMessage` child components. It is used to set the `aria-describedby` attribute on the GDS input form control or `GdsFieldsetGroup`.
+
 ## Simple example
 
-```csharp
-<GdsFormGroup For="() => Model.PhoneNumber">
+```razor
+<GdsFormGroup>
     <GdsLabel Text="What is your phone number?" />
     <GdsHint>For international numbers include the country code</GdsHint>
     <GdsErrorMessage />
@@ -27,27 +35,12 @@ Render a GOV.UK Design System styled form group that contains a GDS form control
 </GdsFormGroup>
 ```
 
-## Manual ID's and Blazor control example
-
-```csharp
-<GdsFormGroup For="() => Model.PhoneNumber" Id="phone-number">
-    <GdsLabel Text="What is your phone number?" />
-    <GdsHint>For international numbers include the country code</GdsHint>
-    <GdsErrorMessage />
-    <InputText id="phone-number" @bind-Value=Model.PhoneNumber class="govuk-input govuk-input--width-50" aria-describedby="phone-number-hint phone-number-error" />
-</GdsFormGroup>
-```
-
-The ID of `phone-number` on the `GdsFormGroup` is cascaded down to:
-- `GdsHint` being phone-number-hint there
-- `GdsErrorMessage` being phone-number-error there
-
 ## Character count example
 
-```csharp
-<GdsFormGroup For="() => Model.OtherAction" AdditionalCssClasses="govuk-character-count govuk-!-margin-top-4" DataModule="govuk-character-count" DataMaxLength="100">
-    <GdsHeading Level="2" class="govuk-label-wrapper">
-        <GdsLabel Text="Can you provide more details?" AdditionalCssClasses="govuk-label--m" />
+```razor
+<GdsFormGroup AdditionalCssClasses="govuk-character-count govuk-!-margin-top-4" DataModule="govuk-character-count" DataMaxLength="100">
+    <GdsHeading Level="2" BaseCssClass="govuk-label-wrapper">
+        <GdsLabel Text="Can you provide more details?" Size="GdsSize.Medium" />
     </GdsHeading>
     <GdsHint>Do not include personal or financial information</GdsHint>
     <GdsErrorMessage />

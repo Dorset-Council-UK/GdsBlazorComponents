@@ -1,0 +1,28 @@
+<div class="@_resolvedClass" id="@Id" @attributes="AdditionalAttributes">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public required string Id { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? AdditionalCssClasses { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? _resolvedClass;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        _resolvedClass = new CssClassBuilder("govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden")
+            .Add(AdditionalCssClasses)
+            .Build();
+    }
+}

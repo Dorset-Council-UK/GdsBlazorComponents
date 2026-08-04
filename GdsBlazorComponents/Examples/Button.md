@@ -18,33 +18,33 @@ Render a GOV.UK Design System styled button that can be used to submit forms or 
 
 ## Simple example (Continue button)
 
-```csharp
+```razor
 <GdsButton />
 ```
 
 ## Other Examples
 
-```csharp
+```razor
 <GdsButton Text="Save and continue" />
 ```
 
-```csharp
+```razor
 <GdsButton AdditionalCssClasses="govuk-button--secondary" Text="Find address" />
 ```
 
-```csharp
+```razor
 <GdsButton AdditionalCssClasses="govuk-button--warning" Text="Delete account" />
 ```
 
-```csharp
+```razor
 <GdsButton disabled aria-disabled="true" Text="Disabled button" />
 ```
 
-```csharp
+```razor
 <GdsButton AdditionalCssClasses="govuk-button--inverse" Text="Create an account" />
 ```
 
-```csharp
+```razor
 <GdsButton IsSubmit="false" OnClick="@somefunction" Text="Search" />
 ```
 

@@ -7,8 +7,7 @@ Render a GOV.UK Design System styled fieldset that associates with a form contro
 - Renders ```<fieldset class="govuk-fieldset">``` with any child content you provide.
 - Use `GdsFieldsetLegend` to provide a legend for the fieldset.
 - Optionally use `GdsFieldsetHeading` to provide a heading for the legend.
-- The component tries to calculate aria-describedby based on hint and field errors.
-- It is recommended to use this component within a [GdsFormGroup](FormGroup.md) to fully support correct HTML and accessibility.
+- If used within a `<GdsFormGroup>` the component will automatically calculate aria-describedby based on hint and field errors.
 
 See [GdsCheckboxes](Checkboxes.md) and [GdsRadios](Radios.md) for complete examples of using this component.
 
@@ -19,7 +18,7 @@ Use `GdsFieldsetLegend` with the `Size` parameter instead.
 
 ## Simple example
 
-```csharp
+```razor
 <GdsFieldsetGroup>
     <GdsFieldsetLegend>
         How can we contact you?
@@ -30,7 +29,7 @@ Use `GdsFieldsetLegend` with the `Size` parameter instead.
 
 ## Example with heading
 
-```csharp
+```razor
 <GdsFieldsetGroup>
     <GdsFieldsetLegend Size="@GdsSize.Medium">
         <GdsFieldsetHeading Level="2">How can we contact you?</GdsFieldsetHeading>

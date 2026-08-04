@@ -1,0 +1,7 @@
+﻿@inherits GdsLabelBase
+
+<label for="@ResolvedFor" class="@ResolvedCssClass" @attributes="AdditionalAttributes">@Text</label>
+
+@code {
+    protected override string BaseCssClass => "govuk-label govuk-radios__label";
+}

@@ -1,0 +1,13 @@
+@inherits InputCheckbox
+
+<InputCheckbox id="@_resolvedId"
+               Value="@Value"
+               ValueChanged="@ValueChanged"
+               ValueExpression="@ValueExpression"
+               DisplayName="@DisplayName"
+               name="@_resolvedName"
+               class="@_class"
+               data-behaviour="@_behaviour"
+               data-aria-controls="@ConditionalId"
+               aria-describedby="@CascadedFieldContext?.DescribedBy"
+               @attributes="@AdditionalAttributes" />

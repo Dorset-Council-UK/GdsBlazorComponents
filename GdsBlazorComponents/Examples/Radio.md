@@ -1,6 +1,8 @@
-# Radio
+# Radio with option
 
 Render a single GOV.UK Design System styled radio button using the option from [GdsOptionItem<T>](GdsOptionItem.md).
+
+`GdsRadio` is deprecated in v3.5.0! It will be removed in future versions. Use [GdsInputRadio](InputRadio.md) instead.
 
 ## Example image
 
@@ -8,7 +10,7 @@ Render a single GOV.UK Design System styled radio button using the option from [
 
 ## How it works
 
-- Renders a ```<div class="govuk-radios__item">``` with associated label, radio button and optional hint.
+- Renders a `<div class="govuk-radios__item">` with associated label, radio button and optional hint.
 - Supports binding to any value type (e.g., string, int, enum, bool, custom types).
 - Can be used standalone or as part of a group for multiple selections.
 - If the [GdsOptionItem](GdsOptionItem.md) includes a hint, it is displayed below the label as defined by the GOV.UK Design System style.
@@ -17,14 +19,17 @@ Render a single GOV.UK Design System styled radio button using the option from [
 
 ## Simple example
 
-```csharp
-// id, label, T value, selected = false, isExclusive = false, hint = default
-var option = new GdsOptionItem<bool>("subscribe", "Subscribe to newsletter", hint: "Receive updates and offers via email");
+```razor
 <GdsRadio Option="@option" />
+
+@code {
+	// id, label, T value, selected = false, isExclusive = false, hint = default
+	var option = new GdsOptionItem<bool>("subscribe", "Subscribe to newsletter", hint: "Receive updates and offers via email");
+}
 ```
 
 ## Recommended use example
 
-In most cases you will want something more than a single radio button, so we recomend you using [GdsRadios component](Radios.md). Doing this also guarantees good HTML and accessibility.
+In most cases you will want something more than a single radio button, so we recomend you using [GdsRadios](Radios.md) component. Doing this also guarantees good HTML and accessibility.
 
 Please refer to that component for full examples.

@@ -31,6 +31,12 @@
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
     /// <summary>
+    /// Overrides the base GDS CSS class for this control
+    /// </summary>
+    [Parameter]
+    public string? BaseCssClass { get; set; }
+
+    /// <summary>
     /// Heading level (1-6). This determines the HTML tag used (h1, h2, etc.) and the default size of the heading
     /// </summary>
     /// <remarks>Levels outside of 1-6 will default to h1 and the largest size</remarks>
@@ -47,16 +53,26 @@
 
     protected override void OnParametersSet()
     {
-        var size = Size ?? AutomaticSize();
-        string sizeClass = size switch
+        base.OnParametersSet();
+
+        var builder = new CssClassBuilder(BaseCssClass);
+
+        // Only apply a GDS heading size class when using the default base class, or when the caller explicitly asked for a specific Size.
+        if (BaseCssClass is null || Size.HasValue)
         {
-            GdsSize.Small => "govuk-heading-s",
-            GdsSize.Medium => "govuk-heading-m",
-            GdsSize.Large => "govuk-heading-l",
-            GdsSize.ExtraLarge => "govuk-heading-xl",
-            _ => "govuk-heading-xl",
-        };
-        _class = new CssClassBuilder(sizeClass)
+            var size = Size ?? AutomaticSize();
+            string sizeClass = size switch
+            {
+                GdsSize.Small => "govuk-heading-s",
+                GdsSize.Medium => "govuk-heading-m",
+                GdsSize.Large => "govuk-heading-l",
+                GdsSize.ExtraLarge => "govuk-heading-xl",
+                _ => "govuk-heading-xl",
+            };
+            builder.Add(sizeClass);
+        }
+
+        _class = builder
             .Add(AdditionalCssClasses)
             .Build();
     }

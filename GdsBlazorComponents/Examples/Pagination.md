@@ -24,7 +24,7 @@ The component supports both standard pagination (with page numbers) and block st
 - with query parameters
 - Blazor page navigation
 
-```csharp
+```razor
 @inject NavigationManager NavigationManager
 
 <GdsPagination CurrentPage="7" TotalPages="42" HrefGenerator="PageHref" />
@@ -46,7 +46,7 @@ The component supports both standard pagination (with page numbers) and block st
 - no link generation
 - no Blazor page navigation (using `OnPageChanged`)
 
-```csharp
+```razor
 @inject NavigationManager NavigationManager
 
 <GdsPagination CurrentPage="@CurrentPage" TotalPages="@TotalPages" OnPageChanged="OnPageChanged" />
@@ -72,7 +72,7 @@ The component supports both standard pagination (with page numbers) and block st
 - labels under previous and next
 - no Blazor page navigation (using `OnPageChanged`)
 
-```csharp
+```razor
 @inject NavigationManager NavigationManager
 
 <GdsPagination CurrentPage="@CurrentPage"

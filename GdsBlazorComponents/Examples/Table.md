@@ -17,7 +17,7 @@ Render a GOV.UK Design System styled table component.
 
 ## Simple example (using Formatting)
 
-```csharp
+```razor
 <GdsTable T="Payment" Items="@Payments" Caption="Months and rates" FirstCellIsHeader>
     <HeaderContent>
         <GdsTableTh>Month you apply</GdsTableTh>
@@ -42,7 +42,7 @@ Render a GOV.UK Design System styled table component.
 
 ## Example using ChildContent
 
-```csharp
+```razor
 <GdsTable T="Member" Items="@Members" Caption="Members" CaptionTextSize="GdsSize.Medium" Density="GdsTableDensity.SmallTextUntilTablet">
     <HeaderContent>
         <GdsTableTh>Date started</GdsTableTh>

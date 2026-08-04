@@ -10,19 +10,19 @@ Render GOV.UK Design System styled container.
 
 ## Examples
 
-```csharp
+```razor
 <GdsContainer>
     <div>Container example</div>
 </GdsContainer>
 ```
 
-```csharp
+```razor
 <GdsContainer AdditionalCssClasses="govuk-!-margin-bottom-6">
     <div>Container example</div>
 </GdsContainer>
 ```
 
-```csharp
+```razor
 <GdsContainer id="my-container" data-something="testing">
     <div>Container example</div>
 </GdsContainer>

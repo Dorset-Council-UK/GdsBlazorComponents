@@ -1,71 +1,52 @@
 ﻿@typeparam T
+@attribute [Obsolete("Deprecated in v3.5.0. Use GdsInputCheckbox instead. It will be removed in future versions.")]
 
 @if (Option.IsExclusive)
 {
-    <div class="govuk-checkboxes__divider">or</div>
+    <GdsCheckboxDivider />
 }
 
-<div @key="_id" class="govuk-checkboxes__item">
-    <InputCheckbox id="@_id"
-                   name="@Name"
-                   class="@_class"
-                   data-behaviour="@_exclusiveBehaviour"
-                   aria-describedby="@_hintId"
-                   data-aria-controls="@ConditionalId"
-                   @bind-Value="Option.Selected"
-                   @bind-Value:after="HandleOnChange"
-                   @attributes="AdditionalAttributes" />
-    <GdsLabel For="@_id" AdditionalCssClasses="govuk-checkboxes__label" Text="@Option.Label" />
-    @if (_hasHint)
+<GdsCheckboxItem>
+    <GdsInputCheckbox Id="@Option.Id"
+                      Name="@Name"
+                      Exclusive="@Option.IsExclusive"
+                      ConditionalId="@ConditionalId"
+                      @bind-Value="@Option.Selected"
+                      @bind-Value:after="HandleOnChange"
+                      @attributes="AdditionalAttributes" />
+    <GdsCheckboxLabel Text="@Option.Label" />
+    @if (Option.Hint is not null)
     {
-        <GdsHint Id="@_hintId" CssClass="govuk-hint govuk-checkboxes__hint">@Option.Hint</GdsHint>
+        <GdsCheckboxHint>@Option.Hint</GdsCheckboxHint>
     }
-</div>
+</GdsCheckboxItem>
 
 @code {
+    [Parameter, EditorRequired]
+    public required GdsOptionItem<T> Option { get; set; }
+
+    [Parameter]
+    public string? ConditionalId { get; set; }
+
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
-    [Parameter, EditorRequired]
-    public required GdsOptionItem<T> Option { get; set; }
-
     [Parameter]
-    public string Name { get; set; } = Guid.NewGuid().ToString();
-
-    [Parameter]
-    public string? ConditionalId { get; set; }
+    public string? Name { get; set; }
 
     [Parameter]
     public EventCallback<GdsOptionItem<T>> OnChanged { get; set; }
 
-    private string? _class;
-    private string? _exclusiveBehaviour;
-    private string _id = "";
-    private bool _hasHint;
-    private string? _hintId;
-
     protected override void OnInitialized()
     {
-        ArgumentNullException.ThrowIfNull(Option, nameof(Option));
-
-        if (Option.IsExclusive)
+        if (Option is null)
         {
-            _exclusiveBehaviour = "exclusive";
+            throw new InvalidOperationException($"The {GetType()} component needs to be provided with an Options parameter of type GdsOptionItem.");
         }
-        _id = Option.Id;
-        _hasHint = Option.Hint != null;
-        _hintId = Option.Hint == null ? null : $"{_id}-hint";
     }
 
     private Task HandleOnChange() => OnChanged.HasDelegate ? OnChanged.InvokeAsync(Option) : Task.CompletedTask;
-
-    protected override void OnParametersSet()
-    {
-        _class = new CssClassBuilder("govuk-checkboxes__input")
-            .Add(AdditionalCssClasses)
-            .Build();
-    }
 }

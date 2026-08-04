@@ -4,10 +4,10 @@ using System.Linq.Expressions;
 
 namespace GdsBlazorComponents;
 
-public partial class GdsInputNumber<TNumberValue>
+public partial class GdsInputNumber<TNumberValue> : IDisposable
 {
     [CascadingParameter]
-    private string? CascadedId { get; set; }
+    private FieldContext? CascadedFieldContext { get; set; }
 
     [Parameter, EditorRequired]
     public TNumberValue? NumberValue { get; set; } // Nullable just in case someone tries to use a non number type
@@ -16,6 +16,10 @@ public partial class GdsInputNumber<TNumberValue>
     [Parameter]
     public Expression<Func<TNumberValue>>? NumberValueExpression { get; set; }
 
+    /// <summary>
+    ///     <para>Optionally override the 'id' attribute of the input control.</para>
+    ///     <para>If not set, a default id will be generated and stored in <see cref="FieldContext" /> 'InputId', if available.</para>
+    /// </summary>
     [Parameter]
     public string? Id { get; set; }
 
@@ -27,17 +31,12 @@ public partial class GdsInputNumber<TNumberValue>
 
     private string? _class;
     private string? _inputmode;
-    private string? _describedBy;
+    private string? _resolvedId;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        Id ??= CascadedId;
-        if (Id != null)
-        {
-            _describedBy = $"{Id}-hint {Id}-error";
-        }
         _inputmode = GetInputModeValue();
     }
 
@@ -49,6 +48,31 @@ public partial class GdsInputNumber<TNumberValue>
             .Add(CssClass)
             .Add(AdditionalCssClasses)
             .Build();
+
+        // Calculate the input id
+        if (!string.IsNullOrWhiteSpace(Id))
+        {
+            // if id is set, use it
+            _resolvedId = Id.Trim();
+        }
+        else if (string.IsNullOrWhiteSpace(CascadedFieldContext?.InputId))
+        {
+            // generate a default input id
+            _resolvedId = FieldIdentifier.FieldName;
+        }
+        else
+        {
+            // use the existing input id
+            _resolvedId = CascadedFieldContext?.InputId;
+        }
+
+        // update the field context
+        if (CascadedFieldContext is not null)
+        {
+            CascadedFieldContext.InputId = Show ? _resolvedId : null;
+            CascadedFieldContext.RegisterField(FieldIdentifier);
+            CascadedFieldContext.NotifyIfChanged();
+        }
     }
 
     private static string? GetInputModeValue()
@@ -132,5 +156,11 @@ public partial class GdsInputNumber<TNumberValue>
         }
 
         return success ? (TNumberValue)result : default;
+    }
+
+    public void Dispose()
+    {
+        CascadedFieldContext?.UnregisterField(FieldIdentifier);
+        GC.SuppressFinalize(this);
     }
 }

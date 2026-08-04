@@ -16,11 +16,11 @@ Render a GOV.UK Design System styled start button link that triggers actions.
 
 ## Simple example
 
-```csharp
+```razor
 <GdsStartButton />
 ```
 
-```csharp
+```razor
 <GdsStartButton Text="Sign in" Href="./somepage" />
 ```
 

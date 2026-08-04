@@ -16,13 +16,13 @@ We are currently using an older style of header component. We are planning to up
 
 ## Example
 
-```html
+```razor
 <GdsInsetText Text="Some text here.." />
 ```
 
 or 
 
-```html
+```razor
 <GdsInsetText>
     Some text here..
 </GdsInsetText>

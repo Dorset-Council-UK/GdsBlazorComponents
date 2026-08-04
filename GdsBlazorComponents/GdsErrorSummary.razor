@@ -2,7 +2,7 @@
 {
     <div class="@_class" data-module="govuk-error-summary" @attributes="AdditionalAttributes">
         <div role="alert">
-            <GdsHeading Level="2" class="govuk-error-summary__title">There is a problem</GdsHeading>
+            <GdsHeading Level="2" BaseCssClass="govuk-error-summary__title">There is a problem</GdsHeading>
             <div class="govuk-error-summary__body">
                 <ul class="govuk-list govuk-error-summary__list">
                     @foreach (var message in CurrentEditContext.GetValidationMessages())

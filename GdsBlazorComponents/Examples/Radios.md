@@ -8,105 +8,143 @@ Render GOV.UK Design System styled radio buttons using the options from a list o
 
 ## How it works
 
-- Renders a list of [GdsOptionItem](GdsOptionItem.md) under a ```<div class="govuk-radios" data-module="govuk-radios">```.
-- Supports binding to any value type (e.g., string, int, enum, bool, custom types).
-- It is recommended to use this component within a [GdsFormGroup](FormGroup.md), Blazor's `InputRadioGroup`, and [GdsFieldsetGroup](FieldsetGroup.md) to fully support correct HTML and accessibility.
+- Renders `<div class="govuk-radios">` element styled according to the GOV.UK Design System.
+- Wraps Blazor's `InputRadioGroup` component.
+- `Smaller` parameter to render smaller radio buttons.
+- `Inline` parameter to render radio buttons inline.
+- It is recommended to use this component within a [GdsFormGroup](FormGroup.md) and [GdsFieldsetGroup](FieldsetGroup.md) to fully support correct HTML and accessibility.
 
-## Simple example
+## Example
 
-```csharp
-ICollection<GdsOptionItem<int>> contactTypes = [
-    new ("contactTypePhone", "Phone", 1),
-    new ("contactTypeEmail", "Email", 2),
-    new ("contactTypeText", "Text message", 3),
-    new ("contactTypePost", "Post", 4),
-];
-<GdsRadios Options="@contactTypes" />
-```
+```razor
+<GdsFormGroup>
+    <GdsFieldsetGroup>
+        <GdsFieldsetLegend Size="GdsSize.Medium">
+            <GdsFieldsetHeading Level="3">Where do you live?</GdsFieldsetHeading>
+        </GdsFieldsetLegend>
 
-## Smaller radio button example
+        <GdsHint>Select one option</GdsHint>
+        <GdsErrorMessage />
 
-```csharp
-ICollection<GdsOptionItem<int>> contactTypes = [
-    new ("contactTypePhone", "Phone", 1),
-    new ("contactTypeEmail", "Email", 2),
-    new ("contactTypeText", "Text message", 3),
-    new ("contactTypePost", "Post", 4),
-];
-<GdsRadios Options="@contactTypes" Smaller="true" />
-```
+        <GdsRadios @bind-Value="model.Country">
+            @foreach ((string countryCode, string countryName) in countries)
+            {
+                <GdsRadioItem>
+                    <GdsInputRadio Value="@countryCode" />
+                    <GdsRadioLabel Text="@countryName" />
+                </GdsRadioItem>
+            }
 
-## Inline radio button example
+            <GdsRadioDivider />
 
-```csharp
-ICollection<GdsOptionItem<bool>> nameChangedOptions = [
-    new ("nameChangedYes", "Yes", true),
-    new ("nameChangedNo", "No", false),
-];
-<GdsRadios Options="@nameChangedOptions" Inline="true" />
-```
-
-## Recommended use example
-
-```csharp
-ICollection<GdsOptionItem<int>> contactTypes = [
-    new ("contactTypePhone", "Phone", 1),
-    new ("contactTypeEmail", "Email", 2),
-    new ("contactTypeText", "Text message", 3),
-    new ("contactTypePost", "Post", 4),
-];
-<GdsFormGroup For="() => Model.ContactType">
-    <InputRadioGroup @bind-Value="Model.ContactType">
-        <GdsFieldsetGroup>
-            <GdsFieldsetLegend Size="@GdsSize.Medium">
-                <GdsFieldsetHeading Level="2">How can we contact you?</GdsFieldsetHeading>
-            </GdsFieldsetLegend>
-
-            <GdsHint>Select all that apply.</GdsHint>
-            <GdsErrorMessage />
-            <GdsRadios Options="@contactTypes" />
-        </GdsFieldsetGroup>
-    </InputRadioGroup>
+            <GdsRadioItem>
+                <GdsInputRadio Value="@("OTHER")" />
+                <GdsRadioLabel Text="Other" />
+                <GdsRadioHint>I live in another country</GdsRadioHint>
+            </GdsRadioItem>
+        </GdsRadios>
+    </GdsFieldsetGroup>
 </GdsFormGroup>
+
+@code {
+    private KeyValuePair<string, string>[] countries = [
+        new("GB-ENG", "England"),
+        new("GB-SCT", "Scotland"),
+        new("GB-WLS", "Wales"),
+        new("GB-NIR", "Northern Ireland"),
+    ];
+
+    public class RadiosModel
+    {
+        [Required(ErrorMessage = "Select where you live")]
+        [GdsFieldErrorClass(GdsFieldTypes.Radio)]
+        public string? Country { get; set; }
+    }
+}
 ```
 
-# Custom example using GDS conditional controls
+# Using GDS conditional controls
 
-```csharp
-ICollection<GdsOptionItem<int>> contactTypes = [
-    new ("contactTypePhone", "Phone", 1),
-    new ("contactTypeEmail", "Email", 2),
-    new ("contactTypeText", "Text message", 3),
-    new ("contactTypePost", "Post", 4),
-];
-<GdsFormGroup For="() => Model.ContactType">
-    <InputRadioGroup @bind-Value="Model.ContactType">
-        <GdsFieldsetGroup>
-            <Heading>
-                <GdsHeading Level="2" class="govuk-fieldset__heading">How can we contact you?</GdsHeading>
-            </Heading>
-            <Content>
-                <GdsHint>Select all that apply.</GdsHint>
-                <GdsErrorMessage />
-                <div class="govuk-radios" data-module="govuk-radios">
-                    @foreach (var option in contactTypes)
-                    {
-                        var conditionalId = option.Value == 1 ? $"{option.Id}-conditional" : null;
-                        <GdsRadio Option="@option" ConditionalId="@conditionalId" />
-                        if (option.Value == 1)
-                        {
-                            <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="@conditionalId">
-                                <GdsFormGroup For="() => Model.PhoneNumber">
-                                    <GdsLabel Text="What is your phone number?" />
-                                    <GdsErrorMessage />
-                                    <GdsInputText @bind-Value=Model.PhoneNumber class="govuk-input govuk-input--width-50" />
-                                </GdsFormGroup>
-                            </div>
-                        }
-                    }
-                </div>
-            </Content>
-        </GdsFieldsetGroup>
-    </InputRadioGroup>
+```razor
+<GdsFormGroup>
+    <GdsFieldsetGroup>
+        <GdsFieldsetLegend Size="GdsSize.Medium">
+            <GdsFieldsetHeading Level="3">How would you prefer to be contacted?</GdsFieldsetHeading>
+        </GdsFieldsetLegend>
+
+        <GdsHint>Select one option</GdsHint>
+        <GdsErrorMessage />
+
+        <GdsRadios @bind-Value="model.ContactPreference">
+            <GdsRadioItem>
+                <GdsInputRadio Value="@ContactPreferences.Email" ConditionalId="conditional-email" />
+                <GdsRadioLabel Text="Email" />
+            </GdsRadioItem>
+            <GdsRadioConditional Id="conditional-email">
+                <GdsFormGroup>
+                    <GdsLabel Text="Email address" />
+                    <GdsErrorMessage />
+                    <GdsInputText @bind-Value="@model.EmailAddress" type="email" spellcheck="false" autocomplete="email" class="govuk-input govuk-!-width-one-third" />
+                </GdsFormGroup>
+            </GdsRadioConditional>
+
+            <GdsRadioItem>
+                <GdsInputRadio Value="@ContactPreferences.Phone" ConditionalId="conditional-phone" />
+                <GdsRadioLabel Text="Phone" />
+            </GdsRadioItem>
+            <GdsRadioConditional Id="conditional-phone">
+                <GdsFormGroup>
+                    <GdsLabel Text="Phone number" />
+                    <GdsErrorMessage />
+                    <GdsInputText @bind-Value="@model.PhoneNumber" type="tel" autocomplete="tel" class="govuk-input govuk-!-width-one-third" />
+                </GdsFormGroup>
+            </GdsRadioConditional>
+
+            <GdsRadioItem>
+                <GdsInputRadio Value="@ContactPreferences.Text" ConditionalId="conditional-text" />
+                <GdsRadioLabel Text="Text" />
+            </GdsRadioItem>
+            <GdsRadioConditional Id="conditional-text">
+                <GdsFormGroup>
+                    <GdsLabel Text="Mobile phone number" />
+                    <GdsErrorMessage />
+                    <GdsInputText @bind-Value="@model.MobileNumber" type="tel" autocomplete="tel" class="govuk-input govuk-!-width-one-third" />
+                </GdsFormGroup>
+            </GdsRadioConditional>
+        </GdsRadios>
+    </GdsFieldsetGroup>
 </GdsFormGroup>
+
+@code {
+    public enum ContactPreferences
+    {
+        Unknown,
+        Email,
+        Phone,
+        Text,
+    }
+
+    public class RadiosModel
+    {
+        [Required]
+        [Range(typeof(ContactPreferences), nameof(ContactPreferences.Email), nameof(ContactPreferences.Text), ErrorMessage = "Select how you prefer to be contacted")]
+        [GdsFieldErrorClass(GdsFieldTypes.Radio)]
+        public ContactPreferences? ContactPreference { get; set; } = ContactPreferences.Unknown;
+
+        [Required(ErrorMessage = "Enter your email address")]
+        [EmailAddress(ErrorMessage = "Enter a valid email address")]
+        [GdsFieldErrorClass(GdsFieldTypes.Input)]
+        public string? EmailAddress { get; set; }
+
+        [Required(ErrorMessage = "Enter your email address")]
+        [EmailAddress(ErrorMessage = "Enter a valid email address")]
+        [GdsFieldErrorClass(GdsFieldTypes.Input)]
+        public string? PhoneNumber { get; set; }
+
+        [Required(ErrorMessage = "Enter your email address")]
+        [EmailAddress(ErrorMessage = "Enter a valid email address")]
+        [GdsFieldErrorClass(GdsFieldTypes.Input)]
+        public string? MobileNumber { get; set; }
+    }
+}
 ```

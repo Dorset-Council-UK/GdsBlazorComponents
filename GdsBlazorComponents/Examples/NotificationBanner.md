@@ -8,22 +8,18 @@ Render a single GOV.UK Design System styled notification banner component.
 
 ## How it works
 
-- Renders a GDS notification banner
-- If you select `BannerSizeOption.small` the header will be set to `h3`
-- Selecting `BannerSizeOption.large` will set the header to `h2`
-- The `NotificationTypeOption` can be `info` or `success` and will configure the panel to blue or green.
-- The role of the component is automatically configured based on the option selected above
-
-## Notes
-
-We are currently using an older style of header component. We are planning to update to their June 2025 refreshed branding soon.
+- Renders `<div class="govuk-notification-banner">` element styled according to the GOV.UK Design System.
+- `Id` optional parameter to set the `id` attribute of the component. If no `Id` is provided, a unique `id` will be generated.
+- `NotificationType` parameter can be `info` or `success` and will configure the panel colour.
+- `BannerTitle` parameter sets the title of the notification banner.
+- `BannerHeadingLevel` parameter sets the heading level of the title. Default is `2`.
 
 ## Example
 
-```html
+```razor
 <GdsNotificationBanner NotificationType="GdsNotificationBanner.NotificationTypeOption.info"
-                       BannerTitleSize="GdsNotificationBanner.BannerSizeOption.small"
+                       BannerHeadingLevel="2"
                        BannerTitle="Title goes here">
-    Notification html goes here
+    <div>Notification content goes here</div>
 </GdsNotificationBanner>
 ```

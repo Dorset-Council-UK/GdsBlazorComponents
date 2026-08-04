@@ -16,13 +16,13 @@ Render a single GOV.UK Design System styled phase banner component.
 
 ## Simple example
 
-```csharp
+```razor
 <GdsPhaseBanner Phase="GdsPhaseBanner.Phases.Alpha" />
 ```
 
 ## Example using feedback link
 
-```csharp
+```razor
 <GdsPhaseBanner Phase="GdsPhaseBanner.Phases.Beta" FeedbackLink="_feedbackUri" />
 
 @code {

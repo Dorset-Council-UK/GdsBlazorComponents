@@ -1,0 +1,47 @@
+<ErrorBoundary @ref="_errorBoundary">
+    <ChildContent>
+        @ChildContent
+    </ChildContent>
+    <ErrorContent>
+        <div class="govuk-error-summary" data-module="govuk-error-summary">
+            <div role="alert">
+                <GdsHeading Level="2" BaseCssClass="govuk-error-summary__title">There is a problem</GdsHeading>
+                <div class="govuk-error-summary__body">
+                    <ul class="govuk-list govuk-error-summary__list">
+                        <li>There was an unexpected problem. Please try again.</li>
+                        @if (ShowErrorMessage)
+                        {
+                            <li>@context.Message</li>
+                        }
+                    </ul>
+
+                    @if (ShowHelpLink && context.HelpLink is not null)
+                    {
+                        <div><a class="govuk-link" href="@context.HelpLink" target="_blank" rel="noopener noreferrer">Help link</a></div>
+                    }
+
+                    @if (ShowRetryButton)
+                    {
+                        <div><GdsButton IsSubmit="@false" Text="Retry" PreventDoubleClick OnClick="_ => _errorBoundary?.Recover()" AdditionalCssClasses="govuk-!-margin-bottom-0" /></div>
+                    }
+                </div>
+            </div>
+        </div>
+    </ErrorContent>
+</ErrorBoundary>
+
+@code {
+    [Parameter, EditorRequired]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool ShowErrorMessage { get; set; }
+
+    [Parameter]
+    public bool ShowHelpLink { get; set; }
+
+    [Parameter]
+    public bool ShowRetryButton { get; set; }
+
+    private ErrorBoundary? _errorBoundary;
+}

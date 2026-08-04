@@ -23,7 +23,7 @@ Full examples from the GOV.UK Design System can be at [Footer with links and sec
 
 ## Example - Simple image and copyright
 
-```csharp
+```razor
 <GdsFooter>
     <Meta>
         <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
@@ -40,7 +40,7 @@ Full examples from the GOV.UK Design System can be at [Footer with links and sec
 
 ## Example - Navigation columns
 
-```csharp
+```razor
 <GdsFooter>
     <Navigation>
         <GdsFooterSection Width="GdsGridColumnWidth.TwoThirds">

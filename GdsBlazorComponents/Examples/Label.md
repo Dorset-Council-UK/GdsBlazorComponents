@@ -1,23 +1,38 @@
 # Label
 
-Render a GOV.UK Design System styled `<label>` that associates with a form control. Works standalone (explicit `for`) or by consuming a cascaded control id provided by `GdsFormGroup`.
+Render a GOV.UK Design System styled label associated with a form control.
 
 ## How it works
 
-- Renders `<label class="govuk-label">` with optional extra classes.
-- The label `for` attribute is set from `For`. If omitted, it falls back to a cascaded id provided by `GdsFormGroup`.
+- Renders a `<label class="govuk-label">` element.
+- `For` optional parameter to set the `for` attribute of the label.
+  The id of the associated input control. If no `For` is provided and used within `GdsFormGroup`, the associated GDS input control id will be used automatically.
+- `Text` optional parameter to set the label text.
+- `Size` optional parameter to change the size of the label.
+- `CssClass` optional parameter allows you override the base CSS class.
+- `AdditionalCssClasses` optional parameter allows you to add additional CSS classes.
+
+## Variants
+
+All label components work the same way, but with different CSS classes applied.
+
+The following components are available:
+- GdsLabel - see [GdsInputText](InputText.md)
+- GdsCheckboxLabel - see [GdsInputCheckbox](InputCheckbox.md)
+- GdsDateLabel
+- GdsRadioLabel - see [GdsInputRadio](InputRadio.md)
 
 ## Simple example with explicit `for`
 
-```csharp
-<GdsLabel For="first-name" Text="First name" />
-<InputText id="first-name" class="govuk-input" @bind-Value="firstName" />
+```razor
+<GdsLabel For="event-name" Text="Event name" />
+<GdsInputText id="event-name" @bind-Value="Model.EventName" class="govuk-input govuk-input--width-50" />
 ```
 
-## Example using a cascaded id
+## Full example
 
-```csharp
-<GdsFormGroup For="() => Model.EventName">
+```razor
+<GdsFormGroup>
     <GdsLabel Text="What is the name of the event?" />
     <GdsHint>The name you'll use on promotional material</GdsHint>
     <GdsErrorMessage />
@@ -25,9 +40,9 @@ Render a GOV.UK Design System styled `<label>` that associates with a form contr
 </GdsFormGroup>
 ```
 
-## Example with additional classes
+## Example with Size
 
-```csharp
-<GdsLabel For="more-detail" Text="Can you provide more detail?" AdditionalCssClasses="govuk-label--l" />
-<textarea class="govuk-textarea" id="more-detail" name="moreDetail" rows="5"></textarea>
+```razor
+<GdsLabel For="more-detail" Text="Can you provide more detail?" Size="GdsSize.Large" />
+<textarea id="more-detail" class="govuk-textarea" name="moreDetail" rows="5"></textarea>
 ```
