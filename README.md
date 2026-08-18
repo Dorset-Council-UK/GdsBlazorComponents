@@ -114,6 +114,7 @@ Actual code samples can be found in this repo alongside each component.
 - [GdsTabs](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Tabs.md)
 - [GdsTaskList](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/TaskList.md)
 - [GdsTaskListHint](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Hint.md)
+- [GdsReconnectModal](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/ReconnectModal.md)
 
 ### Other examples and patterns:
 
