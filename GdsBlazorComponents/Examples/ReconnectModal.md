@@ -5,10 +5,10 @@ Render a GOV.UK Design System styled Blazor Reconnect Model.
 ## Example image
 
 ### First Attempt
-![Trying to reconnect](ReconnectModel/Trying to reconnect.png)
+![Trying to reconnect](<ReconnectModal/Trying to reconnect.png>)
 
 ### Repeated Attempts
-![Still trying to reconnect](ReconnectModel/still trying to reconnect.png)
+![Still trying to reconnect](<ReconnectModal/still trying to reconnect.png>)
 
 ### Reconnect Failed
 ![We could not reconnect](ReconnectModel/we could not reconnect.png)
