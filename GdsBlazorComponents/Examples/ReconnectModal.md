@@ -1,6 +1,6 @@
-# Blazor Reconnect Model
+# Blazor Reconnect Modal
 
-Render a GOV.UK Design System styled Blazor Reconnect Model.
+Render a GOV.UK Design System styled Blazor Reconnect Modal.
 
 ## Example image
 
