@@ -1,0 +1,50 @@
+﻿﻿.components-reconnect-first-attempt-visible,
+.components-reconnect-repeated-attempt-visible,
+.components-reconnect-failed-visible,
+.components-pause-visible,
+.components-resume-failed-visible,
+.components-rejoining-animation {
+	display: none;
+}
+
+#components-reconnect-modal.components-reconnect-show .components-reconnect-first-attempt-visible,
+#components-reconnect-modal.components-reconnect-show .components-rejoining-animation,
+#components-reconnect-modal.components-reconnect-paused .components-pause-visible,
+#components-reconnect-modal.components-reconnect-resume-failed .components-resume-failed-visible,
+#components-reconnect-modal.components-reconnect-retrying,
+#components-reconnect-modal.components-reconnect-retrying .components-reconnect-repeated-attempt-visible,
+#components-reconnect-modal.components-reconnect-retrying .components-rejoining-animation,
+#components-reconnect-modal.components-reconnect-failed,
+#components-reconnect-modal.components-reconnect-failed .components-reconnect-failed-visible {
+	display: block;
+}
+
+#components-reconnect-modal.components-reconnect-show.components-reconnect-retrying .components-reconnect-first-attempt-visible {
+	display: none;
+}
+
+#components-reconnect-modal {
+	position: fixed;
+	top: 15vh;
+	left: 50%;
+	transform: translateX(-50%);
+	max-width: 44rem;
+	width: auto;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 2rem;
+	box-shadow: none;
+	outline: none;
+	background-color: #ffffff;
+	opacity: 0;
+	overflow-x: hidden;
+}
+
+	#components-reconnect-modal[open] {
+		opacity: 1;
+		transition: opacity 0.2s ease-in;
+	}
+
+	#components-reconnect-modal::backdrop {
+		background-color: rgba(0, 0, 0, 0.4);
+	}
