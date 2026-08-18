@@ -1,11 +1,11 @@
 # Blazor Reconnect Model
 
-Render a GOV.UK Design System styled Blazzor Reconnect Model.
+Render a GOV.UK Design System styled Blazor Reconnect Model.
 
 ## Example image
 
 ### First Attempt
-![Trying to reconnecct](ReconnectModel/Trying to reconnecct.png)
+![Trying to reconnect](ReconnectModel/Trying to reconnect.png)
 
 ### Repeated Attempts
 ![Still trying to reconnect](ReconnectModel/still trying to reconnect.png)
@@ -18,7 +18,7 @@ Render a GOV.UK Design System styled Blazzor Reconnect Model.
 
 ## How it works
 
-- renders the Blazor Recconect Model styled according to the GOV.UK Design System.
+- Renders the Blazor Reconnect Model styled according to the GOV.UK Design System.
 
 
 ## Example - `App.Razor`
