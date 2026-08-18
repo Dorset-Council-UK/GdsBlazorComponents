@@ -1,7 +1,7 @@
-<dialog id="components-reconnect-modal" aria-modal="true" aria-labelledby="reconnect-heading" data-nosnippet>
+<dialog id="components-reconnect-modal" aria-modal="true" aria-label="Connection status" data-nosnippet>
     @* Initial disconnect *@
     <div class="components-reconnect-first-attempt-visible">
-        <GdsHeading Level="1" id="reconnect-heading">
+        <GdsHeading Level="1">
             @FirstAttemptVisibleHeading
         </GdsHeading>
         @FirstAttemptVisibleContent
@@ -59,20 +59,20 @@
             <strong>
                 <span id="components-seconds-to-next-attempt"></span>
             </strong>
-            seconds..
+            seconds.
         </p>
     </div>;
 
     [Parameter]
     public RenderFragment ReconnectFailedVisibleContent { get; set; } = @<div>
         <p class="govuk-body-l">Check your internet connection and try again.</p>
-        <GdsButton PreventDoubleClick Text="Try Again" AdditionalCssClasses="govuk-button--start" tabindex="0" draggable="false" id="components-reconnect-button" />
+        <GdsButton PreventDoubleClick Text="Try Again" AdditionalCssClasses="govuk-button--start" IsSubmit="false" tabindex="0" draggable="false" id="components-reconnect-button" />
     </div>;
 
     [Parameter]
     public RenderFragment PauseVisibleContent { get; set; } = @<div>
-        <p class="govuk-body-l">Your session was paused becuase this page was inactive.</p>
-        <GdsButton PreventDoubleClick Text="Continue" AdditionalCssClasses="govuk-button--start" tabindex="0" draggable="false" id="components-resume-button" />
+        <p class="govuk-body-l">Your session was paused because this page was inactive.</p>
+        <GdsButton PreventDoubleClick Text="Continue" AdditionalCssClasses="govuk-button--start" IsSubmit="false" tabindex="0" draggable="false" id="components-resume-button" />
     </div>;
 
 }

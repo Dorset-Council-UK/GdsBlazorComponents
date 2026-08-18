@@ -19,6 +19,11 @@ export function initialiseReconnectHandlers(): void {
     const resumeButton = document.getElementById("components-resume-button") as HTMLButtonElement | null;
 
     if (!reconnectModal) {
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initialiseReconnectHandlers, { once: true });
+            return;
+        }
+
         console.warn("Reconnect modal not found.");
         return;
     }
@@ -29,6 +34,10 @@ export function initialiseReconnectHandlers(): void {
         if (event.key === "Escape") {
             event.preventDefault();
         }
+    });
+
+    reconnectModal.addEventListener("cancel", (event: Event) => {
+        event.preventDefault();
     });
 
     retryButton?.addEventListener("click", () => retry(reconnectModal));
@@ -44,7 +53,9 @@ function handleReconnectStateChanged(event: ReconnectStateChangeEvent): void {
 
     switch (event.detail.state) {
         case "show":
-            reconnectModal.showModal();
+            if (!reconnectModal.open) {
+                reconnectModal.showModal();
+            }
             break;
 
         case "hide":
@@ -71,15 +82,17 @@ async function retry(reconnectModal: HTMLDialogElement): Promise<void> {
     try {
         const successful = await window.Blazor.reconnect();
 
-        if (!successful) {
-            const resumeSuccessful =
-                await window.Blazor.resumeCircuit();
+        if (successful) {
+            reconnectModal.close();
+            return;
+        }
 
-            if (!resumeSuccessful) {
-                location.reload();
-            } else {
-                reconnectModal.close();
-            }
+        const resumeSuccessful = await window.Blazor.resumeCircuit();
+
+        if (!resumeSuccessful) {
+            location.reload();
+        } else {
+            reconnectModal.close();
         }
     } catch {
         document.addEventListener(

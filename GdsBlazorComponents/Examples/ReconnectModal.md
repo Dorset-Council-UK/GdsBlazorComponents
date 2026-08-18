@@ -11,14 +11,14 @@ Render a GOV.UK Design System styled Blazor Reconnect Model.
 ![Still trying to reconnect](<ReconnectModal/still trying to reconnect.png>)
 
 ### Reconnect Failed
-![We could not reconnect](ReconnectModel/we could not reconnect.png)
+![We could not reconnect](ReconnectModal/we could not reconnect.png)
 
 ### Paused
-![Your session is paused](ReconnectModel/your session is paused.png)
+![Your session is paused](ReconnectModal/your session is paused.png)
 
 ## How it works
 
-- Renders the Blazor Reconnect Model styled according to the GOV.UK Design System.
+- Renders the Blazor Reconnect Modal styled according to the GOV.UK Design System.
 
 
 ## Example - `App.Razor`
