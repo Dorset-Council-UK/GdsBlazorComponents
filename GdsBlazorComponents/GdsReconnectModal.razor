@@ -1,0 +1,78 @@
+<dialog id="components-reconnect-modal" aria-modal="true" aria-label="Connection status" data-nosnippet>
+    @* Initial disconnect *@
+    <div class="components-reconnect-first-attempt-visible">
+        <GdsHeading Level="1">
+            @FirstAttemptVisibleHeading
+        </GdsHeading>
+        @FirstAttemptVisibleContent
+    </div>
+
+    @* Repeated retry *@
+    <div class="components-reconnect-repeated-attempt-visible">
+        <GdsHeading Level="1">
+            @RepeatedAttemptVisibleHeading
+        </GdsHeading>
+        @RepeatedAttemptVisibleContent
+    </div>
+
+    @* Reconnect failed *@
+    <div class="components-reconnect-failed-visible">
+        <GdsHeading Level="1">
+            @ReconnectFailedVisibleHeading
+        </GdsHeading>
+        @ReconnectFailedVisibleContent
+    </div>
+
+    @* Session paused *@
+    <div class="components-pause-visible">
+        <GdsHeading Level="1">
+            @PauseVisibleHeading
+        </GdsHeading>
+        @PauseVisibleContent
+    </div>
+</dialog>
+
+@code {
+    [Parameter]
+    public string FirstAttemptVisibleHeading { get; set; } = "Trying to reconnect";
+
+    [Parameter]
+    public string RepeatedAttemptVisibleHeading { get; set; } = "Still trying to reconnect";
+
+    [Parameter]
+    public string ReconnectFailedVisibleHeading { get; set; } = "We could not reconnect";
+
+    [Parameter]
+    public string PauseVisibleHeading { get; set; } = "Your session is paused";
+
+    [Parameter]
+    public RenderFragment FirstAttemptVisibleContent { get; set; } = @<div>
+        <p class="govuk-body-l">Your connection was interrupted. We're trying to restore it.</p>
+    </div>;
+
+    [Parameter]
+    public RenderFragment RepeatedAttemptVisibleContent { get; set; } = @<div>
+        <p class="govuk-body-l">We could not reconnect. We'll try again automatically.</p>
+        <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l govuk-!-margin-top-0">
+        <p class="govuk-body">
+            Trying again in
+            <strong>
+                <span id="components-seconds-to-next-attempt"></span>
+            </strong>
+            seconds.
+        </p>
+    </div>;
+
+    [Parameter]
+    public RenderFragment ReconnectFailedVisibleContent { get; set; } = @<div>
+        <p class="govuk-body-l">Check your internet connection and try again.</p>
+        <GdsButton PreventDoubleClick Text="Try Again" AdditionalCssClasses="govuk-button--start" IsSubmit="false" tabindex="0" draggable="false" id="components-reconnect-button" />
+    </div>;
+
+    [Parameter]
+    public RenderFragment PauseVisibleContent { get; set; } = @<div>
+        <p class="govuk-body-l">Your session was paused because this page was inactive.</p>
+        <GdsButton PreventDoubleClick Text="Continue" AdditionalCssClasses="govuk-button--start" IsSubmit="false" tabindex="0" draggable="false" id="components-resume-button" />
+    </div>;
+
+}

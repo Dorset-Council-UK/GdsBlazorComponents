@@ -1,5 +1,8 @@
 ﻿import './gds.scss';
 import { GdsObserver } from './gdsObserver';
+import { initialiseReconnectHandlers } from "./blazorReconnect";
+
+initialiseReconnectHandlers();
 
 // Setup GDS frontend requirements on document.body
 function setupGdsFrontend(): void {
