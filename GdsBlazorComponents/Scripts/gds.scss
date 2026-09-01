@@ -5,8 +5,6 @@
     $govuk-assets-path: "/_content/Dorset-Council-UK.GdsBlazorComponents/",
 );
 
-@import "./ReconnectModal.css";
-
 // Colour variables to help with user styling
 :root {
     --govuk-frontend-color-red: #{govuk.govuk-colour("red")};
