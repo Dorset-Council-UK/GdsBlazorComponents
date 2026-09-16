@@ -29,7 +29,7 @@
 	</ItemGroup>
 	
 	<Target Name="BuildNpmPackagesBeforeBuildInDebug" BeforeTargets="build" Condition="'$(Configuration)' == 'Debug'">
-		<Exec Command="npm run build" WorkingDirectory="$(MSBuildProjectDirectory)" />
+		<Exec Command="npm run build:dev" WorkingDirectory="$(MSBuildProjectDirectory)" />
 	</Target>
 
 </Project>
