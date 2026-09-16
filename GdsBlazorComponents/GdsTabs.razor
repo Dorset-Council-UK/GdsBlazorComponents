@@ -1,4 +1,6 @@
-﻿<CascadingValue Value="this" IsFixed="true">
+﻿@inject NavigationManager navigationManager
+
+<CascadingValue Value="this" IsFixed="true">
     <div class="@_class" data-module="govuk-tabs" @attributes="@AdditionalAttributes">
         <GdsHeading Level="2" BaseCssClass="govuk-tabs__title">
             @Title
@@ -7,12 +9,12 @@
         @if (panels.Count > 0)
         {
             <ul class="govuk-tabs__list">
-                @for (var i = 0; i < panels.Count; i++)
+                @for (int i = 0; i < panels.Count; i++)
                 {
                     GdsTabPanel panel = panels[i];
 
                     <li class="govuk-tabs__list-item @(i == 0 ? "govuk-tabs__list-item--selected" : string.Empty)">
-                        <GdsLink Href="@($"#{panel.Id}")" class="govuk-tabs__tab" data-test="huh">
+                        <GdsLink Href="@($"{new Uri(navigationManager.Uri).PathAndQuery}#{panel.Id}")" class="govuk-tabs__tab" data-test="huh">
                             @panel.Heading
                         </GdsLink>
                     </li>

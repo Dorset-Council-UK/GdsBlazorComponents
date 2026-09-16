@@ -1,24 +1,31 @@
-﻿<GdsLink Href="@Href" class="@_class" data-module="govuk-skip-link" @attributes="AdditionalAttributes">@Text</GdsLink>
+﻿@using Microsoft.AspNetCore.Components.Routing
+@implements IDisposable
+@inject NavigationManager navigationManager
+
+<GdsLink Href="@ResolvedHref" class="govuk-skip-link" data-module="govuk-skip-link" @attributes="AdditionalAttributes">@Text</GdsLink>
 
 @code {
-    [Parameter, EditorRequired]
-    public string Href { get; set; }
+    [Parameter]
+    public string? Href { get; set; }
 
     [Parameter]
     public string Text { get; set; } = "Skip to main content";
 
+    [Obsolete("This property is deprecated. The skip link does not support additional CSS classes.")]
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
 
-    private string? _class;
-    
-    protected override void OnParametersSet()
-    {
-        _class = new CssClassBuilder("govuk-skip-link")
-            .Add(AdditionalCssClasses)
-            .Build();
-    }
+    private string ResolvedHref => Href ?? $"{new Uri(navigationManager.Uri).PathAndQuery}#main-content";
+
+    protected override void OnInitialized()
+        => navigationManager.LocationChanged += OnLocationChanged;
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+        => InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+        => navigationManager.LocationChanged -= OnLocationChanged;
 }
