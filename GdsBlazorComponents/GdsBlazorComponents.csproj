@@ -28,4 +28,8 @@
 		<None Include="..\README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 	
+	<Target Name="BuildNpmPackagesBeforeBuildInDebug" BeforeTargets="build" Condition="'$(Configuration)' == 'Debug'">
+		<Exec Command="npm run build" WorkingDirectory="$(MSBuildProjectDirectory)" />
+	</Target>
+
 </Project>
