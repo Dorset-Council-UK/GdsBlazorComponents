@@ -131,11 +131,11 @@ Please see our guide on [contributing](https://github.com/Dorset-Council-UK/GdsB
 
 ## Reporting security issues
 
-Security issues should be reported privately, to the project team via email at [gis@dorsetcouncil.gov.uk](mailto:gis@dorsetcouncil.gov.uk). You should receive a response within 24 hours during business days.
+See [SECURITY.md](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/SECURITY.md)
 
 ## Core developers
 
-The Gds Blazor Components are a Dorset Council Open Source project. The core developers are currently Dorset Council staff. If you want to become a core developer, Please see our guide on [contributing](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/CONTRIBUTING.md).
+The GDS Blazor Components are a Dorset Council Open Source project. There are core contributors from both Dorset Council and HMRC. If you want to become a core contributor, Please see our guide on [contributing](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/CONTRIBUTING.md).
 
 ## Licence
 
