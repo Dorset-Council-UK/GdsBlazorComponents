@@ -37,7 +37,7 @@ Libraries can be challenging to develop. We recommend making use of the [`GdsBla
 
 Here is our current local development loop. Ideas for improvements to this process are welcome.
 
-- Clone the `GdsBlazorComponents-Demo` repository and make sure can run it locally. This will allow you to see your changes in action.
+- Clone the `GdsBlazorComponents-Demo` repository and make sure you can run it locally. This will allow you to see your changes in action.
 - [Create a new package source](https://learn.microsoft.com/en-us/nuget/consume-packages/nuget-visual-studio-options#sources) on your local machine. Point it at a local folder e.g. `C:\LocalNugetFeed`. This will be used to host your local builds of the `GdsBlazorComponents` package.
 - Make some changes to your local copy of the `GdsBlazorComponents` project.
 - Up the version number in the `GdsBlazorComponents` project. This is important to ensure that the demo project picks up your changes.
