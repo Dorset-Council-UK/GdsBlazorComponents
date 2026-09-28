@@ -135,7 +135,7 @@ See [SECURITY.md](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/
 
 ## Core developers
 
-The GDS Blazor Components are a Dorset Council Open Source project. There are core contributors from both Dorset Council and HMRC. If you want to become a core contributor, Please see our guide on [contributing](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/CONTRIBUTING.md).
+The GDS Blazor Components are a Dorset Council Open Source project. There are core contributors from both Dorset Council and CST in HMRC. If you want to become a core contributor, Please see our guide on [contributing](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/CONTRIBUTING.md).
 
 ## Licence
 
