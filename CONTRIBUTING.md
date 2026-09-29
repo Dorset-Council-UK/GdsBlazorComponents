@@ -1,8 +1,8 @@
-# Contributing to Gds Blazor Components
+# Contributing to GDS Blazor Components
 
-Thank you for your interest in contributing to Gds Blazor Components! Please review the project's [https://github.com/Dorset-Council-UK/GdsBlazorComponents/CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before proceeding.
+Thank you for your interest in contributing to GDS Blazor Components! Please review the project's [https://github.com/Dorset-Council-UK/GdsBlazorComponents/CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before proceeding.
 
-If you wish to become a core developer, please contact the project team via email at [gis@dorsetcouncil.gov.uk](mailto:gis@dorsetcouncil.gov.uk)
+If you wish to become a core contributor, please contact the project team via email at [gis@dorsetcouncil.gov.uk](mailto:gis@dorsetcouncil.gov.uk)
 
 ## Submitting Contributions
 
