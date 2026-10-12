@@ -5,9 +5,7 @@
         </GdsHeading>
     </div>
     <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">
-            @ChildContent
-        </p>
+        @ChildContent
     </div>
 </div>
 
@@ -28,7 +26,7 @@
     public required string BannerTitle { get; set; }
 
     [Parameter]
-    [Obsolete("Deprecated, use BannerHeadingSize instead.")]
+    [Obsolete("Deprecated, Banner Title cannot have a custom size.")]
     public BannerSizeOption? BannerTitleSize { get; set; }
     [Parameter]
     public int BannerHeadingLevel { get; set; } = 2;
@@ -36,7 +34,7 @@
     [Parameter, EditorRequired]
     public required RenderFragment? ChildContent { get; set; }
 
-    [Obsolete("This enum is deprecated. Use GdsSize instead.")]
+    [Obsolete("This enum is deprecated. Banner Title cannot have a custom size.")]
     public enum BannerSizeOption
     {
         small,
