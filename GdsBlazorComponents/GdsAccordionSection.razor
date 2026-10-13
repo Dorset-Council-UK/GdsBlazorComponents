@@ -1,34 +1,46 @@
 <div class="@_class" @attributes="@AdditionalAttributes">
-    @if (Header is not null)
-    {
-        <div class="govuk-accordion__section-header">
-            <h2 class="govuk-accordion__section-heading">
-                <span id="@_headingId" class="govuk-accordion__section-button">
-                    @Header
-                </span>
-            </h2>
-        </div>
-    }
-    @if (Content is not null)
-    {
-        <div id="@_contentId" class="govuk-accordion__section-content">
-            @Content
-        </div>
-    }
+
+    <div class="govuk-accordion__section-header">
+        <GdsHeading Level="@AccordionHeadingLevel" BaseCssClass="govuk-accordion__section-heading">
+            <span id="@_headingId" class="govuk-accordion__section-button">
+                @SectionTitle
+            </span>
+        </GdsHeading>
+        @if (!string.IsNullOrEmpty(SummaryText))
+        {
+            <div id="@_summaryId" class="govuk-accordion__section-summary govuk-body">
+                @SummaryText
+            </div>
+        }
+    </div>
+
+    <div id="@_contentId" class="govuk-accordion__section-content">
+        @Content
+    </div>
+
 </div>
 
 @code {
     [CascadingParameter]
     public GdsAccordion.AccordionContext? Accordion { get; set; }
 
-    [Parameter]
-    public RenderFragment? Header { get; set; }
+    [Parameter, EditorRequired]
+    public string SectionTitle { get; set; }
 
     [Parameter]
+    public string? SummaryText { get; set; }
+
+    [Parameter]
+    public int AccordionHeadingLevel { get; set; } = 2;
+
+    [Parameter, EditorRequired]
     public RenderFragment? Content { get; set; }
 
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
+
+    [Parameter]
+    public bool IsExpanded { get; set; } = false;
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
@@ -36,6 +48,7 @@
     private string? _class;
     private int? _index;
     private string? _headingId;
+    private string? _summaryId;
     private string? _contentId;
 
     protected override void OnInitialized()
@@ -48,6 +61,7 @@
         {
             _index = Accordion.NextIndex();
             _headingId = $"{Accordion.AccordionId}-heading-{_index}";
+            _summaryId = $"{Accordion.AccordionId}-summary-{_index}";
             _contentId = $"{Accordion.AccordionId}-content-{_index}";
         }
     }
@@ -56,6 +70,7 @@
     {
         _class = new CssClassBuilder("govuk-accordion__section")
             .Add(AdditionalCssClasses)
+            .AddIf(IsExpanded, "govuk-accordion__section--expanded")
             .Build();
     }
 }
