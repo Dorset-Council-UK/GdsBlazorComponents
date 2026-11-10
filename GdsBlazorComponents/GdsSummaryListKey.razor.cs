@@ -5,7 +5,7 @@ namespace GdsBlazorComponents;
 public partial class GdsSummaryListKey
 {
     [Parameter]
-    public RenderFragment? Children { get; set; }
+    public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
