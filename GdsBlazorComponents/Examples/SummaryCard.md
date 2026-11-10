@@ -56,7 +56,7 @@ See [summary list](SummaryList.md) for details of common summary card content.
             </GdsSummaryListRow>
         </GdsSummaryList>
     </GdsSummaryCardContent>
-<GdsSummaryCard>
+</GdsSummaryCard>
 ```
 
 ### With card actions
@@ -85,5 +85,5 @@ See [summary list](SummaryList.md) for details of common summary card content.
             </GdsSummaryListRow>
         </GdsSummaryList>
     </GdsSummaryCardContent>
-<GdsSummaryCard>
+</GdsSummaryCard>
 ```

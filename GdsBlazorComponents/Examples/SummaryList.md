@@ -3,8 +3,8 @@
 Render GOV.UK Design System styled summary list component
 
 ## How it works
-- renders a description link (dl) styled according to the GOV.UK Design System
-- use the `NoBorder` parameter to removed separating borders between rows
+- renders a description list (dl) styled according to the GOV.UK Design System
+- use the `NoBorder` parameter to remove separating borders between rows
 - supports additional CSS classes via the `AdditionalCssClasses` parameter
 - supports any additional HTML attributes via the `AdditionalAttributes` parameter
 
