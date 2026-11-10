@@ -107,6 +107,7 @@ Actual code samples can be found in this repo alongside each component.
 - [GdsSkipLink](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/SkipLink.md)
 - [GdsSpinner](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Spinner.md)
 - [GdsStartButton](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/StartButton.md)
+- [GdsSummaryList](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/SummaryList.md)
 - [GdsWarning](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Warning.md)
 - [GdsTag](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Tag.md)
 - [GdsTable](https://github.com/Dorset-Council-UK/GdsBlazorComponents/blob/main/GdsBlazorComponents/Examples/Table.md)
