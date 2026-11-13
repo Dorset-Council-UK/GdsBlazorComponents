@@ -16,7 +16,8 @@ Render GOV.UK Design System styled accordion.
 - each section is defined using the `GdsAccordionSection` component
 - `SectionTitle` parameter on `GdsAccordionSection` is required and is used to set the section header text
 - optional `SummaryText` parameter for summary text underneath the title
-- optional `IsExpanded` parameter to set the section to be expanded by default
+- optional `IsExpanded` parameter sets the initial expanded state only; later changes are ignored because GOV.UK JavaScript manages the expanded state and accessible controls
+- section CSS classes (including `AdditionalCssClasses`) are captured at initialization to avoid overwriting JavaScript-managed state
 - optional `HeadingLevel` parameter to set the heading level for the section title (default is 2)
 - `Content` child element is required and is used to define the content for the section
 - the header ID and content ID are automatically generated

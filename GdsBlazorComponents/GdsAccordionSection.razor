@@ -39,6 +39,9 @@
     [Parameter]
     public string? AdditionalCssClasses { get; set; }
 
+    /// <summary>
+    /// Sets the initial expanded state. Later changes are ignored; GOV.UK JavaScript owns the expanded state.
+    /// </summary>
     [Parameter]
     public bool IsExpanded { get; set; } = false;
 
@@ -64,10 +67,8 @@
             _summaryId = $"{Accordion.AccordionId}-summary-{_index}";
             _contentId = $"{Accordion.AccordionId}-content-{_index}";
         }
-    }
 
-    protected override void OnParametersSet()
-    {
+        // Keep the rendered class stable so Blazor does not overwrite JavaScript-owned state.
         _class = new CssClassBuilder("govuk-accordion__section")
             .Add(AdditionalCssClasses)
             .AddIf(IsExpanded, "govuk-accordion__section--expanded")
