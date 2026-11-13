@@ -18,7 +18,7 @@ Render GOV.UK Design System styled accordion.
 - optional `SummaryText` parameter for summary text underneath the title
 - optional `IsExpanded` parameter sets the initial expanded state only; later changes are ignored because GOV.UK JavaScript manages the expanded state and accessible controls
 - section CSS classes (including `AdditionalCssClasses`) are captured at initialization to avoid overwriting JavaScript-managed state
-- optional `HeadingLevel` parameter to set the heading level for the section title (default is 2)
+- optional `AccordionHeadingLevel` parameter to set the heading level for the section title (default is 2)
 - `Content` child element is required and is used to define the content for the section
 - the header ID and content ID are automatically generated
 
@@ -28,12 +28,12 @@ Render GOV.UK Design System styled accordion.
 
 ```razor
 <GdsAccordion Id="accordion-test">
-    <GdsAccordionSection Title="Writing well for the web">
+    <GdsAccordionSection SectionTitle="Writing well for the web">
         <Content>
             <p class="govuk-body">This is the content for Writing well for the web.</p>
         </Content>
     </GdsAccordionSection>
-    <GdsAccordionSection Title="Writing well for specialists">
+    <GdsAccordionSection SectionTitle="Writing well for specialists">
         <Content>
             <p class="govuk-body">This is the content for Writing well for specialists.</p>
         </Content>
@@ -41,18 +41,18 @@ Render GOV.UK Design System styled accordion.
 </GdsAccordion>
 ```
 
-## Basic exmaple with summary text
+## Basic example with summary text
 
 ![Accordion example with summary text](AccordionSummary.png)
 
 ```razor
 <GdsAccordion Id="accordion-test">
-    <GdsAccordionSection Title="Writing well for the web" SummaryText="This is the summary text for Writing well for the web.">
+    <GdsAccordionSection SectionTitle="Writing well for the web" SummaryText="This is the summary text for Writing well for the web.">
         <Content>
             <p class="govuk-body">This is the content for Writing well for the web.</p>
         </Content>
     </GdsAccordionSection>
-    <GdsAccordionSection Title="Writing well for specialists" SummaryText="This is the summary text for Writing well for specialists.">
+    <GdsAccordionSection SectionTitle="Writing well for specialists" SummaryText="This is the summary text for Writing well for specialists.">
         <Content>
             <p class="govuk-body">This is the content for Writing well for specialists.</p>
         </Content>
@@ -66,12 +66,12 @@ Render GOV.UK Design System styled accordion.
 
 ```razor
 <GdsAccordion Id="accordion-test">
-    <GdsAccordionSection Title="Writing well for the web" SummaryText="This is the summary text for Writing well for the web." IsExpanded="true">
+    <GdsAccordionSection SectionTitle="Writing well for the web" SummaryText="This is the summary text for Writing well for the web." IsExpanded="true">
         <Content>
             <p class="govuk-body">This is the content for Writing well for the web.</p>
         </Content>
     </GdsAccordionSection>
-    <GdsAccordionSection Title="Writing well for specialists" SummaryText="This is the summary text for Writing well for specialists.">
+    <GdsAccordionSection SectionTitle="Writing well for specialists" SummaryText="This is the summary text for Writing well for specialists.">
         <Content>
             <p class="govuk-body">This is the content for Writing well for specialists.</p>
         </Content>
