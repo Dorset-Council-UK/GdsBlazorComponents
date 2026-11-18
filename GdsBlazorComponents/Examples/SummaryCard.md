@@ -2,6 +2,12 @@
 
 Render GOV.UK Design System styled summary card component
 
+## Example images
+
+![Summary card example](SummaryCard.png)
+
+![Summary card with actions example](SummaryCardWithActions.png)
+
 ## How it works
 - renders a summary card styled according to the GOV.UK Design System
 - supports additional CSS classes via the `AdditionalCssClasses` parameter

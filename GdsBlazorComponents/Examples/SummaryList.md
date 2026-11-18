@@ -2,6 +2,12 @@
 
 Render GOV.UK Design System styled summary list component
 
+## Example images
+
+![Summary list example](SummaryList.png)
+
+![Summary list with no actions example](SummaryListNoActions.png)
+
 ## How it works
 - renders a description list (dl) styled according to the GOV.UK Design System
 - use the `NoBorder` parameter to remove separating borders between rows
