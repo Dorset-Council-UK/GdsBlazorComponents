@@ -6,7 +6,7 @@
                 @SectionTitle
             </span>
         </GdsHeading>
-        @if (!string.IsNullOrEmpty(SummaryText))
+        @if (!string.IsNullOrWhiteSpace(SummaryText))
         {
             <div id="@_summaryId" class="govuk-accordion__section-summary govuk-body">
                 @SummaryText
